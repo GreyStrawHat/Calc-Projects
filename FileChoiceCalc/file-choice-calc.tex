@@ -1,0 +1,152 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{tabularx} % extra features for tabular environment
+\usepackage{amsmath}  % improve math presentation
+\usepackage{graphicx} % takes care of graphic including machinery
+\usepackage[margin=1in,letterpaper]{geometry} % decreases margins
+\usepackage{cite} % takes care of citations
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+\usepackage{blindtext}
+\usepackage{dirtree}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+	\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+%++++++++++++++++++++++++++++++++++++++++
+
+
+\begin{document}
+	
+	\title{File Choice Calc}
+	\author{Cyber Solutions Development - Georgia}
+	\date{\today}
+	\maketitle
+	
+	\begin{abstract}
+		Your task is to use the same parser you built for FileCalc, but this time the grader will ask for only a subset of the files in the input\_dir using unix domain sockets.
+	\end{abstract}
+	
+	
+	\section{Requirements}
+	
+	In this assignment, you will build an application that will perform the same operations as FileCalc, but will also take input from the grader over a unix domain socket.
+	
+	\subsection{Basic Requirements}
+		\begin{enumerate}
+			\item Written in C
+			\item Everything FileCalc does
+			\item Uses socket communications to a unix domain socket
+			\item Uses a linked-list to hold information pertaining to each file
+			\item Uses a stack to compute each equation in different formats
+			\item Single-threaded (No multi-threading)
+	\end{enumerate}
+	
+	\subsection{Specific Requirements}
+	
+	\subsubsection{Data Structures}
+	Use a linked-list data structure that will hold each file's data in a series of nodes. The choice of linked-list is up to you, but you must read in each file and store it using a linked-list. The follow procedure is what you should expect:
+	\begin{enumerate}
+		\item Read in each file as in FileCalc.
+		\item Store each file into a node in your linked-list.
+		\item Wait for a file id from the grader. If the id does not exist, print error but do not exit. If the id does exist, remove the item from the linked-list, solve the equations, and output file to the output directory. If you get the id: 0xDEADBEEF, that is the signal to cleanup and exit.
+	\end{enumerate}
+	You will also have to handle equations in other formats from standard notation:
+	\begin{enumerate}
+		\item Prefix: OPERATOR OPERAND1 OPERAND2
+		\item Postfix: OPERAND1 OPERAND2 OPERATOR
+		\item Standard: OPERAND1 OPERATOR OPERAND2
+	\end{enumerate}
+	
+	Your solution to implementing each notation should use a stack data structure implemented with either a linked-list or an array. Think about why you don't need to specify in the file header what notation the equation is in.
+	
+	\subsubsection{Socket Communications}
+	The grader will be listening on a unix domain socket, and when it receives a connection, it will go ahead and supply you a formatted list, containing the file IDs it wants solved. Your program should look for a socket file called \textbf{\emph{grader-socket}} located in the \textbf{\emph{/tmp}} directory. If the socket file is not present, report an error, released resources and exit. Otherwise go ahead and establish a connection to it. If the provided ID does not exist, report ID\_NOT\_FOUND, otherwise report STATUS\_GOOD. Use a single send at the end using the REPORT\_STATUS command. See \textbf{protocol-specification} for more information.
+	
+	\textbf{\emph{BONUS:}} Ensure the socket file in the \textbf{\emph{/tmp}} is actually a socket file. Research what system call will be useful for determining this.
+	
+	\textbf{\emph{BONUS:}} Include an option "-s" that will allow the binary to function as the server that the grader will connect to. Create the socket file, bind to the socket file as stated above, and wait for the grader to connect. Do not worry about timeouts or other socket options. This will include sections 3.1.12 (f, h)
+	
+	\subsubsection{Memory Management}
+	Your program should not be leaking memory. Your program should show no memory leaks with:
+		\begin{lstlisting}
+			valgrind --leak-check=full ./filecalc input_dir output_dir 
+		\end{lstlisting}
+	
+	\subsubsection{Assumptions}
+		\begin{enumerate}
+			\item All numbers are little endian
+			\item All numbers are 64-bits in size
+			\item All numbers should be treated as signed (int64\_t)
+		\end{enumerate}
+	
+	\section{Deliverables}
+	Your code should have the following file structure:
+	\dirtree{%
+	.1 FileCalc.
+	.2 src.
+	.3 source-files.
+	.2 hdrs.
+	.3 file-calc.h.
+	.3 file-calc-protocol.h.
+	.2 docs.
+	.3 documentation.
+	.2 CMakeLists.txt.
+	}\hfill
+
+	Your code should build and compile with the following shell script ran from the FileCalc directory:
+
+	\begin{lstlisting}
+	// build.sh
+	mkdir build
+	cd build
+	cmake .. 
+	make
+	\end{lstlisting}
+	
+	
+	\section{Notes to grader}
+	The purpose of this assignment is to start using simple data structures in C. Use this assignment to achieve the following objectives:
+	\begin{enumerate}
+		\item Perform file input and output operations using system calls
+		\item Building on CMake knowledge. Your mentee should create a linked-list implementation before this project. Have them build their implementation as a static library and link it using cmake to the project.
+		\item Code organization. This is complex project, and code organization will be key. Ensure your mentee is levering good practices for code organization.
+		\item This project is a step towards building to network communications. The grader acts as an listening post (LP) that sends commands and the C program responds to these tasks just as an implant would. 
+		\item This project introduces data structures. Please ensure your mentee is prepared with the necessary theoretical background and has implemented a working linked-list. Consider making successful completion of 3.3.1 a pre-requisite for this project.
+	\end{enumerate}
+
+	\section{JQR Sections Covered}
+	\begin{itemize}
+		\item All sections in FileCalc
+		\item 3.1.12 (a, b, c, d, e, g, p)
+		\item 3.3.2 / 3.3.3 / 3.3.4 (Depending on which linked-list is chosen)
+		\item 3.3.9 (all)
+	\end{itemize}
+	
+	
+\end{document}
