@@ -1,0 +1,155 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{tabularx} % extra features for tabular environment
+\usepackage{amsmath}  % improve math presentation
+\usepackage{graphicx} % takes care of graphic including machinery
+\usepackage[margin=1in,letterpaper]{geometry} % decreases margins
+\usepackage{cite} % takes care of citations
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+	linkcolor=blue,        % color of internal links
+	citecolor=blue,        % color of links to bibliography
+	filecolor=magenta,     % color of file links
+	urlcolor=blue         
+}
+\usepackage{blindtext}
+\usepackage{dirtree}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+	\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+%++++++++++++++++++++++++++++++++++++++++
+
+
+\begin{document}
+	
+	\title{File Calc}
+	\author{Cyber Solutions Development - Georgia}
+	\date{\today}
+	\maketitle
+	
+	\begin{abstract}
+		Your task is to build file parser that conforms to the attached format and solve the equations, given two directories that contain 'M' files and with each file containing 'N' equations.
+	\end{abstract}
+	
+	
+	\section{Requirements}
+	
+	In this assignment, you will build an application that will compute equations that are read in from a binary file.
+	
+	\subsection{Basic Requirements}
+		\begin{enumerate}
+			\item Written in C
+			\item Take two arguments that are directories: Input and Output directory. Report error if not directory.
+			\item Successfully parses the binary file. Report error otherwise.
+			\item Handle bad inputs such as bad format as described above, divide by zero, or interger overflow. Report error otherwise.
+			\item Single binary with the usage statement ./simplecalc input\_dir output\_dir	
+			\item All files should have the following memory permissions: -,rw-, r-\--, r-\--. Report error otherwise.
+			\item Use the read, write, lseek, open, close, and creat system calls. See man pages for usages. 
+	\end{enumerate}
+	
+	\subsection{Specific Requirements}
+	\subsubsection{Required Operators}
+		\begin{enumerate}
+			\item Addition 
+			\item Subtraction
+			\item Multiplication
+			\item Division
+			\item Modulo 
+			\item Left shift 
+			\item Right shift 
+			\item And
+			\item Or
+			\item XOR
+			\item Rotate Left
+			\item Rotate Right
+		\end{enumerate}
+	
+	\subsubsection{Data Structures}
+	Use an array to hold the data for each file. Use dynamic memory allocation on the heap to hold all file data.
+	
+	\subsubsection{Memory Management}
+	Your program should not be leaking memory. Your program should show no memory leaks with:
+		\begin{lstlisting}
+			valgrind --leak-check=full ./filecalc input_dir output_dir 
+		\end{lstlisting}
+	
+	\subsubsection{Assumptions}
+		\begin{enumerate}
+			\item All numbers are little endian
+			\item All numbers are 64-bits in size
+			\item All numbers should be treated as signed (int64\_t)
+		\end{enumerate}
+	
+	\section{Deliverables}
+	Your code should have the following file structure:
+	\dirtree{%
+	.1 FileCalc.
+	.2 src.
+	.3 source-files.
+	.2 hdrs.
+	.3 file-calc.h.
+	.2 docs.
+	.3 documentation.
+	.2 CMakeLists.txt.
+	}\hfill
+
+	Your code should build and compile with the following shell script ran from the FileCalc directory:
+
+	\begin{lstlisting}
+	// build.sh
+	mkdir build
+	cd build
+	cmake .. 
+	make
+	\end{lstlisting}
+	
+	
+	\section{Notes to grader}
+	The purpose of this assignment is to start writing complex C code. Use this assignment to achieve the following objectives:
+	\begin{enumerate}
+		\item Perform file input and output operations using system calls
+		\item Building on CMake knowledge. Have your mentee experiment with using debug macros and building debug/release builds
+		\item Code organization. This is complex project, and code organization will be key. Ensure your mentee is leverging good practices for code organization.
+	\end{enumerate}
+
+	\section{JQR Sections Covered}
+	\begin{itemize}
+		\item 3.1.3 (all)
+		\item 3.1.4 (a)
+		\item 3.1.5 (all)
+		\item 3.1.6 (a, b)
+		\item 3.1.7 (all)
+		\item 3.1.8 (a, b, c, d, e, f) 
+		\item 3.1.9
+		\item 3.1.10 (b, d, f)
+		\item 3.1.11 (all)
+		\item 3.1.18 (a, b)
+		\item 3.1.19 (all)
+		\item 3.1.20 (all)
+		\item 3.1.21 (only if debug macros are used)
+		\item 3.1.22 (all)
+	\end{itemize}
+	
+	
+\end{document}
