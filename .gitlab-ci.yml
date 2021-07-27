@@ -55,7 +55,7 @@ stages:
 # Sections for SimpleCalc
 .SimpleCalc:
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ "/SimpleCalc/"'
+    - if: '$CI_COMMIT_BRANCH =~ /SimpleCalc/'
       when: always
   variables:
     CUR_PROJ: SimpleCalc
@@ -84,7 +84,7 @@ valgrind:SimpleCalc:
 # Sections for FileCalc
 .FileCalc:
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ "/FileCalc/"'
+    - if: '$CI_COMMIT_BRANCH =~ /FileCalc/'
       when: always
   variables:
     CUR_PROJ: FileCalc
@@ -106,7 +106,7 @@ test:FileCalc:
 # Sections for FileChoiceCalc
 .FileChoiceCalc:
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ "/FileChoiceCalc/"'
+    - if: '$CI_COMMIT_BRANCH =~ /FileChoiceCalc/'
       when: always
   variables:
     CUR_PROJ: FileChoiceCalc
