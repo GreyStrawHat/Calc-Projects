@@ -1,0 +1,103 @@
+variables:
+  FORMAT_IMAGE: maranov/clang-git
+
+stages:
+  - lint
+  - build
+  - test
+  - valgrind
+
+.container:
+  image: registry.cybbh.space/17d/bolc/docker/build:latest
+  stage: build
+  interruptible: true
+  allow_failure: true
+  tags:
+    - docker
+  timeout: 10m
+
+.lint:
+  extends: .container
+  image: $FORMAT_IMAGE
+  stage: lint
+  before_script:
+    - export PROJ=$CUR_PROJ
+  script:
+    - echo "Start BARR-C Check"
+    - echo "No output here is good"
+    - touch clanglog.txt
+    - find ${PROJ}/ -iname "*.c" -o -iname "*.h" | xargs clang-format --assume-filename=$FORMAT_FILE -n 2>&1 | tee clanglog.txt
+    - export warnings=$(grep -c warning clanglog.txt)
+    - if [ 0 -ne ${warnings} ]; then echo "Clang-Tidy found ${warnings} warnings." && exit 1; fi
+
+.builder:
+  extends:
+    - .container
+  stage: build
+  before_script:
+    - export PROJ=$CUR_PROJ
+  script:
+    - echo "Start clang-tidy Check"
+    - echo "No output here is good"
+    - echo "Ignore \"database\" erorrs for now"
+    - find ${PROJ}/ -iname "*.c" -o -iname "*.h" | xargs -I {} clang-tidy {} "-checks=-*,clang-analyzer-*,-clang-analyzer-cplusplus*" -- -I${PROJ}/hdrs
+    - echo "End clang-tidy Check"
+    - cd $PROJ
+    - ./build.sh
+
+.tester:
+  extends:
+    - .builder
+  stage: test
+  allow_failure: false
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - export PROJ=$CUR_PROJ
+  script:
+    - ls $PROJ
+    - ls $PROJ/build/
+    - python3 tests/${PROJ}Tests.py
+
+.valgrind:
+  extends: .builder
+  variables:
+    GIT_STRATEGY: none
+  stage: valgrind
+  before_script:
+    - export PROJ=$CUR_PROJ
+  script:
+    - ""
+
+# Sections for SimpleCalc
+.SimpleCalc:
+  rules:
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ "SimpleCalc" && $CI_COMMIT_TITLE != "Initial commit"
+  variables:
+    CUR_PROJ: SimpleCalc
+
+lint:SimpleCalc:
+  extends:
+    - .lint
+    - .SimpleCalc
+
+build:SimpleCalc:
+  extends:
+    - .builder
+    - .SimpleCalc
+  needs:
+    - lint:SimpleCalc
+
+test:SimpleCalc:
+  extends:
+    - .tester
+    - .SimpleCalc
+  needs:
+    - build:SimpleCalc
+
+valgrind:SimpleCalc:
+  extends:
+    - .valgrind
+    - .SimpleCalc
+  needs:
+    - test:SimpleCalc
