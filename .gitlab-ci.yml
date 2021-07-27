@@ -55,7 +55,9 @@ stages:
 # Sections for SimpleCalc
 .SimpleCalc:
   rules:
-    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ "/SimpleCalc/" || $CI_COMMIT_BRANCH =~ "/SimpleCalc/"
+    - if: $CI_COMMIT_BRANCH =~ "/SimpleCalc/"
+      when: always
+    - when: never
   variables:
     CUR_PROJ: SimpleCalc
 
@@ -83,7 +85,9 @@ valgrind:SimpleCalc:
 # Sections for FileCalc
 .FileCalc:
   rules:
-    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ "/FileCalc/" || $CI_COMMIT_BRANCH =~ "/FileCalc/"
+    - if: $CI_COMMIT_BRANCH =~ "/FileCalc/"
+      when: always
+    - when: never
   variables:
     CUR_PROJ: FileCalc
 
@@ -104,8 +108,9 @@ test:FileCalc:
 # Sections for FileChoiceCalc
 .FileChoiceCalc:
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ "/FileChoiceCalc/" || $CI_COMMIT_BRANCH =~ "/FileChoiceCalc/"
+    - if: $CI_COMMIT_BRANCH =~ "/FileChoiceCalc/"
+      when: always
+    - when: never
   variables:
     CUR_PROJ: FileChoiceCalc
 
