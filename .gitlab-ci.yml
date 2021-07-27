@@ -57,8 +57,6 @@ stages:
   rules:
     - if: $CI_COMMIT_BRANCH =~ "/SimpleCalc/"
       when: always
-    - if: $CI_COMMIT_BRANCH !~ "/SimpleCalc/"
-      when: never
   variables:
     CUR_PROJ: SimpleCalc
 
