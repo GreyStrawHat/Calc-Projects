@@ -38,6 +38,7 @@ stages:
   before_script:
     - export PROJ=$CUR_PROJ
   script:
+    - echo $PROJ
     - ls $PROJ
     - ls $PROJ/build/
     - python3 tests/${PROJ}Tests.py
