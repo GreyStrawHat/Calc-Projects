@@ -105,24 +105,6 @@
 		\begin{enumerate}
 			\item Please see the attached FileSpec.pdf file.
 		\end{enumerate}
-	\subsubsection{Logging}
-		\begin{enumerate}
-			\item Your program must write all status, errors, and debug output to a seperate file called:
-			\begin{lstlisting}
-						top_level_dir/logs/(TimeStamp)-FileCalc.log
-			\end{lstlisting}
-			\item Your program will read from the FILECALC\_LOG\_LEVEL environment variable which will be a one-byte value:
-			\begin{enumerate}
-				\item 0: DEBUG - Used for development only
-				\item 1: INFO - Default value if environment variable is not set or does not exist
-				\item 2: WARNING - File Format errors
-				\item 3: ERROR - Directories don't exist
-			\end{enumerate}
-			\item Your program will only log events that are greater than or equal to the value of the environment variable.
-			\item Formatting is your choice.
-			\item (ADVANCED) Implement a binary log format, please document it for your mentor and include a python3 parser. Note this is an excellent way to complete more JQR items that are in the python3 portion.
-
-		\end{enumerate}
 	\subsubsection{Special Requirements}
 		\begin{enumerate}
 			\item If your program receives an incorrectly formatted file: Log a warning and move that file to a seperate directory called BadFiles.
