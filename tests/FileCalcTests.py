@@ -400,7 +400,7 @@ def main():
         num_files += 1
         for j in range(0,len(outfilelist)):
             if matchfiles((infilelist[i]), (outfilelist[j])): #Comparing filenames
-                print(f'Grading {infilelist[i]} against {outfilelist[j]}')
+                # print(f'Grading {infilelist[i]} against {outfilelist[j]}')
                 num_failed += EquGrader(infilelist[i], outfilelist[j]).fail
 
     num_passed = num_files - num_failed
