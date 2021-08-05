@@ -19,18 +19,24 @@ def test_input(op1, operator, op2, ans):
 
     # if failure occurs, assume first char in error message not decimal
     if (ans == "FAIL"):
-        if len(str_out) == 0:
+        if len(output) == 0:
             return PASS
-        elif str_out[0] in string.digits:
+        elif len(err) != 0:
+            return PASS
+        elif str_out[0] not in string.digits:
             return PASS
         else:
-            print(f"Expected FAILURE MESSAGE, but got: {str_out.strip()}")
+            print("Failing Output")
+            print(output)
+            print(err)
             return FAIL
     else:
         if (ans in str_out):
             return PASS
         else:
-            print(f"Expected {ans}, but got: {str_out.strip()}")
+            print("Failing Output")
+            print(output)
+            print(err)
             return FAIL
 
 def main():

@@ -1,6 +1,3 @@
-variables:
-  FORMAT_IMAGE: maranov/clang-git
-
 stages:
   - lint
   - build
@@ -15,20 +12,6 @@ stages:
   tags:
     - docker
   timeout: 10m
-
-.lint:
-  extends: .container
-  image: $FORMAT_IMAGE
-  stage: lint
-  before_script:
-    - export PROJ=$CUR_PROJ
-  script:
-    - echo "Start BARR-C Check"
-    - echo "No output here is good"
-    - touch clanglog.txt
-    - find ${PROJ}/ -iname "*.c" -o -iname "*.h" | xargs clang-format --assume-filename=$FORMAT_FILE -n 2>&1 | tee clanglog.txt
-    - export warnings=$(grep -c warning clanglog.txt)
-    - if [ 0 -ne ${warnings} ]; then echo "Clang-Tidy found ${warnings} warnings." && exit 1; fi
 
 .builder:
   extends:
@@ -55,6 +38,7 @@ stages:
   before_script:
     - export PROJ=$CUR_PROJ
   script:
+    - echo $PROJ
     - ls $PROJ
     - ls $PROJ/build/
     - python3 tests/${PROJ}Tests.py
@@ -72,21 +56,15 @@ stages:
 # Sections for SimpleCalc
 .SimpleCalc:
   rules:
-    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ "SimpleCalc" && $CI_COMMIT_TITLE != "Initial commit"
+    - if: '$CI_COMMIT_BRANCH =~ /SimpleCalc/'
+      when: always
   variables:
     CUR_PROJ: SimpleCalc
-
-lint:SimpleCalc:
-  extends:
-    - .lint
-    - .SimpleCalc
 
 build:SimpleCalc:
   extends:
     - .builder
     - .SimpleCalc
-  needs:
-    - lint:SimpleCalc
 
 test:SimpleCalc:
   extends:
@@ -101,3 +79,48 @@ valgrind:SimpleCalc:
     - .SimpleCalc
   needs:
     - test:SimpleCalc
+# End Sections for SimpleCalc
+
+
+# Sections for FileCalc
+.FileCalc:
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /FileCalc/'
+      when: always
+  variables:
+    CUR_PROJ: FileCalc
+
+build:FileCalc:
+  extends:
+    - .builder
+    - .FileCalc
+
+test:FileCalc:
+  extends:
+    - .tester
+    - .FileCalc
+  needs:
+    - build:FileCalc
+# End Sections for FileCalc
+
+
+# Sections for FileChoiceCalc
+.FileChoiceCalc:
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /FileChoiceCalc/'
+      when: always
+  variables:
+    CUR_PROJ: FileChoiceCalc
+
+build:FileChoiceCalc:
+  extends:
+    - .builder
+    - .FileChoiceCalc
+
+test:FileChoiceCalc:
+  extends:
+    - .tester
+    - .FileChoiceCalc
+  needs:
+    - build:FileChoiceCalc
+# End Sections for FileChoiceCalc

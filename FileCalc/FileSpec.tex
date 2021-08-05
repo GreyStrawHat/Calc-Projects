@@ -1,0 +1,203 @@
+% This file was converted to LaTeX by Writer2LaTeX ver. 1.6.1
+% see http://writer2latex.sourceforge.net for more info
+\documentclass[letterpaper]{article}
+\usepackage[ascii]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,textcomp}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{color}
+\usepackage{array}
+\usepackage{supertabular}
+\usepackage{hhline}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue}
+\makeatletter
+\newcommand\arraybslash{\let\\\@arraycr}
+\makeatother
+% Page layout (geometry)
+\setlength\voffset{-1in}
+\setlength\hoffset{-1in}
+\setlength\topmargin{0.5in}
+\setlength\oddsidemargin{1in}
+\setlength\textheight{8.5398in}
+\setlength\textwidth{6.5in}
+\setlength\footskip{0.0cm}
+\setlength\headheight{0.5in}
+\setlength\headsep{0.4602in}
+% Footnote rule
+\setlength{\skip\footins}{0.0469in}
+\renewcommand\footnoterule{\vspace*{-0.0071in}\setlength\leftskip{0pt}\setlength\rightskip{0pt plus 1fil}\noindent\textcolor{black}{\rule{0.25\columnwidth}{0.0071in}}\vspace*{0.0398in}}
+
+\title{}
+\begin{document}
+\textsc{\LARGE \bf \noindent File Specification for FileCalc Project}
+\bigskip
+\subsection{1 Equ File Header}
+
+This is the overall header format that you will be presented with and you will write an output file using this format. Be sure to note the magic number. That will tell you if a file is valid. If there is any deviation from this format, reported error.
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{0.8497598in}|m{0.8504598in}|m{0.8497598in}|m{0.8504598in}|m{0.8497598in}|m{0.8504598in}|m{0.8483598in}|}
+\hline
+\centering{\bfseries Name} &
+\centering{\bfseries Magic Number} &
+\centering{\bfseries Field} &
+\centering{\bfseries Number of Equations} &
+\centering{\bfseries Flags} &
+{\centering\bfseries Equation Offset\par}
+
+~
+ &
+\centering\arraybslash{\bfseries Number of Optional Headers}\\\hline
+{\bfseries Length (Bytes)} &
+\centering 4 &
+\centering 8 &
+\centering 8 &
+\centering 1 &
+\centering 4 &
+\centering\arraybslash 2\\\hline
+{\bfseries Purpose} &
+Should be 0xDD77BB55 &
+Unique File ID &
+Number of Equations in the file &
+Unsolved = 0x00
+
+Solved = \ \ \ \ 0x01 &
+Where the operations begin &
+RESERVED FOR FUTURE USE\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+\subsection{2 Equation Format For Binary Serialization}
+
+This describes each equation. It is {\textquotedbl}serialized{\textquotedbl} into a custom format described below. Note the flags field will tell you if the numbers should be treated as floats or not.
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{1.2212598in}|m{1.2212598in}|m{1.2212598in}|m{1.2212598in}|m{1.2212598in}|}
+\hline
+\centering{\bfseries Name} &
+\centering{\bfseries Equation ID} &
+\centering{\bfseries Flags} &
+\centering{\bfseries Equation} &
+\centering\arraybslash{\bfseries Padding}\\\hline
+{\bfseries Length (Bytes)} &
+\centering 4 &
+\centering 1 &
+\centering 17 &
+\centering\arraybslash 10\\\hline
+{\bfseries Purpose} &
+\centering Unique ID for each Equation &
+\centering Reserved for Future Use &
+\centering Equation to Solve &
+\centering\arraybslash Pad to 32 bytes\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+\subsection{3 Unsolved Equation Format}
+
+This is the format of an equation
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{1.5462599in}|m{1.5462599in}|m{1.5462599in}|m{1.5462599in}|}
+\hline
+\centering{\bfseries Name} &
+\centering{\bfseries Operand} &
+\centering{\bfseries Operator} &
+\centering\arraybslash{\bfseries Operand}\\\hline
+{\bfseries Length (Bytes)} &
+\centering 8 &
+\centering 1 &
+\centering\arraybslash 8\\\hline
+{\bfseries Purpose} &
+\centering 64 bit integer &
+\centering Single Byte Operator &
+\centering\arraybslash 64 bit integer\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\newpage
+
+\subsection{3.1 Operators are defined as:}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{1.7226598in}|m{1.0261599in}|}
+\hline
+Addition &
+0x01\\\hline
+Subtraction &
+0x02\\\hline
+Division &
+0x03\\\hline
+Multiplication &
+0x04\\\hline
+Modulo &
+0x05\\\hline
+Left Shift &
+0x06\\\hline
+Right Shift &
+0x07\\\hline
+Bitwise And &
+0x08\\\hline
+Bitwise Or &
+0x09\\\hline
+Bitwise XOR &
+0x0a\\\hline
+Rotate Left &
+0x0b\\\hline
+Rotate Right &
+0x0c\\\hline
+Undefined: should report error if used &
+0x0d, 0x0e, 0x0f\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+
+\subsection{4 Solved Equation Format}
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{1.3in}|m{1.3in}|m{1.3in}|m{1.3in}}
+\hline
+\centering{\bfseries Name} &
+\centering{\bfseries Equation ID} &
+\centering{\bfseries Error} &
+\centering\arraybslash{\bfseries Solution} \\\hline
+{\bfseries Length (Bytes)} &
+\centering 4 &
+\centering 1 &
+\centering\arraybslash 8\\\hline
+{\bfseries Purpose} &
+\centering Unique ID for Equation &
+\centering Successful: 0x00 Error occurred: 0x01 &
+\centering\arraybslash 64 bit integer\\\hline
+
+\end{supertabular}
+\end{flushleft}
+
+\bigskip
+\end{document}

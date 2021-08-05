@@ -1,0 +1,6 @@
+__pycache__/
+__pycache__/*
+solved/
+solved/*
+tests/
+tests/*
