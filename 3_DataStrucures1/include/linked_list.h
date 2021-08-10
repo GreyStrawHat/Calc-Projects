@@ -1,9 +1,11 @@
-#ifndef _list_H
-#define _list_H
+#ifndef _LIST_H
+#define _LIST_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdarg.h>
+#include <errno.h>
 
 /**
  * @brief structure of a list node
@@ -72,7 +74,7 @@ typedef struct list_t
  *        list
  * @returns pointer to allocated list
  */
-list_t *list_new(FREE_F customfree, CMP_F compare_function);
+list_t *list_new(FREE_F, CMP_F);
 
 /**
  * @brief pushes a new node onto the head of list
@@ -126,7 +128,7 @@ list_node_t *list_pop_back(list_t *list);
  * @param receiving_object object to store the node's data
  * @return pointer to head node on success, NULL on failure
  */
-list_node_t *list_peek_head(list_t *list, void **receiving_onject);
+list_node_t *list_peek_head(list_t *list);
 
 /**
  * @brief get the data from the node at the back of the list without 
@@ -136,7 +138,7 @@ list_node_t *list_peek_head(list_t *list, void **receiving_onject);
  * @param receiving_object object to store the node's data
  * @return pointer to back node on success, NULL on failure
  */
-list_node_t *list_peek_back(list_t *list, void **receiving_onject);
+list_node_t *list_peek_back(list_t *list);
 
 /**
  * @brief remove a specific node from the list based on the data stored 
