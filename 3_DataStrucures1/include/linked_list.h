@@ -19,7 +19,6 @@ typedef struct list_node_t
 {
     uint32_t position;
     void *data;
-    struct list_node_t *prev;
     struct list_node_t *next;
 } list_node_t;
 
@@ -53,7 +52,7 @@ typedef void (*ACT_F)(void *);
  * 
  * @param size is the number of nodes the list is currently storing
  * @param head pointer to the head node
- * @param back pointer to the back node
+ * @param tail pointer to the tail node
  * @param customfree pointer to the user defined free function
  * @param compare_function pointer to the user defined compare function
  */
@@ -61,7 +60,7 @@ typedef struct list_t
 {
     uint32_t     size;
     list_node_t  *head;
-    list_node_t  *back;
+    list_node_t  *tail;
     FREE_F       customfree;
     CMP_F        compare_function;
 } list_t;
@@ -86,13 +85,13 @@ list_t *list_new(FREE_F, CMP_F);
 int list_push_head(list_t *list, void *data);
 
 /**
- * @brief pushes a new node onto the back of list
+ * @brief pushes a new node onto the tail of list
  * 
  * @param list list to push the node into
  * @param data data to be pushed into node
  * @return 0 on success, non-zero value on failure
  */
-int list_push_back(list_t *list, void *data);
+int list_push_tail(list_t *list, void *data);
 
 /**
  * @brief checks if the list object is empty
@@ -112,13 +111,13 @@ int list_emptycheck(list_t *list);
 list_node_t *list_pop_head(list_t *list);
 
 /**
- * @brief pops the back node out of the list
+ * @brief pops the tail node out of the list
  * 
  * @param list list to pop the node out of
  * @param receiving_object object to store the node's data
  * @return pointer to popped node on success, NULL on failure
  */
-list_node_t *list_pop_back(list_t *list);
+list_node_t *list_pop_tail(list_t *list);
 
 /**
  * @brief get the data from the node at the head of the list without 
@@ -131,14 +130,14 @@ list_node_t *list_pop_back(list_t *list);
 list_node_t *list_peek_head(list_t *list);
 
 /**
- * @brief get the data from the node at the back of the list without 
+ * @brief get the data from the node at the tail of the list without 
  *        popping
  * 
  * @param list list to pop the node out of
  * @param receiving_object object to store the node's data
- * @return pointer to back node on success, NULL on failure
+ * @return pointer to tail node on success, NULL on failure
  */
-list_node_t *list_peek_back(list_t *list);
+list_node_t *list_peek_tail(list_t *list);
 
 /**
  * @brief remove a specific node from the list based on the data stored 
