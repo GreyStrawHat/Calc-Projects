@@ -195,7 +195,6 @@ void test_list_push_head()
     CU_ASSERT(5 == list->size);
 }
 
-/*
 void test_list_sort()
 {
     int exit_code = 1;
@@ -207,14 +206,7 @@ void test_list_sort()
     exit_code = list_sort(invalid_list);
     CU_ASSERT(0 != exit_code);
 
-    //Create an empty list
-    invalid_list = calloc(1, sizeof(list_t));
-    list_new(invalid_list, 
-                         free_node, 
-                         compare_node);
-
     exit_code = list_sort(list);
-
     //Ensure function exited successfully
     CU_ASSERT(0 == exit_code);
 
@@ -224,8 +216,9 @@ void test_list_sort()
         node = list_pop_head(list);
         CU_ASSERT_FATAL(NULL != node);
         //Correct value should be successfully popped from head
-        CU_ASSERT(data[i] == (int)*node->data);
-        free(node)
+        //NOLINTNEXTLINE
+        CU_ASSERT(data[i] == *(int *)node->data);
+        free(node);
         i++;
     }
 
@@ -237,7 +230,7 @@ void test_list_sort()
         i++;
     }
 
-}*/
+}
 
 void test_list_pop_tail()
 {
@@ -438,10 +431,6 @@ void test_list_clear()
 
     //Function should have exited successfully
     CU_ASSERT(0 == exit_code);
-
-    //Should catch if clear is called on an empty list
-    exit_code = list_clear(list);
-    CU_ASSERT(0 != exit_code);
 }
 
 void test_list_peek_tail()
@@ -518,8 +507,8 @@ int main(void)
         {"Testing if the resulting list is still circular:", \
         test_list_is_circular},
 
-        /*{"Testing list_sort():", \
-        test_list_sort},*/
+        {"Testing list_sort():", \
+        test_list_sort},
 
         {"Testing list_pop_tail():", \
         test_list_pop_tail},

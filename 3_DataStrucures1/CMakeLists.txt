@@ -5,7 +5,9 @@ include_directories(${datastructures1_SOURCE_DIR}/include)
 
 find_program(CLANG_TIDY_PROG clang-tidy)
 if(CLANG_TIDY_PROG)
-        set(CMAKE_C_CLANG_TIDY ${CLANG_TIDY_PROG} "--checks=*,-llvm-include-order,-cppcoreguidelines-*,-readability-magic-numbers,-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling, -hiccp-no-assembler")
+        set(CMAKE_C_CLANG_TIDY 
+        ${CLANG_TIDY_PROG};
+        "--checks=* -llvm-include-order, -cppcoreguidelines-*, -readability-magic-numbers, -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling, -hiccp-no-assembler")
         set(CMAKE_C_FLAGS "-g")
     else()
         set(CMAKE_C_COMPILER gcc)
