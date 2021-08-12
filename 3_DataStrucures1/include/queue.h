@@ -29,7 +29,7 @@ typedef void (*FREE_F)(void*);
  * @brief A pointer to a user-defined function for comparing que values to a 
  *        search value and returning the pointer to that node if found
  */
-typedef void * (*CMP_F)(void *, void *);
+typedef void * (*CMP_F)(const void *, const void *);
 
 /**
  * @brief structure of a queue object
@@ -102,7 +102,7 @@ queue_node_t * queue_dequeue(queue_t * queue);
  * @brief get the data from the node at the front of the queue without popping
  * 
  * @param queue pointer to queue pointer to peek
- * @return the int exit code of the function
+ * @return the pointer to the head on success or NULL for failure
  */
 queue_node_t * queue_peek(queue_t * queue);
 

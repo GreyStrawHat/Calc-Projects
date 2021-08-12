@@ -108,7 +108,6 @@ void test_list_push_tail()
 
     //Should catch if push is called on an invalid list
     CU_ASSERT_FATAL(NULL != list);
-    printlist(list);
     CU_ASSERT(0 != list_push_tail(invalid_list, &data[0]));
 
     while (i < 5)
@@ -406,7 +405,6 @@ void test_list_find_all_occurrences()
     //Verify that the correct number of occurrences were found
     //NOLINTNEXTLINE
     CU_ASSERT(3 == result_list->size);
-    printf("TESTLISTSIZE %d", result_list->size);
     
     list_delete(&test_list);
     list_delete(&result_list);

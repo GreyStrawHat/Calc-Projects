@@ -21,9 +21,9 @@ void * compare_node(const void * value_to_find, const void * node)
 {   
     void * retval = NULL;
 
-    if (*(int *)node->data == *(int *)value_to_find)
+    if (*(int *)((queue_node_t *)node)->data == *(int *)value_to_find)
     {
-        retval = node;
+        retval = (void *)node;
     }
 
     return retval;
@@ -42,15 +42,16 @@ int clean_suite1(void)
 void test_queue_init()
 {
     uint32_t capacity = CAPACITY;
-    int exit_code     = 1;
 
     //Verify queue was created correctly
     queue = queue_init(capacity, free_node, compare_node);
     CU_ASSERT_FATAL(NULL != queue);
+    //NOLINTNEXTLINE
     CU_ASSERT(CAPACITY == queue->capacity);
-    CU_ASSERT(0 == queue->size); 
+    //NOLINTNEXTLINE
+    CU_ASSERT(0 == queue->currentsz); 
+    //NOLINTNEXTLINE
     CU_ASSERT(NULL != queue->arr);
-    CU_ASSERT(0 == exit_code);
 }
 
 void test_queue_enqueue()
@@ -60,15 +61,15 @@ void test_queue_enqueue()
     queue_t * invalid_queue = NULL;
 
     //Should catch if enqueue is called on an invalid queue or with invalid data
-    exit_code = queue_enqueue(invalid_queue, data[i]);
+    exit_code = queue_enqueue(invalid_queue, &data[i]);
     CU_ASSERT(0 != exit_code);
-    exit_code = queue_enqueue(queue, (void*)void);
+    exit_code = queue_enqueue(queue, NULL);
     CU_ASSERT(0 != exit_code);
 
     //enqueue CAPACITY number of nodes
     while (i < CAPACITY)
     {
-        exit_code = queue_enqueue(queue, data[i]);
+        exit_code = queue_enqueue(queue, &data[i]);
         //New node was enqueueed and points to the correct data
         CU_ASSERT(data[i] == *(int *)((queue_node_t *)(queue->arr[i]))->data);
         i++;
@@ -77,10 +78,10 @@ void test_queue_enqueue()
     //Function exited correctly
     CU_ASSERT(0 == exit_code);
     //queue size is correct
-    CU_ASSERT(CAPACITY == queue->size);
+    CU_ASSERT(CAPACITY == queue->currentsz);
 
     //Function should return a code if enqueue is called on a full queue
-    exit_code = queue_enqueue(queue, data[5]);
+    exit_code = queue_enqueue(queue, &data[5]);
     CU_ASSERT(0 != exit_code);
 }
 
@@ -95,11 +96,12 @@ void test_queue_dequeue()
     CU_ASSERT(NULL == node);
 
     //Dequeue all items
-    while (queue->size > 0)
+    while (queue->currentsz > 0)
     {
         node = queue_dequeue(queue);
         CU_ASSERT_FATAL(NULL != node);
-        CU_ASSERT(data[i] == (*int)*node->data);
+        //NOLINTNEXTLINE
+        CU_ASSERT(data[i] == (*(int *)node->data));
         i++;
     }
 
@@ -117,14 +119,14 @@ void test_queue_peek()
 
     //Should catch if pop is called on an invalid queue or empty
     node = queue_peek(invalid_queue);
-    CU_ASSERT(NULL != node);
+    CU_ASSERT(NULL == node);
     node = queue_peek(queue);
-    CU_ASSERT(NULL != exit_code);
+    CU_ASSERT(NULL != node);
 
     //enqueue CAPACITY number of nodes
     while (i < CAPACITY)
     {
-        queue_enqueue(queue, data[i]);
+        queue_enqueue(queue, &data[i]);
         i++;
     }
 
@@ -133,9 +135,9 @@ void test_queue_peek()
     //Function should have exited 0fully
     CU_ASSERT_FATAL(NULL != node); 
     //Correct value should have been peeked from front node
-    CU_ASSERT(data[0] == node->data);
+    CU_ASSERT(data[0] == (*(int *)((queue_node_t *)node)->data));
     //Size shouldn't have changed
-    CU_ASSERT(CAPACITY == queue->size);
+    CU_ASSERT(CAPACITY == queue->currentsz);
 }
 
 void test_queue_clear()
@@ -149,7 +151,7 @@ void test_queue_clear()
 
     exit_code = queue_clear(&queue);
     //queue should now be empty
-    CU_ASSERT(0 == queue->size);
+    CU_ASSERT(0 == queue->currentsz);
     //Function should have exited fully
     CU_ASSERT(0 == exit_code);
 
@@ -194,12 +196,13 @@ int main(void)
         CU_TEST_INFO_NULL
     };
 
-    CU_SuiteInfo suites[] = {
+    CU_SuiteInfo suites[] = 
+    {
         {"Suite-1:", init_suite1, clean_suite1, .pTests = suite1_tests},
         CU_SUITE_INFO_NULL
     };
 
-    if (CUE_0 != CU_initialize_registry())
+    if (0 != CU_initialize_registry())
     {
         return CU_get_error();
     }
