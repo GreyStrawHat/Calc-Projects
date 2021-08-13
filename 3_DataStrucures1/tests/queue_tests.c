@@ -10,25 +10,6 @@ queue_t * queue = NULL;
 //The integer all node data[5] pointers point to
 int data[5]     = {1, 2, 3, 4, 5};
 
-//"User defined" free function
-void free_node(void * node)
-{
-    free(node);
-}
-
-//"User defined" compare function
-void * compare_node(const void * value_to_find, const void * node)
-{   
-    void * retval = NULL;
-
-    if (*(int *)((queue_node_t *)node)->data == *(int *)value_to_find)
-    {
-        retval = (void *)node;
-    }
-
-    return retval;
-}
-
 int init_suite1(void)
 {
     return 0;
@@ -44,7 +25,7 @@ void test_queue_init()
     uint32_t capacity = CAPACITY;
 
     //Verify queue was created correctly
-    queue = queue_init(capacity, free_node, compare_node);
+    queue = queue_init(capacity, NULL);
     CU_ASSERT_FATAL(NULL != queue);
     //NOLINTNEXTLINE
     CU_ASSERT(CAPACITY == queue->capacity);
@@ -101,13 +82,15 @@ void test_queue_dequeue()
         node = queue_dequeue(queue);
         CU_ASSERT_FATAL(NULL != node);
         //NOLINTNEXTLINE
-        CU_ASSERT(data[i] == (*(int *)node->data));
+        CU_ASSERT(data[i] == *(int *)node->data);
+        free(node);
+        node = NULL;
         i++;
     }
 
-    //Should return error when called on empty queue
+    //Should return NULL when called on empty queue
     node = queue_dequeue(queue);
-    CU_ASSERT(NULL != node);
+    CU_ASSERT(NULL == node);
 }
 
 void test_queue_peek()
@@ -121,7 +104,7 @@ void test_queue_peek()
     node = queue_peek(invalid_queue);
     CU_ASSERT(NULL == node);
     node = queue_peek(queue);
-    CU_ASSERT(NULL != node);
+    CU_ASSERT(NULL == node);
 
     //enqueue CAPACITY number of nodes
     while (i < CAPACITY)
@@ -132,10 +115,11 @@ void test_queue_peek()
 
     node = queue_peek(queue);
 
-    //Function should have exited 0fully
+
+    //Function should have exited successfully
     CU_ASSERT_FATAL(NULL != node); 
     //Correct value should have been peeked from front node
-    CU_ASSERT(data[0] == (*(int *)((queue_node_t *)node)->data));
+    CU_ASSERT(data[0] == *(int *)(queue_node_t *)node->data);
     //Size shouldn't have changed
     CU_ASSERT(CAPACITY == queue->currentsz);
 }
@@ -146,18 +130,14 @@ void test_queue_clear()
     queue_t * invalid_queue = NULL;
 
     //Should catch if clear is called on an invalid queue
-    exit_code = queue_clear(&invalid_queue);
+    exit_code = queue_clear(invalid_queue);
     CU_ASSERT(0 != exit_code);
 
-    exit_code = queue_clear(&queue);
+    exit_code = queue_clear(queue);
     //queue should now be empty
     CU_ASSERT(0 == queue->currentsz);
     //Function should have exited fully
     CU_ASSERT(0 == exit_code);
-
-    //Should catch if clear is called on an empty queue
-    exit_code = queue_clear(&queue);
-    CU_ASSERT(0 != exit_code);
 }
 
 void test_queue_destroy()

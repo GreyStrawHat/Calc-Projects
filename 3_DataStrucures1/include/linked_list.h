@@ -71,7 +71,7 @@ typedef struct list_t
  * @param customfree pointer to the free function to be used with that list
  * @param compare_function pointer to the compare function to be used with that 
  *        list
- * @returns pointer to allocated list
+ * @returns pointer to allocated list on success or NULL on failure
  */
 list_t *list_new(FREE_F, CMP_F);
 
@@ -97,7 +97,7 @@ int list_push_tail(list_t *list, void *data);
  * @brief checks if the list object is empty
  * 
  * @param list pointer to linked list object to be checked
- * @returns 0 if list is empty, non zero value if not empty
+ * @returns non-zero if list is empty, 0 value if not empty
  */
 int list_emptycheck(list_t *list);
 
@@ -105,7 +105,6 @@ int list_emptycheck(list_t *list);
  * @brief pops the head node out of the list
  * 
  * @param list list to pop the node out of
- * @param receiving_object object to store the node's data
  * @return pointer to popped node on success, NULL on failure
  */
 list_node_t *list_pop_head(list_t *list);
@@ -114,7 +113,6 @@ list_node_t *list_pop_head(list_t *list);
  * @brief pops the tail node out of the list
  * 
  * @param list list to pop the node out of
- * @param receiving_object object to store the node's data
  * @return pointer to popped node on success, NULL on failure
  */
 list_node_t *list_pop_tail(list_t *list);
@@ -124,7 +122,6 @@ list_node_t *list_pop_tail(list_t *list);
  *        popping
  * 
  * @param list list to pop the node out of
- * @param receiving_object object to store the node's data
  * @return pointer to head node on success, NULL on failure
  */
 list_node_t *list_peek_head(list_t *list);
@@ -134,7 +131,6 @@ list_node_t *list_peek_head(list_t *list);
  *        popping
  * 
  * @param list list to pop the node out of
- * @param receiving_object object to store the node's data
  * @return pointer to tail node on success, NULL on failure
  */
 list_node_t *list_peek_tail(list_t *list);
