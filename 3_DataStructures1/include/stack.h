@@ -38,7 +38,7 @@ typedef struct stack_t
 {
     uint32_t capacity;
     uint32_t currentsz;
-	void **  arr;
+	stack_node_t **  arr;
     FREE_F   customfree;
 } stack_t;
 

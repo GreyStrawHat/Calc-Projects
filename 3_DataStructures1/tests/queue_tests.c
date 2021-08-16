@@ -52,7 +52,7 @@ void test_queue_enqueue()
     {
         exit_code = queue_enqueue(queue, &data[i]);
         //New node was enqueueed and points to the correct data
-        CU_ASSERT(data[i] == *(int *)((queue_node_t *)(queue->arr[i]))->data);
+        CU_ASSERT(data[i] ==  (*(int *)queue->arr[i]->data));
         i++;
     }
 
@@ -119,7 +119,7 @@ void test_queue_peek()
     //Function should have exited successfully
     CU_ASSERT_FATAL(NULL != node); 
     //Correct value should have been peeked from front node
-    CU_ASSERT(data[0] == *(int *)(queue_node_t *)node->data);
+    CU_ASSERT(data[0] == *(int *)node->data);
     //Size shouldn't have changed
     CU_ASSERT(CAPACITY == queue->currentsz);
 }

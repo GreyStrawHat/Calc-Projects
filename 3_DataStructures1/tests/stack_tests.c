@@ -52,7 +52,7 @@ void test_stack_push()
     {
         exit_code = stack_push(stack, &data[i]);
         //New node was pushed and points to the correct data
-        CU_ASSERT(data[i] == *(int *)((stack_node_t *)(stack->arr[(stack->capacity - i) - 1]))->data);
+        CU_ASSERT(data[i] == (*(int *)stack->arr[(stack->capacity - i) - 1]->data));
         i++;
     }
 
@@ -119,7 +119,7 @@ void test_stack_peek()
     //Function should have exited successfully
     CU_ASSERT_FATAL(NULL != node); 
     //Correct value should have been peeked from front node
-    CU_ASSERT(data[CAPACITY - 1] == *(int *)(stack_node_t *)node->data);
+    CU_ASSERT(data[CAPACITY - 1] == *(int *)node->data);
     //Size shouldn't have changed
     CU_ASSERT(CAPACITY == stack->currentsz);
 }

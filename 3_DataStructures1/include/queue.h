@@ -39,7 +39,7 @@ typedef struct queue_t
     uint32_t capacity;
     uint32_t currentsz;
     FREE_F   customfree;
-	void **  arr;
+	queue_node_t ** arr;
 } queue_t;
 
 /**
