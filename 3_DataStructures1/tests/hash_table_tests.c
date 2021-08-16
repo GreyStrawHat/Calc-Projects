@@ -9,6 +9,7 @@
 #define SIZE 10
 hash_table_t * hash_table = NULL;
 int data[10] = {0,1,2,3,4,5,6,7,8,9};
+int properly_implemented_free = 1;
 
 int init_suite1(void)
 {
@@ -20,12 +21,18 @@ int clean_suite1(void)
     return 0;
 }
 
+void customfree(void * mem_addr)
+{
+    properly_implemented_free = 0;
+    free(mem_addr);
+}
+
 void test_hash_table_init()
 {
     int exit_code        = 1;
 
     //Verify hash_table was created correctly
-    hash_table = hash_table_init(SIZE);
+    hash_table = hash_table_init(SIZE, customfree);
     CU_ASSERT_FATAL(NULL != hash_table);
     CU_ASSERT(NULL != hash_table->table)
     CU_ASSERT(SIZE == hash_table->size);
@@ -39,108 +46,106 @@ void test_hash_table_init()
 
 void test_hash_table_add()
 {
-    int exit_code = 1;
+    int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
 
     
     //Should catch if create is called on an invalid pointer
-    exit_code = hash_table_add(&invalid_table, (void *)&data[3], (unsigned char *)"asdgasga", 8);
-    CU_ASSERT(TABLE_INVALID == exit_code);
+    exit_code = hash_table_add(invalid_table, (void *)&data[3], "asdgasga");
+    CU_ASSERT(0 != exit_code);
 
-    exit_code = hash_table_add(&hash_table, (void *)&data[0], (unsigned char *)"Item one", 9);
-    exit_code = hash_table_add(&hash_table, (void *)&data[1], (unsigned char *)"Item two", 9);
-    exit_code = hash_table_add(&hash_table, (void *)&data[2], (unsigned char *)"Item three", 11);
-    exit_code = hash_table_add(&hash_table, (void *)&data[3], (unsigned char *)"Item four", 10);
-    exit_code = hash_table_add(&hash_table, (void *)&data[4], (unsigned char *)"Item five", 10);
-    exit_code = hash_table_add(&hash_table, (void *)&data[5], (unsigned char *)"Item six", 9);
-    exit_code = hash_table_add(&hash_table, (void *)&data[6], (unsigned char *)"Item seven", 11);
-    exit_code = hash_table_add(&hash_table, (void *)&data[7], (unsigned char *)"Item eight", 11);
-    exit_code = hash_table_add(&hash_table, (void *)&data[8], (unsigned char *)"Item nine", 10);
-    exit_code = hash_table_add(&hash_table, (void *)&data[9], (unsigned char *)"Item ten", 9);
+    exit_code = hash_table_add(hash_table, (void *)&data[0], "Item one");
+    exit_code = hash_table_add(hash_table, (void *)&data[1], "Item two");
+    exit_code = hash_table_add(hash_table, (void *)&data[2], "Item three");
+    exit_code = hash_table_add(hash_table, (void *)&data[3], "Item four");
+    exit_code = hash_table_add(hash_table, (void *)&data[4], "Item five");
+    exit_code = hash_table_add(hash_table, (void *)&data[5], "Item six");
+    exit_code = hash_table_add(hash_table, (void *)&data[6], "Item seven");
+    exit_code = hash_table_add(hash_table, (void *)&data[7], "Item eight");
+    exit_code = hash_table_add(hash_table, (void *)&data[8], "Item nine");
+    exit_code = hash_table_add(hash_table, (void *)&data[9], "Item ten");
     
-    CU_ASSERT(TABLE_SUCCESS == exit_code); 
+    CU_ASSERT(0 == exit_code); 
 }
 
 void test_hash_table_lookup()
 {
-    int exit_code = 1;
+    int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
-    int * receiving_object = NULL;
+    int * ret_ptr                = NULL;
 
     //Should catch if create is called on an invalid pointer
-    exit_code = hash_table_lookup(&invalid_table, (unsigned char *)"Item three", 11, (void *)&receiving_object);
-    CU_ASSERT(TABLE_INVALID == exit_code);
+    ret_ptr = hash_table_lookup(invalid_table, "Item three");
+    CU_ASSERT(NULL == ret_ptr);
 
     //Should catch if create is called on an invalid pointer
-    exit_code = hash_table_lookup(&hash_table, (unsigned char *)"Item two", 9, (void *)&receiving_object);
-    CU_ASSERT(TABLE_SUCCESS == exit_code);
-    CU_ASSERT(data[1] == *receiving_object);
+    ret_ptr = hash_table_lookup(hash_table, "Item two");
+    CU_ASSERT_FATAL(NULL != ret_ptr);
+    CU_ASSERT(data[1] == *ret_ptr);
 
     //Should catch if create is called on an invalid pointer
-    exit_code = hash_table_lookup(&hash_table, (unsigned char *)"Item three", 11, (void *)&receiving_object);
-    CU_ASSERT(TABLE_SUCCESS == exit_code);
-    CU_ASSERT(data[2] == *receiving_object);
-
-    //exit_code = hash_table_lookup(&hash_table, (unsigned char *)"Item ten", 9, (void *)&receiving_object);
+    ret_ptr = hash_table_lookup(hash_table, "Item three");
+    CU_ASSERT_FATAL(NULL != exit_code);
+    CU_ASSERT(data[2] == *ret_ptr);
 }
 
 void test_hash_table_remove()
 {
-    int exit_code = 1;
+    int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
-    int * receiving_object = NULL;
+    int * ret_ptr                = NULL;
 
-    exit_code = hash_table_remove(&invalid_table, (unsigned char *)"Item three", 11);
-    CU_ASSERT(TABLE_INVALID == exit_code);
+    exit_code = hash_table_remove(invalid_table, "Item three");
+    CU_ASSERT(0 != exit_code);
 
-    exit_code = hash_table_remove(&hash_table, (unsigned char *)"Item three", 11);
-    CU_ASSERT(TABLE_SUCCESS == exit_code);
+    exit_code = hash_table_remove(hash_table, "Item three");
+    CU_ASSERT(0 == exit_code);
     
-    exit_code = hash_table_lookup(&hash_table, (unsigned char *)"Item three", 11, (void *)&receiving_object);
-    CU_ASSERT(TABLE_DATA_NOT_FOUND == exit_code);
+    ret_ptr = hash_table_lookup(hash_table, "Item three");
+    CU_ASSERT(0 != exit_code);
 
-    exit_code = hash_table_remove(&hash_table, (unsigned char *)"Item three", 11);
-    CU_ASSERT(TABLE_DATA_NOT_FOUND == exit_code);
+    exit_code = hash_table_remove(hash_table, "Item three");
+    CU_ASSERT(0 != exit_code);
 }
 
 void test_hash_table_clear()
 {
-    int exit_code = 1;
+    int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
 
-    exit_code = hash_table_clear(&invalid_table);
-    CU_ASSERT(TABLE_INVALID == exit_code);
+    exit_code = hash_table_clear(invalid_table);
+    CU_ASSERT(0 != exit_code);
 
-    exit_code = hash_table_clear(&hash_table);
-    CU_ASSERT(TABLE_SUCCESS == exit_code);
+    exit_code = hash_table_clear(hash_table);
+    CU_ASSERT(0 == exit_code);
 
 }
 
 void test_hash_table_destroy()
 {
-    int exit_code = 1;
+    int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
 
     exit_code = hash_table_destroy(&invalid_table);
-    CU_ASSERT(TABLE_INVALID == exit_code);
+    CU_ASSERT(0 != exit_code);
 
     exit_code = hash_table_destroy(&hash_table);
-    CU_ASSERT(TABLE_SUCCESS == exit_code);
+    CU_ASSERT(0 == exit_code);
 
     exit_code = hash_table_destroy(&hash_table);
-    CU_ASSERT(TABLE_INVALID == exit_code);
+    CU_ASSERT(0 != exit_code);
 
 }
 
 void test_hash_function_effectiveness()
 {
-    ssize_t read;
-    char * line = NULL;
-    size_t len = 0;
-    FILE * dict_pointer = NULL;
+    size_t read               = 0;
+    char * line               = NULL;
+    size_t len                = 0;
+    FILE * dict_pointer       = NULL;
     hash_table_t * dict_table = NULL;
-    void * nullval = NULL;
-    int num_entries = 0;
+    void * nullval            = NULL;
+    int num_entries           = 0;
 
     dict_table = calloc(1, sizeof(hash_table_t));
 
@@ -150,7 +155,7 @@ void test_hash_function_effectiveness()
 
     while ((read = getline(&line, &len, dict_pointer)) != -1)
     {
-        hash_table_add(&dict_table, &nullval, (unsigned char *)line, strlen(line));
+        hash_table_add(&dict_table, &nullval, (unsigned char *)line);
         num_entries++;
     }
     printf("Total entries: %d\n", num_entries);

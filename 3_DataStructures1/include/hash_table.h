@@ -24,7 +24,7 @@ typedef struct hash_table_t
 {
     uint32_t      size;
     void **       table;
-    FREE_F *      customfree;
+    FREE_F        customfree;
 } hash_table_t;
 
 /**
@@ -34,7 +34,7 @@ typedef struct hash_table_t
  * 
  * @return hash_table_t pointer to allocated table
  */
-hash_table_t * hash_table_init(uint32_t size, FREE_F * customfree);
+hash_table_t * hash_table_init(uint32_t size, FREE_F customfree);
 
 /**
  * @brief adds an item to the table
@@ -45,24 +45,16 @@ hash_table_t * hash_table_init(uint32_t size, FREE_F * customfree);
  * 
  * @return int exit code
  */
-int hash_table_add(hash_table_t * table, 
-                   void * data, 
-                   char * key);
+int hash_table_add(hash_table_t * table, void * data, char * key);
 
 /**
  * @brief looks up an item in the table by key
  * 
  * @param table pointer to table address
  * @param key key for data being searched for
- * @param len length of key
- * @param rcv_ptr pointer for object data will be passed out to
- * 
  * @return int exit code
  */
-int hash_table_lookup(hash_table_t * table, 
-                      char * key, 
-                      uint32_t len, 
-                      void ** rcv_ptr);
+void * hash_table_lookup(hash_table_t * table, char * key);
 
 /**
  * @brief removes an item from the hash table
@@ -80,7 +72,7 @@ int hash_table_remove(hash_table_t * table, char * key);
  * @param table_addr pointer to address of table to be cleared out
  * @return int 
  */
-int hash_table_clear(hash_table_t ** table_addr);
+int hash_table_clear(hash_table_t * table_addr);
 
 /**
  * @brief destroys hash table
