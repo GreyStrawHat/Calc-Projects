@@ -26,13 +26,6 @@ typedef struct stack_node_t
 typedef void (*FREE_F)(void*);
 
 /**
- * @brief A pointer to a user-defined function for comparing que values to a 
- *        search value and returning the pointer to that node if found
- * 
- */
-typedef void * (*CMP_F)(void *, void *);
-
-/**
  * @brief structure of a stack object
  * 
  * @param capacity is the number of nodes the stack can hold
@@ -47,22 +40,16 @@ typedef struct stack_t
     uint32_t currentsz;
 	void **  arr;
     FREE_F   customfree;
-    CMP_F    compare_function;
 } stack_t;
 
 /**
  * @brief creates a new stack
  * 
  * @param capacity max number of nodes the stack will hold
- * @param pointer to where the stack will be created
  * @param customfree pointer to the free function to be used with that list
- * @param compare_function pointer to the compare function to be used with that 
- *        list
- * @returns the int exit code of the function
+ * @returns pointer to allocated stack on SUCCESS, NULL on failure
  */
- stack_t * stack_init(uint32_t capacity, 
-					  FREE_F customfree, 
-					  CMP_F compare_function);
+ stack_t * stack_init(uint32_t capacity, FREE_F customfree);
 
 /**
  * @brief verifies that stack isn't full
@@ -85,8 +72,7 @@ int stack_emptycheck(stack_t * stack);
  * 
  * @param stack pointer to stack pointer to push the node into
  * @param data data to be pushed into node
- * @param priority of data
- * @return the int exit code of the function
+ * @return 0 on success, non-zero value on failure
  */
 int stack_push(stack_t * stack, void * data);
 
@@ -94,8 +80,7 @@ int stack_push(stack_t * stack, void * data);
  * @brief pops the front node out of the stack
  * 
  * @param stack pointer to stack pointer to pop the node off of
- * @param receiving_object object to store the node's data
- * @return the int exit code of the function
+ * @return pointer to popped node on SUCCESS, NULL on failure
  */
 stack_node_t * stack_pop(stack_t * stack);
 
@@ -103,24 +88,23 @@ stack_node_t * stack_pop(stack_t * stack);
  * @brief get the data from the node at the front of the stack without popping
  * 
  * @param stack pointer to stack pointer to peek
- * @param receiving_object object to store the node's data
- * @return the int exit code of the function
+ * @return pointer to peeked node on SUCCESS, NULL on failure
  */
-void * stack_peek(stack_t * stack);
+stack_node_t * stack_peek(stack_t * stack);
 
 /**
  * @brief clear all nodes out of a stack
  * 
  * @param stack pointer to stack pointer to clear out
- * @return the int exit code of the function
+ * @return 0 on success, non-zero value on failure
  */
-int stack_clear(stack_t ** stack);
+int stack_clear(stack_t * stack);
 
 /**
  * @brief delete a stack
  * 
  * @param stack pointer to stack pointer to be destroyed
- * @return the int exit code of the function
+ * @return 0 on success, non-zero value on failure
  */
 int stack_destroy(stack_t ** stack);
 

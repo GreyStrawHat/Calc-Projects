@@ -10,25 +10,6 @@ stack_t * stack = NULL;
 //The integer all node data[5] pointers point to
 int data[5]     = {1, 2, 3, 4, 5};
 
-//"User defined" free function
-void free_node(void * node)
-{
-    free(node);
-}
-
-//"User defined" compare function
-void * compare_node(const void * value_to_find, const void * node)
-{   
-    void * retval = NULL;
-
-    if (*(int *)node->data == *(int *)value_to_find)
-    {
-        retval = node;
-    }
-
-    return retval;
-}
-
 int init_suite1(void)
 {
     return 0;
@@ -42,15 +23,16 @@ int clean_suite1(void)
 void test_stack_init()
 {
     uint32_t capacity = CAPACITY;
-    int exit_code     = 1;
 
     //Verify stack was created correctly
-    stack = stack_init(capacity, free_node, compare_node);
+    stack = stack_init(capacity, NULL);
     CU_ASSERT_FATAL(NULL != stack);
+    //NOLINTNEXTLINE
     CU_ASSERT(CAPACITY == stack->capacity);
-    CU_ASSERT(0 == stack->size); 
+    //NOLINTNEXTLINE
+    CU_ASSERT(0 == stack->currentsz); 
+    //NOLINTNEXTLINE
     CU_ASSERT(NULL != stack->arr);
-    CU_ASSERT(0 == exit_code);
 }
 
 void test_stack_push()
@@ -60,27 +42,27 @@ void test_stack_push()
     stack_t * invalid_stack = NULL;
 
     //Should catch if push is called on an invalid stack or with invalid data
-    exit_code = stack_push(invalid_stack, data[i]);
+    exit_code = stack_push(invalid_stack, &data[i]);
     CU_ASSERT(0 != exit_code);
-    exit_code = stack_push(stack, (void*)void);
+    exit_code = stack_push(stack, NULL);
     CU_ASSERT(0 != exit_code);
 
     //push CAPACITY number of nodes
     while (i < CAPACITY)
     {
-        exit_code = stack_push(stack, data[i]);
+        exit_code = stack_push(stack, &data[i]);
         //New node was pushed and points to the correct data
-        CU_ASSERT(data[i] == *(int *)((stack_node_t *)(stack->arr[i]))->data);
+        CU_ASSERT(data[i] == *(int *)((stack_node_t *)(stack->arr[(stack->capacity - i) - 1]))->data);
         i++;
     }
 
     //Function exited correctly
     CU_ASSERT(0 == exit_code);
     //stack size is correct
-    CU_ASSERT(CAPACITY == stack->size);
+    CU_ASSERT(CAPACITY == stack->currentsz);
 
     //Function should return a code if push is called on a full stack
-    exit_code = stack_push(stack, data[5]);
+    exit_code = stack_push(stack, &data[5]);
     CU_ASSERT(0 != exit_code);
 }
 
@@ -95,17 +77,20 @@ void test_stack_pop()
     CU_ASSERT(NULL == node);
 
     //pop all items
-    while (stack->size > 0)
+    while (stack->currentsz > 0)
     {
         node = stack_pop(stack);
         CU_ASSERT_FATAL(NULL != node);
+        //NOLINTNEXTLINE
+        CU_ASSERT(data[stack->currentsz] == *(int *)node->data);
+        free(node);
+        node = NULL;
         i++;
-        CU_ASSERT(alt_data[CAPACITY - i] == *(int *)node->data);
     }
 
-    //Should return error when called on empty stack
+    //Should return NULL when called on empty stack
     node = stack_pop(stack);
-    CU_ASSERT(NULL != node);
+    CU_ASSERT(NULL == node);
 }
 
 void test_stack_peek()
@@ -117,25 +102,26 @@ void test_stack_peek()
 
     //Should catch if pop is called on an invalid stack or empty
     node = stack_peek(invalid_stack);
-    CU_ASSERT(NULL != node);
+    CU_ASSERT(NULL == node);
     node = stack_peek(stack);
-    CU_ASSERT(NULL != exit_code);
+    CU_ASSERT(NULL == node);
 
     //push CAPACITY number of nodes
     while (i < CAPACITY)
     {
-        stack_push(stack, data[i]);
+        stack_push(stack, &data[i]);
         i++;
     }
 
     node = stack_peek(stack);
 
-    //Function should have exited 0fully
+
+    //Function should have exited successfully
     CU_ASSERT_FATAL(NULL != node); 
     //Correct value should have been peeked from front node
-    CU_ASSERT(data[0] == node->data);
+    CU_ASSERT(data[CAPACITY - 1] == *(int *)(stack_node_t *)node->data);
     //Size shouldn't have changed
-    CU_ASSERT(CAPACITY == stack->size);
+    CU_ASSERT(CAPACITY == stack->currentsz);
 }
 
 void test_stack_clear()
@@ -144,18 +130,14 @@ void test_stack_clear()
     stack_t * invalid_stack = NULL;
 
     //Should catch if clear is called on an invalid stack
-    exit_code = stack_clear(&invalid_stack);
+    exit_code = stack_clear(invalid_stack);
     CU_ASSERT(0 != exit_code);
 
-    exit_code = stack_clear(&stack);
+    exit_code = stack_clear(stack);
     //stack should now be empty
-    CU_ASSERT(0 == stack->size);
+    CU_ASSERT(0 == stack->currentsz);
     //Function should have exited fully
     CU_ASSERT(0 == exit_code);
-
-    //Should catch if clear is called on an empty stack
-    exit_code = stack_clear(&stack);
-    CU_ASSERT(0 != exit_code);
 }
 
 void test_stack_destroy()
@@ -194,12 +176,13 @@ int main(void)
         CU_TEST_INFO_NULL
     };
 
-    CU_SuiteInfo suites[] = {
+    CU_SuiteInfo suites[] = 
+    {
         {"Suite-1:", init_suite1, clean_suite1, .pTests = suite1_tests},
         CU_SUITE_INFO_NULL
     };
 
-    if (CUE_0 != CU_initialize_registry())
+    if (0 != CU_initialize_registry())
     {
         return CU_get_error();
     }
