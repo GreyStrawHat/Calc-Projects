@@ -29,23 +29,30 @@ void customfree(void * mem_addr)
 
 void test_hash_table_init()
 {
-    int exit_code        = 1;
+    int exit_code             = 1;
+
+    //Ensure hash table is properly created without a supplied free function
+    hash_table = hash_table_init(SIZE, NULL);
+    CU_ASSERT_FATAL(NULL != hash_table);
+    CU_ASSERT_FATAL(NULL != hash_table->table) //NOLINT
+    CU_ASSERT(SIZE == hash_table->size); //NOLINT
+    CU_ASSERT(free == hash_table->customfree); //NOLINT
+    free(hash_table->table); //NOLINT
+    free(hash_table);
+    hash_table = NULL;
 
     //Verify hash_table was created correctly
     hash_table = hash_table_init(SIZE, customfree);
     CU_ASSERT_FATAL(NULL != hash_table);
-    CU_ASSERT(NULL != hash_table->table)
-    CU_ASSERT(SIZE == hash_table->size);
-    //Ensure that free is substituted in the event that a custom 
-    //free function isnt supplied
-    CU_ASSERT(free == hash_table->customfree);
+    CU_ASSERT_FATAL(NULL != hash_table->table) //NOLINT
+    CU_ASSERT(SIZE == hash_table->size); //NOLINT
+    CU_ASSERT(customfree == hash_table->customfree); //NOLINT
 }
-//////////////////////////////////
-//TODO: FINISH REFACTORING BELOW//
-//////////////////////////////////
 
 void test_hash_table_add()
 {
+    CU_ASSERT_FATAL(NULL != hash_table);
+    CU_ASSERT_FATAL(NULL != hash_table->table) //NOLINT
     int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
 
@@ -55,21 +62,31 @@ void test_hash_table_add()
     CU_ASSERT(0 != exit_code);
 
     exit_code = hash_table_add(hash_table, (void *)&data[0], "Item one");
+    CU_ASSERT(0 != exit_code);
     exit_code = hash_table_add(hash_table, (void *)&data[1], "Item two");
+    CU_ASSERT(0 != exit_code);
     exit_code = hash_table_add(hash_table, (void *)&data[2], "Item three");
+    CU_ASSERT(0 != exit_code);
     exit_code = hash_table_add(hash_table, (void *)&data[3], "Item four");
+    CU_ASSERT(0 != exit_code);
     exit_code = hash_table_add(hash_table, (void *)&data[4], "Item five");
+    CU_ASSERT(0 != exit_code);
     exit_code = hash_table_add(hash_table, (void *)&data[5], "Item six");
+    CU_ASSERT(0 != exit_code);
     exit_code = hash_table_add(hash_table, (void *)&data[6], "Item seven");
+    CU_ASSERT(0 != exit_code);
     exit_code = hash_table_add(hash_table, (void *)&data[7], "Item eight");
+    CU_ASSERT(0 != exit_code);
     exit_code = hash_table_add(hash_table, (void *)&data[8], "Item nine");
+    CU_ASSERT(0 != exit_code);
     exit_code = hash_table_add(hash_table, (void *)&data[9], "Item ten");
-    
     CU_ASSERT(0 == exit_code); 
 }
 
 void test_hash_table_lookup()
 {
+    CU_ASSERT_FATAL(NULL != hash_table);
+    CU_ASSERT_FATAL(NULL != hash_table->table) //NOLINT
     int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
     int * ret_ptr                = NULL;
@@ -81,35 +98,39 @@ void test_hash_table_lookup()
     //Should catch if create is called on an invalid pointer
     ret_ptr = hash_table_lookup(hash_table, "Item two");
     CU_ASSERT_FATAL(NULL != ret_ptr);
-    CU_ASSERT(data[1] == *ret_ptr);
+    CU_ASSERT(data[1] == *ret_ptr); //NOLINT
 
     //Should catch if create is called on an invalid pointer
     ret_ptr = hash_table_lookup(hash_table, "Item three");
-    CU_ASSERT_FATAL(NULL != exit_code);
-    CU_ASSERT(data[2] == *ret_ptr);
+    CU_ASSERT_FATAL(NULL != ret_ptr);
+    CU_ASSERT(data[2] == *ret_ptr); //NOLINT
 }
 
 void test_hash_table_remove()
 {
+    CU_ASSERT_FATAL(NULL != hash_table);
+    CU_ASSERT_FATAL(NULL != hash_table->table) //NOLINT
     int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
     int * ret_ptr                = NULL;
 
-    exit_code = hash_table_remove(invalid_table, "Item three");
+    exit_code = hash_table_remove(invalid_table, "Item three"); //Should not take an invalid table
     CU_ASSERT(0 != exit_code);
 
-    exit_code = hash_table_remove(hash_table, "Item three");
+    exit_code = hash_table_remove(hash_table, "Item three"); //Removal should return success
     CU_ASSERT(0 == exit_code);
     
-    ret_ptr = hash_table_lookup(hash_table, "Item three");
-    CU_ASSERT(0 != exit_code);
+    ret_ptr = hash_table_lookup(hash_table, "Item three"); //Item should not be found
+    CU_ASSERT(NULL == ret_ptr);
 
-    exit_code = hash_table_remove(hash_table, "Item three");
+    exit_code = hash_table_remove(hash_table, "Item three"); //Removal should return failure
     CU_ASSERT(0 != exit_code);
 }
 
 void test_hash_table_clear()
 {
+    CU_ASSERT_FATAL(NULL != hash_table);
+    CU_ASSERT_FATAL(NULL != hash_table->table) //NOLINT
     int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
 
@@ -123,6 +144,8 @@ void test_hash_table_clear()
 
 void test_hash_table_destroy()
 {
+    CU_ASSERT_FATAL(NULL != hash_table);
+    CU_ASSERT_FATAL(NULL != hash_table->table) //NOLINT
     int exit_code                = 1;
     hash_table_t * invalid_table = NULL;
 
@@ -139,7 +162,8 @@ void test_hash_table_destroy()
 
 void test_hash_function_effectiveness()
 {
-    size_t read               = 0;
+    CU_ASSERT_FATAL(NULL != hash_table);
+    CU_ASSERT_FATAL(NULL != hash_table->table) //NOLINT
     char * line               = NULL;
     size_t len                = 0;
     FILE * dict_pointer       = NULL;
@@ -149,16 +173,17 @@ void test_hash_function_effectiveness()
 
     dict_table = calloc(1, sizeof(hash_table_t));
 
-    hash_table_init(400000, &dict_table);
+    hash_table_init(400000, NULL);
 
     dict_pointer = fopen("/usr/share/dict/american-english", "r");
 
-    while ((read = getline(&line, &len, dict_pointer)) != -1)
+    while ((getline(&line, &len, dict_pointer)) != -1)
     {
-        hash_table_add(&dict_table, &nullval, (unsigned char *)line);
+        hash_table_add(dict_table, nullval, line);
         num_entries++;
     }
     printf("Total entries: %d\n", num_entries);
+    hash_table_destroy(&dict_table);
 }
 
 int main(void)
@@ -169,15 +194,15 @@ int main(void)
 
         {"Testing hash_table_add():", test_hash_table_add},
 
-        {"Testing hash_table_lookup():", test_hash_table_lookup},
+        // {"Testing hash_table_lookup():", test_hash_table_lookup},
 
-        {"Testing hash_table_remove():", test_hash_table_remove},
+        // {"Testing hash_table_remove():", test_hash_table_remove},
 
-        {"Testing hash_table_clear():", test_hash_table_clear},
+        // {"Testing hash_table_clear():", test_hash_table_clear},
 
-        {"Testing hash_table_destroy():", test_hash_table_destroy},
+        // {"Testing hash_table_destroy():", test_hash_table_destroy},
 
-        {"Testing hash_function_effectiveness():", test_hash_function_effectiveness},
+        // {"Testing hash_function_effectiveness():", test_hash_function_effectiveness},
 
         CU_TEST_INFO_NULL
     };

@@ -23,12 +23,13 @@ stages:
     - echo "Start clang-tidy Check"
     - echo "No output here is good"
     - echo "Ignore \"database\" erorrs for now"
-    - find ${PROJ}/ -iname "*.c" -o -iname "*.h" | xargs -I {} clang-tidy {} "-checks=-*,clang-analyzer-*,-clang-analyzer-cplusplus*" -- -I${PROJ}/hdrs 2>&1 | tee clanglog.txt
+    - find ${PROJ}/ -iname "*.c" -o -iname "*.h" | xargs -I {} clang-tidy {} "-checks=-*,clang-analyzer-*,-clang-analyzer-cplusplus*,-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling*" -- -I${PROJ}/hdrs 2>&1 | tee clanglog.txt
     - export warnings=$(grep -c warning clanglog.txt)
+    - export suppressed=$(grep -c NOLINT clanglog.txt)
     - echo "End clang-tidy Check"
     - cd $PROJ
     - ./build.sh 
-    - if [[ 0 -ne ${warnings} ]]; then echo "Clang-Tidy found ${warnings} warnings." && exit 1; fi
+    - if [[ 0 -ne $(( ${warnings} - ${suppressed} )) ]]; then echo "Clang-Tidy found ${warnings} warnings." && exit 1; fi
 
 .tester:
   extends:
@@ -126,3 +127,25 @@ test:FileChoiceCalc:
   needs:
     - build:FileChoiceCalc
 # End Sections for FileChoiceCalc
+
+
+# Sections for DataStructures1
+.DataStructures1:
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /DataStructures1/i'
+      when: always
+  variables:
+    CUR_PROJ: DataStructures1
+
+build:DataStructures1:
+  extends:
+    - .builder
+    - .DataStructures1
+
+test:DataStructures1:
+  extends:
+    - .tester
+    - .DataStructures1
+  needs:
+    - build:DataStructures1
+# End Sections for DataStructures1
