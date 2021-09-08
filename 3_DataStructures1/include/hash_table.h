@@ -18,6 +18,19 @@
 typedef void (*FREE_F)(void *data);
 
 /**
+ * @brief structure of a node_t object
+ *
+ * @param char * key saved keyvalue for item
+ * @param void * data saved data pointer
+ * @param node_t * pointer to next node
+ */
+typedef struct node_t {
+  char *key;
+  void *data;
+  struct node_t *next;
+} node_t;
+
+/**
  * @brief structure of a hash_table_t object
  *
  * @param size uint32_t number of indices supported by table
