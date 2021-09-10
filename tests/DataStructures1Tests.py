@@ -26,14 +26,30 @@ def test_binary(binary):
         print(err.decode("ascii"))
         return FAIL
 
+def test_valgrind(binary):
+    p = Popen(['valgrind', '--leak-check=full', '--error-exitcode=1', binary], stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=bin_loc)
+    output, err = p.communicate()
+    str_out = output.decode("ascii")
+
+    if p.returncode == 0:
+        return PASS
+    else:
+        print(f"{binary} Failed!")
+        print("Failing Output")
+        print(output.decode("ascii"))
+        print(err.decode("ascii"))
+        return FAIL
+
+
 def main():
     numtests = 0
     numpassed = 0
 
     for test in tests:
         numtests += 1
-        res = test_binary(f"./{test}")
-        numpassed = numpassed + 1 if PASS == res else numpassed
+        res1 = test_binary(f"./{test}")
+        res2 = test_valgrind(f"./{test}")
+        numpassed = numpassed + 1 if (PASS == res1 and PASS == res2) else numpassed
 
 
     print("\nPassed {} out of {} ".format(numpassed, numtests))
