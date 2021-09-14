@@ -2,7 +2,6 @@ stages:
   - lint
   - build
   - test
-  - valgrind
 
 .container:
   image: registry.cybbh.space/17d/bolc/docker/build:latest
@@ -13,10 +12,10 @@ stages:
     - docker
   timeout: 10m
 
-.builder:
+.tester: &test
   extends:
     - .container
-  stage: build
+  stage: test
   before_script:
     - export PROJ=$CUR_PROJ
   script:
@@ -30,122 +29,45 @@ stages:
     - cd $PROJ
     - ./build.sh 
     - if [[ 0 -ne $(( ${warnings} - ${suppressed} )) ]]; then echo "Clang-Tidy found ${warnings} warnings." && exit 1; fi
-
-.tester:
-  extends:
-    - .builder
-  stage: test
-  allow_failure: false
-  variables:
-    GIT_STRATEGY: none
-  before_script:
-    - export PROJ=$CUR_PROJ
-  script:
-    - echo $PROJ
-    - ls $PROJ
-    - ls $PROJ/build/
-    - python3 tests/${PROJ}Tests.py
-
-.valgrind:
-  extends: .builder
-  variables:
-    GIT_STRATEGY: none
-  stage: valgrind
-  before_script:
-    - export PROJ=$CUR_PROJ
-  script:
-    - ""
+    - export PROJ=$(echo $CUR_PROJ | cut -c 3-)
+    - cd ..
+    - python3 Tests/${PROJ}Tests.py
 
 # Sections for SimpleCalc
-.SimpleCalc:
+SimpleCalc:
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /SimpleCalc/'
       when: always
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
   variables:
-    CUR_PROJ: SimpleCalc
-
-build:SimpleCalc:
-  extends:
-    - .builder
-    - .SimpleCalc
-
-test:SimpleCalc:
-  extends:
-    - .tester
-    - .SimpleCalc
-  needs:
-    - build:SimpleCalc
-
-valgrind:SimpleCalc:
-  extends:
-    - .valgrind
-    - .SimpleCalc
-  needs:
-    - test:SimpleCalc
+    CUR_PROJ: 1_SimpleCalc
+  <<: *test
 # End Sections for SimpleCalc
 
 
 # Sections for FileCalc
-.FileCalc:
+FileCalc:
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /FileCalc/'
       when: always
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
   variables:
-    CUR_PROJ: FileCalc
-
-build:FileCalc:
-  extends:
-    - .builder
-    - .FileCalc
-
-test:FileCalc:
-  extends:
-    - .tester
-    - .FileCalc
-  needs:
-    - build:FileCalc
+    CUR_PROJ: 2_FileCalc
+  <<: *test
 # End Sections for FileCalc
 
 
-# Sections for FileChoiceCalc
-.FileChoiceCalc:
-  rules:
-    - if: '$CI_COMMIT_BRANCH =~ /FileChoiceCalc/'
-      when: always
-  variables:
-    CUR_PROJ: FileChoiceCalc
-
-build:FileChoiceCalc:
-  extends:
-    - .builder
-    - .FileChoiceCalc
-
-test:FileChoiceCalc:
-  extends:
-    - .tester
-    - .FileChoiceCalc
-  needs:
-    - build:FileChoiceCalc
-# End Sections for FileChoiceCalc
-
-
 # Sections for DataStructures1
-.DataStructures1:
+DataStructures1:
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /DataStructures1/i'
       when: always
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
   variables:
-    CUR_PROJ: DataStructures1
-
-build:DataStructures1:
-  extends:
-    - .builder
-    - .DataStructures1
-
-test:DataStructures1:
-  extends:
-    - .tester
-    - .DataStructures1
-  needs:
-    - build:DataStructures1
+    CUR_PROJ: 3_DataStructures1
+  <<: *test
 # End Sections for DataStructures1
+

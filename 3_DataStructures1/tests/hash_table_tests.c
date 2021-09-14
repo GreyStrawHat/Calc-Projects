@@ -68,20 +68,11 @@ void test_hash_table_add() {
 
 void test_hash_table_lookup() {
   void *return_ptr = NULL;
-  char test_key[10] = {0};
   hash_table_t *invalid_table = NULL;
 
   // Should catch if create is called on an invalid pointer
   return_ptr = hash_table_lookup(invalid_table, "Item three");
   CU_ASSERT(NULL == return_ptr);
-
-  // Check for ptr comparision of key value
-  strncpy(test_key, "key1", 10);
-  CU_ASSERT(SUCCESS == hash_table_add(hash_table, (void *)&data[0], test_key));
-  strncpy(test_key, "key2", 10);
-  CU_ASSERT(SUCCESS == hash_table_add(hash_table, (void *)&data[0], test_key));
-  return_ptr = hash_table_lookup(hash_table, test_key);
-  CU_ASSERT_FATAL((void *)&test_key != return_ptr);
 
   return_ptr = hash_table_lookup(hash_table, "Item two");
   CU_ASSERT_FATAL((void *)&data[1] != return_ptr);
