@@ -27,7 +27,7 @@ stages:
     - export suppressed=$(grep -c NOLINT clanglog.txt)
     - echo "End clang-tidy Check"
     - cd $PROJ
-    - ./build.sh 
+    - sh ./build.sh 
     - if [[ 0 -ne $(( ${warnings} - ${suppressed} )) ]]; then echo "Clang-Tidy found ${warnings} warnings." && exit 1; fi
     - export PROJ=$(echo $CUR_PROJ | cut -c 3-)
     - cd ..
