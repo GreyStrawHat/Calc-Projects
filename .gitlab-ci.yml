@@ -28,7 +28,7 @@ stages:
     - echo "End clang-tidy Check"
     - cd $PROJ
     - sh ./build.sh 
-    - if [[ 0 -ne $(( ${warnings} - ${suppressed} )) ]]; then echo "Clang-Tidy found ${warnings} warnings." && exit 1; fi
+    - if [[ 0 -ne $(( ${warnings} - ${suppressed} )) ]]; then echo "Clang-Tidy found ${warnings} warnings." && cat clanglog.txt && exit 1; fi
     - export PROJ=$(echo $CUR_PROJ | cut -c 3-)
     - cd ..
     - python3 Tests/${PROJ}Tests.py
