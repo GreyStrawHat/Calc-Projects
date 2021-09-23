@@ -9,11 +9,11 @@ import string
 FAIL = -1
 PASS = 0
 
-bin_loc = "1_SimpleCalc/build/simplecalc"
-test_loc = "Tests/SimpleCalc.tests"
+BIN_LOC = "1_SimpleCalc/build/simplecalc"
+TEST_LOC = "Tests/SimpleCalc.tests"
 
 def test_input(op1, operator, op2, ans):
-    p = Popen([bin_loc, op1, operator, op2], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    p = Popen([BIN_LOC, op1, operator, op2], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     output, err = p.communicate()
     str_out = output.decode("ascii")
 
@@ -39,11 +39,20 @@ def test_input(op1, operator, op2, ans):
             print(err)
             return FAIL
             
+            
+def test_bin():
+    if not os.path.exists(BIN_LOC):
+        print("Binary Does Not Exist; Check build process", file=sys.stderr)
+        exit(FAIL)
+
+
 def main():
     numtests = 0
     numpassed = 0
 
-    with open(test_loc, "r") as tf:
+    test_bin()
+
+    with open(TEST_LOC, "r") as tf:
         for equ in tf:
             numtests += 1
             #print(f"Testing: {equ.strip()}")

@@ -5,15 +5,27 @@ include_directories(${simplecalc_SOURCE_DIR}/hdrs)
 
 find_program(CLANG_TIDY_PROG clang-tidy)
 if(CLANG_TIDY_PROG)
-        set(CMAKE_C_CLANG_TIDY ${CLANG_TIDY_PROG} "--checks=*,-llvm-include-order,-cppcoreguidelines-*,-readability-magic-numbers,-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling, -hiccp-no-assembler")
+        set(CMAKE_C_CLANG_TIDY ${CLANG_TIDY_PROG} "--checks=*,-llvm-include-order,-cppcoreguidelines-*,-readability-magic-numbers,-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,-llvmlibc-restrict-system-libc-headers, -hiccp-no-assembler")
         set(CMAKE_C_FLAGS "-g")
     else()
         set(CMAKE_C_COMPILER gcc)
         set(CMAKE_C_FLAGS "-g -Wall -pedantic")
     endif()
 
-add_executable(simplecalc ${simplecalc_SOURCE_DIR}/src/simplecalc.c)
+cmake_minimum_required(VERSION 3.16)
 
-#add and link libraries as needed, install to ${simplecalc_SOURCE_DIR}/build
+project(
+    SimpleCalc
+    VERSION 0.1
+    LANGUAGES C
+    DESCRIPTION "Simple Calculator in C"
+)
 
-INSTALL(TARGETS simplecalc DESTINATION ${simplecalc_SOURCE_DIR}/build)
+set(TARGET simplecalc)
+
+FILE(GLOB CSources src/*.c)
+
+include_directories(hdrs/)
+
+add_executable(${TARGET} ${CSources})
+

@@ -12,8 +12,18 @@ if(CLANG_TIDY_PROG)
         set(CMAKE_C_FLAGS "-g -Wall -pedantic")
     endif()
 
+if (EXISTS ${DEBUG})
+    if(${DEBUG} EQUAL 1)
+        message("DEBUGGING VERSION")
+        add_compile_definitions(DEBUG)
+    else()
+        message("RELEASE VERSION")
+    endif()
+endif()
+
+add_library(the_maths SHARED ${filecalc_SOURCE_DIR}/src/the_maths.c)
 add_executable(filecalc ${filecalc_SOURCE_DIR}/src/filecalc.c)
+target_link_libraries(filecalc the_maths)
 
-#add and link libraries as needed, install to ${filecalc_SOURCE_DIR}/build
-
-INSTALL(TARGETS filecalc DESTINATION ${filecalc_SOURCE_DIR}/build)
+INSTALL(TARGETS the_maths DESTINATION ${filecalc_SOURCE_DIR}/bin)
+INSTALL(TARGETS filecalc DESTINATION ${filecalc_SOURCE_DIR}/bin)
