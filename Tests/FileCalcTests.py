@@ -52,12 +52,15 @@ class Equation():
             self.op1 = struct.unpack_from("<Q", bytes, offset=5)[0]
             self.op2 = struct.unpack_from("<Q", bytes, offset=14)[0]
             self.padding = bytes[25:32]
+            self.data_code = 0x02;
         else:
             """Treat as signed"""
             self.id = struct.unpack_from("<I", bytes, offset=0)[0]
             self.op1 = struct.unpack_from("<q", bytes, offset=5)[0]
             self.op2 = struct.unpack_from("<q", bytes, offset=14)[0]
             self.padding = bytes[25:32]
+            self.data_code = 0x01;
+
 
     def __str__(self):
         try:
@@ -88,15 +91,24 @@ class Solution():
             "ERROR":        0x1
         }
 
+        self.dtflags = {
+            "SIGNED": 0x01,
+            "UNSIGED": 0x02,
+            "FLOAT": 0x03
+        }
+
+
         if isinstance(equation, bytes):
             self.id = struct.unpack_from("<I", equation, offset=0)[0]
             self.eqflag = equation[4]
-            self.solution = struct.unpack_from("<q", equation, offset=5)[0]
+            self.data_code = equation[5]
+            self.solution = struct.unpack_from("<q", equation, offset=6)[0]
         else:
             self.long_max = (2 ** 63)
             self.long_min = (2 ** 64)
             self.equation = equation
             self.id = equation.id
+            self.data_code = equation.data_code
             self.eqflag = 0
             self.solution = 0
             try:
@@ -116,7 +128,7 @@ class Solution():
     
 
     def __str__(self):
-        return "\t\t--Solution--\n\tID: {}, Flag: {}, Solution: {}".format(self.id, self.eqflag, self.solution)
+        return "\t\t--Solution--\n\tID: {}, Flag: {}, DataCode: {}, Solution: {}".format(self.id, self.eqflag, self.data_code, self.solution)
 
     def add(self):
             
@@ -226,7 +238,7 @@ class EquGrader():
 
         self.fail = 0
         self.fulleqlen = 32
-        self.solutionlen = 13
+        self.solutionlen = 14
         self.inheader = UnpackedHeader(self.infilebuf)
         self.solheader = UnpackedHeader(self.solfilebuf)
         self.unsolvedlist = self.get_unsolved()
@@ -295,7 +307,8 @@ class EquGrader():
             for i in range(len(self.givensols)):
                 if (self.givensols[i].id != self.checksols[i].id or 
                     self.givensols[i].eqflag != self.checksols[i].eqflag or 
-                    self.givensols[i].solution != self.checksols[i].solution):
+                    self.givensols[i].solution != self.checksols[i].solution or
+                    self.givensols[i].data_code != self.checksols[i].data_code):
                 # TODO Support bitwise shifting and rotating
                 # if (self.givensols[i].rawbytes != self.checksols[i].rawbytes):
                     errors.append("[-] Calculation error.")
@@ -321,31 +334,28 @@ def checkheader(filepath):
             
 def setup():
 
-    if os.path.isdir("./tests/"):
-        shutil.rmtree("./tests/")
-    os.mkdir("./tests/")
+    if os.path.isdir("./filecalc_tests/"):
+        shutil.rmtree("./filecalc_tests/")
+    os.mkdir("./filecalc_tests/")
 
-    if os.path.isdir("./tests/unsolved"):
-        shutil.rmtree("./tests/unsolved")
-    os.mkdir("./tests/unsolved")
+    if os.path.isdir("./filecalc_tests/unsolved"):
+        shutil.rmtree("./filecalc_tests/unsolved")
+    os.mkdir("./filecalc_tests/unsolved")
 
-    if os.path.isdir("./tests/solved"):
-        shutil.rmtree("./tests/solved")
-    os.mkdir("./tests/solved")
+    if os.path.isdir("./filecalc_tests/solved"):
+        shutil.rmtree("./filecalc_tests/solved")
+    os.mkdir("./filecalc_tests/solved")
 
-    os.system("python3 ./GeneratorsGraders/FileCalc/FileCalc_Generator.py -o ./tests/unsolved")
+    os.system("python3 ./GeneratorsGraders/FileCalc/FileCalc_Generator.py -o ./filecalc_tests/unsolved")
     os.chdir("./2_FileCalc")
     os.system("./build.sh")
-    os.system("./build/filecalc ../tests/unsolved ../tests/solved")
+    os.system("./build/filecalc ../filecalc_tests/unsolved ../filecalc_tests/solved")
     os.chdir("../")
 
 
 def cleanup():
-    if os.path.isdir("./tests/unsolved"):
-        shutil.rmtree("./tests/unsolved")
-
-    if os.path.isdir("./tests/solved"):
-        shutil.rmtree("./tests/solved")
+    if os.path.isdir("./filecalc_tests/"):
+        shutil.rmtree("./filecalc_tests/")
 
 def matchfiles(file1, file2):
     """Ensure the files have the same file id"""
@@ -361,41 +371,18 @@ def matchfiles(file1, file2):
     return False
 
 def main():
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-u", type=str, help="Unsolved Directory")
-    parser.add_argument("-s", type=str, help="Solved Directory")
-    args = parser.parse_args()
-
-    num_files = 0
-    num_failed = 0
-
-    infilelist = []
-    outfilelist = []
-    for dirpath, _, filenames in os.walk(args.u):
-        for file in filenames:
-            filepath = os.path.abspath(os.path.join(dirpath, file))
-            if checkheader(filepath) == 0:
-                infilelist.append(filepath)
-
-    for dirpath, _, filenames in os.walk(args.s):
-        for file in filenames:
-            filepath = os.path.abspath(os.path.join(dirpath, file))
-            if checkheader(filepath) == 1:
-                outfilelist.append(filepath)
-    """
     setup()
     num_files = 0
     num_failed = 0
     infilelist = []
     outfilelist = []
-    for dirpath, _, filenames in os.walk("./tests/unsolved"):
+    for dirpath, _, filenames in os.walk("./filecalc_tests/unsolved"):
         for file in filenames:
             filepath = os.path.abspath(os.path.join(dirpath, file))
             if checkheader(filepath) == 0:
                 infilelist.append(filepath)
 
-    for dirpath, _, filenames in os.walk("./tests/solved"):
+    for dirpath, _, filenames in os.walk("./filecalc_tests/solved"):
         for file in filenames:
             filepath = os.path.abspath(os.path.join(dirpath, file))
             if checkheader(filepath) == 1:
@@ -410,7 +397,7 @@ def main():
     num_passed = num_files - num_failed
     print(f"Test Results: Passed {num_passed} out of {num_files} files.")
 
-    # returns negative failure on non passing tests
+    # returns negative failure on non passing filecalc_tests
     cleanup()
     exit((num_passed - num_files))
 
