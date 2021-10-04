@@ -12,7 +12,9 @@
  * @brief A function pointer to a custom-defined delete function
  *        required to support deletion/memory deallocation of
  *        arbitrary data types. For simple data types, this function
- *        pointer can simply point to the free function.
+ *        pointer can simply point to the free function. For more complex data
+ *        types, this function should free all of the sub items that are
+ *        allocated in the data.
  *
  */
 typedef void (*FREE_F)(void *data);
@@ -20,31 +22,38 @@ typedef void (*FREE_F)(void *data);
 /**
  * @brief structure of a node_t object
  *
- * @param char * key saved keyvalue for item
- * @param void * data saved data pointer
- * @param node_t * pointer to next node
+ * @param key       pointer to the saved keyvalue string
+ * @param data      saved data pointer
+ * @param next      pointer to next node_t
  */
-typedef struct node_t {
-  char *key;
-  void *data;
-  struct node_t *next;
+typedef struct node_t
+{
+    char *         key;
+    void *         data;
+    struct node_t *next;
 } node_t;
 
 /**
  * @brief structure of a hash_table_t object
  *
- * @param size uint32_t number of indices supported by table
- * @param table void ** array of pointers
- * @param customfree pointer to the user defined free function
+ * Table will have N slots, with each slot holding a node_t
+ * Upon table insertion, hash algo will detmine which slot to store data
+ * If that slot is null, insert new node_t there
+ * If not null (colision), traverse to end of list and append new node_t
+ *
+ * @param size          number of positions supported by table
+ * @param table         the table of node_t lists
+ * @param customfree    pointer to the user defined free function
  */
-typedef struct hash_table_t {
-  uint32_t size;
-  void **table;
-  FREE_F customfree;
+typedef struct hash_table_t
+{
+    uint32_t size;
+    node_t **table;
+    FREE_F   customfree;
 } hash_table_t;
 
 /**
- * @brief initializes weighed graph as adjacency matrix
+ * @brief initializes hash table
  *
  * @param size number indexes in the table
  *

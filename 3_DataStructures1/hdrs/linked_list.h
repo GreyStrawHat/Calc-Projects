@@ -48,6 +48,26 @@ typedef void * (*CMP_F)(const void *, const void *);
 typedef void (*ACT_F)(void *);
 
 /**
+ * @brief Default Compare Function. Should be used if NULL specified for cmp_fun in createion
+ * 
+ * @param value_to_find 
+ * @param node 
+ * @return void* 
+ */
+void * default_compare(void * value_to_find, void * node)
+{   
+    puts("\nDEFAULT\n");
+    void * returnval = NULL;
+
+    if (0 == memcmp(value_to_find, node, sizeof(node)))
+    {
+        returnval = node;
+    }
+
+    return returnval;
+}
+
+/**
  * @brief structure of a list object
  * 
  * @param size is the number of nodes the list is currently storing
@@ -70,7 +90,7 @@ typedef struct list_t
  * 
  * @param customfree pointer to the free function to be used with that list
  * @param compare_function pointer to the compare function to be used with that 
- *        list
+ *        list. must
  * @returns pointer to allocated list on success or NULL on failure
  */
 list_t *list_new(FREE_F, CMP_F);
