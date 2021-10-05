@@ -71,3 +71,15 @@ DataStructures1:
   <<: *test
 # End Sections for DataStructures1
 
+
+# Sections for ThreadCalc
+DataStructures1:
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /ThreadCalc/i'
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
+  variables:
+    CUR_PROJ: 4_ThreadCalc
+  <<: *test
+# End Sections for DataStructures1
