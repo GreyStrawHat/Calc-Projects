@@ -37,10 +37,10 @@ typedef void (*FREE_F)(void *);
  */
 typedef struct stack_t
 {
-    uint32_t       capacity;
-    uint32_t       currentsz;
+    uint32_t capacity;
+    uint32_t currentsz;
     stack_node_t **arr;
-    FREE_F         customfree;
+    FREE_F customfree;
 } stack_t;
 
 /**

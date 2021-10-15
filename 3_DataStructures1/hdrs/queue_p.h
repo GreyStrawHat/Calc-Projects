@@ -14,7 +14,7 @@
 typedef struct queue_p_node_t
 {
     void *data;
-    int   priority;
+    int priority;
 } queue_p_node_t;
 
 /**
@@ -37,10 +37,10 @@ typedef void (*FREE_F)(void *);
  */
 typedef struct queue_p_t
 {
-    uint32_t         capacity;
-    uint32_t         currentsz;
+    uint32_t capacity;
+    uint32_t currentsz;
     queue_p_node_t **arr;
-    FREE_F           customfree;
+    FREE_F customfree;
 } queue_p_t;
 
 /**

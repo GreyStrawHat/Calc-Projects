@@ -8,11 +8,10 @@
 // The queue_p to be used by all the tests
 queue_p_t *queue_p = NULL;
 // The integer all node data[5] pointers point to
-int data[10]         = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-int priority_data[5] = { 1, 2, 3, 4, 5 };
+int data[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+int priority_data[5] = {1, 2, 3, 4, 5};
 
-static void
-printqueue(queue_p_t *queue)
+static void printqueue(queue_p_t *queue)
 {
     puts("----\n");
     for (int i = 0; i < queue->currentsz; i++)
@@ -22,11 +21,10 @@ printqueue(queue_p_t *queue)
     puts("----\n");
 }
 
-static void
-resetqueue(queue_p_t *queue)
+static void resetqueue(queue_p_t *queue)
 {
     queue_p_node_t *tmp = NULL;
-    int             i   = 0;
+    int i = 0;
 
     while (queue->currentsz != 0)
     {
@@ -44,20 +42,17 @@ resetqueue(queue_p_t *queue)
     }
 }
 
-int
-init_suite1(void)
+int init_suite1(void)
 {
     return 0;
 }
 
-int
-clean_suite1(void)
+int clean_suite1(void)
 {
     return 0;
 }
 
-void
-test_queue_p_init()
+void test_queue_p_init()
 {
     uint32_t capacity = CAPACITY;
 
@@ -72,11 +67,10 @@ test_queue_p_init()
     CU_ASSERT(NULL != queue_p->arr);
 }
 
-void
-test_queue_p_enqueue()
+void test_queue_p_enqueue()
 {
-    int        exit_code       = 1;
-    int        i               = 0;
+    int exit_code = 1;
+    int i = 0;
     queue_p_t *invalid_queue_p = NULL;
 
     // Should catch if enqueue_p is called on an invalid queue_p or with invalid
@@ -111,12 +105,11 @@ test_queue_p_enqueue()
     CU_ASSERT(0 != exit_code);
 }
 
-void
-test_queue_p_dequeue()
+void test_queue_p_dequeue()
 {
-    int             i               = 0;
-    queue_p_t *     invalid_queue_p = NULL;
-    queue_p_node_t *node            = NULL;
+    int i = 0;
+    queue_p_t *invalid_queue_p = NULL;
+    queue_p_node_t *node = NULL;
 
     // Should catch if enqueue_p is called on an invalid queue_p
     node = queue_p_dequeue(invalid_queue_p);
@@ -139,12 +132,11 @@ test_queue_p_dequeue()
     CU_ASSERT(NULL == node);
 }
 
-void
-test_queue_p_peek()
+void test_queue_p_peek()
 {
-    queue_p_t *     invalid_queue_p = NULL;
-    queue_p_node_t *node            = NULL;
-    int             i               = 0;
+    queue_p_t *invalid_queue_p = NULL;
+    queue_p_node_t *node = NULL;
+    int i = 0;
 
     // Should catch if pop is called on an invalid queue_p or empty
     node = queue_p_peek(invalid_queue_p);
@@ -169,10 +161,9 @@ test_queue_p_peek()
     CU_ASSERT(CAPACITY == queue_p->currentsz);
 }
 
-void
-test_queue_p_clear()
+void test_queue_p_clear()
 {
-    int        exit_code       = 1;
+    int exit_code = 1;
     queue_p_t *invalid_queue_p = NULL;
 
     // Should catch if clear is called on an invalid queue_p
@@ -186,10 +177,9 @@ test_queue_p_clear()
     CU_ASSERT(0 == exit_code);
 }
 
-void
-test_queue_p_destroy()
+void test_queue_p_destroy()
 {
-    int        exit_code       = 1;
+    int exit_code = 1;
     queue_p_t *invalid_queue_p = NULL;
 
     // Should catch if delete is called on an invalid queue_p
@@ -206,26 +196,25 @@ test_queue_p_destroy()
     CU_ASSERT(0 != exit_code);
 }
 
-int
-main(void)
+int main(void)
 {
-    CU_TestInfo suite1_tests[]
-        = { { "Testing queue_p_init():", test_queue_p_init },
+    CU_TestInfo suite1_tests[] = {
+        {"Testing queue_p_init():", test_queue_p_init},
 
-            { "Testing queue_p_enqueue():", test_queue_p_enqueue },
+        {"Testing queue_p_enqueue():", test_queue_p_enqueue},
 
-            { "Testing queue_p_dequeue():", test_queue_p_dequeue },
+        {"Testing queue_p_dequeue():", test_queue_p_dequeue},
 
-            { "Testing queue_p_peek():", test_queue_p_peek },
+        {"Testing queue_p_peek():", test_queue_p_peek},
 
-            { "Testing queue_p_clear():", test_queue_p_clear },
+        {"Testing queue_p_clear():", test_queue_p_clear},
 
-            { "Testing queue_p_destroy():", test_queue_p_destroy },
-            CU_TEST_INFO_NULL };
+        {"Testing queue_p_destroy():", test_queue_p_destroy},
+        CU_TEST_INFO_NULL};
 
-    CU_SuiteInfo suites[]
-        = { { "Suite-1:", init_suite1, clean_suite1, .pTests = suite1_tests },
-            CU_SUITE_INFO_NULL };
+    CU_SuiteInfo suites[] = {
+        {"Suite-1:", init_suite1, clean_suite1, .pTests = suite1_tests},
+        CU_SUITE_INFO_NULL};
 
     if (0 != CU_initialize_registry())
     {

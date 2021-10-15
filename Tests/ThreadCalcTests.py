@@ -347,11 +347,7 @@ def setup():
     os.mkdir("./threadcalc_tests/solved")
 
     os.system("python3 ./GeneratorsGraders/FileCalc/FileCalc_Generator.py -o ./threadcalc_tests/unsolved")
-    os.chdir("./4_ThreadCalc")
-    os.system("./build.sh")
-    os.system("./build/threadcalc ../threadcalc_tests/unsolved ../threadcalc_tests/solved")
-    os.chdir("../")
-
+    os.system("./build/4_ThreadCalc/threadcalc ./threadcalc_tests/unsolved ./threadcalc_tests/solved")
 
 def cleanup():
     if os.path.isdir("./threadcalc_tests/"):
@@ -391,15 +387,19 @@ def main():
         num_files += 1
         for j in range(0,len(outfilelist)):
             if matchfiles((infilelist[i]), (outfilelist[j])): #Comparing filenames
-                # print(f'Grading {infilelist[i]} against {outfilelist[j]}')
+                print(f'Grading {infilelist[i]} against {outfilelist[j]}')
                 num_failed += EquGrader(infilelist[i], outfilelist[j]).fail
+
+    if (num_files != len(outfilelist)):
+        print(f'Not all files found')
+        num_failed += num_files - len(outfilelist)
 
     num_passed = num_files - num_failed
     print(f"Test Results: Passed {num_passed} out of {num_files} files.")
 
-    # returns negative failure on non passing threadcalc_tests
+    # returns negative failure on non passing filecalc_tests
     cleanup()
-    exit((num_passed - num_files))
+    exit((num_files - num_passed))
 
 
 

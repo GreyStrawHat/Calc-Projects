@@ -8,22 +8,19 @@
 // The stack to be used by all the tests
 stack_t *stack = NULL;
 // The integer all node data[5] pointers point to
-int data[5] = { 1, 2, 3, 4, 5 };
+int data[5] = {1, 2, 3, 4, 5};
 
-int
-init_suite1(void)
+int init_suite1(void)
 {
     return 0;
 }
 
-int
-clean_suite1(void)
+int clean_suite1(void)
 {
     return 0;
 }
 
-void
-test_stack_init()
+void test_stack_init()
 {
     uint32_t capacity = CAPACITY;
 
@@ -38,11 +35,10 @@ test_stack_init()
     CU_ASSERT(NULL != stack->arr);
 }
 
-void
-test_stack_push()
+void test_stack_push()
 {
-    int      exit_code     = 1;
-    int      i             = 0;
+    int exit_code = 1;
+    int i = 0;
     stack_t *invalid_stack = NULL;
 
     // Should catch if push is called on an invalid stack or with invalid data
@@ -56,8 +52,8 @@ test_stack_push()
     {
         exit_code = stack_push(stack, &data[i]);
         // New node was pushed and points to the correct data
-        CU_ASSERT(data[i]
-                  == (*(int *)stack->arr[(stack->capacity - i) - 1]->data));
+        CU_ASSERT(data[i] ==
+                  (*(int *)stack->arr[(stack->capacity - i) - 1]->data));
         i++;
     }
 
@@ -71,12 +67,11 @@ test_stack_push()
     CU_ASSERT(0 != exit_code);
 }
 
-void
-test_stack_pop()
+void test_stack_pop()
 {
-    int           i             = 0;
-    stack_t *     invalid_stack = NULL;
-    stack_node_t *node          = NULL;
+    int i = 0;
+    stack_t *invalid_stack = NULL;
+    stack_node_t *node = NULL;
 
     // Should catch if push is called on an invalid stack
     node = stack_pop(invalid_stack);
@@ -99,12 +94,11 @@ test_stack_pop()
     CU_ASSERT(NULL == node);
 }
 
-void
-test_stack_peek()
+void test_stack_peek()
 {
-    stack_t *     invalid_stack = NULL;
-    stack_node_t *node          = NULL;
-    int           i             = 0;
+    stack_t *invalid_stack = NULL;
+    stack_node_t *node = NULL;
+    int i = 0;
 
     // Should catch if pop is called on an invalid stack or empty
     node = stack_peek(invalid_stack);
@@ -129,10 +123,9 @@ test_stack_peek()
     CU_ASSERT(CAPACITY == stack->currentsz);
 }
 
-void
-test_stack_clear()
+void test_stack_clear()
 {
-    int      exit_code     = 1;
+    int exit_code = 1;
     stack_t *invalid_stack = NULL;
 
     // Should catch if clear is called on an invalid stack
@@ -146,10 +139,9 @@ test_stack_clear()
     CU_ASSERT(0 == exit_code);
 }
 
-void
-test_stack_destroy()
+void test_stack_destroy()
 {
-    int      exit_code     = 1;
+    int exit_code = 1;
     stack_t *invalid_stack = NULL;
 
     // Should catch if delete is called on an invalid stack
@@ -166,26 +158,24 @@ test_stack_destroy()
     CU_ASSERT(0 != exit_code);
 }
 
-int
-main(void)
+int main(void)
 {
-    CU_TestInfo suite1_tests[]
-        = { { "Testing stack_init():", test_stack_init },
+    CU_TestInfo suite1_tests[] = {
+        {"Testing stack_init():", test_stack_init},
 
-            { "Testing stack_push():", test_stack_push },
+        {"Testing stack_push():", test_stack_push},
 
-            { "Testing stack_pop():", test_stack_pop },
+        {"Testing stack_pop():", test_stack_pop},
 
-            { "Testing stack_peek():", test_stack_peek },
+        {"Testing stack_peek():", test_stack_peek},
 
-            { "Testing stack_clear():", test_stack_clear },
+        {"Testing stack_clear():", test_stack_clear},
 
-            { "Testing stack_destroy():", test_stack_destroy },
-            CU_TEST_INFO_NULL };
+        {"Testing stack_destroy():", test_stack_destroy}, CU_TEST_INFO_NULL};
 
-    CU_SuiteInfo suites[]
-        = { { "Suite-1:", init_suite1, clean_suite1, .pTests = suite1_tests },
-            CU_SUITE_INFO_NULL };
+    CU_SuiteInfo suites[] = {
+        {"Suite-1:", init_suite1, clean_suite1, .pTests = suite1_tests},
+        CU_SUITE_INFO_NULL};
 
     if (0 != CU_initialize_registry())
     {

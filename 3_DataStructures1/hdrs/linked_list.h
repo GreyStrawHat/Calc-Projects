@@ -17,8 +17,8 @@
  */
 typedef struct list_node_t
 {
-    uint32_t            position;
-    void *              data;
+    uint32_t position;
+    void *data;
     struct list_node_t *next;
 } list_node_t;
 
@@ -58,11 +58,11 @@ typedef void (*ACT_F)(void *);
  */
 typedef struct list_t
 {
-    uint32_t     size;
+    uint32_t size;
     list_node_t *head;
     list_node_t *tail;
-    FREE_F       customfree;
-    CMP_F        compare_function;
+    FREE_F customfree;
+    CMP_F compare_function;
 } list_t;
 
 /**

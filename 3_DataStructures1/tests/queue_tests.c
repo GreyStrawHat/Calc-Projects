@@ -8,22 +8,19 @@
 // The queue to be used by all the tests
 queue_t *queue = NULL;
 // The integer all node data[5] pointers point to
-int data[5] = { 1, 2, 3, 4, 5 };
+int data[5] = {1, 2, 3, 4, 5};
 
-int
-init_suite1(void)
+int init_suite1(void)
 {
     return 0;
 }
 
-int
-clean_suite1(void)
+int clean_suite1(void)
 {
     return 0;
 }
 
-void
-test_queue_init()
+void test_queue_init()
 {
     uint32_t capacity = CAPACITY;
 
@@ -38,11 +35,10 @@ test_queue_init()
     CU_ASSERT(NULL != queue->arr);
 }
 
-void
-test_queue_enqueue()
+void test_queue_enqueue()
 {
-    int      exit_code     = 1;
-    int      i             = 0;
+    int exit_code = 1;
+    int i = 0;
     queue_t *invalid_queue = NULL;
 
     // Should catch if enqueue is called on an invalid queue or with invalid
@@ -71,12 +67,11 @@ test_queue_enqueue()
     CU_ASSERT(0 != exit_code);
 }
 
-void
-test_queue_dequeue()
+void test_queue_dequeue()
 {
-    int           i             = 0;
-    queue_t *     invalid_queue = NULL;
-    queue_node_t *node          = NULL;
+    int i = 0;
+    queue_t *invalid_queue = NULL;
+    queue_node_t *node = NULL;
 
     // Should catch if enqueue is called on an invalid queue
     node = queue_dequeue(invalid_queue);
@@ -99,12 +94,11 @@ test_queue_dequeue()
     CU_ASSERT(NULL == node);
 }
 
-void
-test_queue_peek()
+void test_queue_peek()
 {
-    queue_t *     invalid_queue = NULL;
-    queue_node_t *node          = NULL;
-    int           i             = 0;
+    queue_t *invalid_queue = NULL;
+    queue_node_t *node = NULL;
+    int i = 0;
 
     // Should catch if pop is called on an invalid queue or empty
     node = queue_peek(invalid_queue);
@@ -129,10 +123,9 @@ test_queue_peek()
     CU_ASSERT(CAPACITY == queue->currentsz);
 }
 
-void
-test_queue_clear()
+void test_queue_clear()
 {
-    int      exit_code     = 1;
+    int exit_code = 1;
     queue_t *invalid_queue = NULL;
 
     // Should catch if clear is called on an invalid queue
@@ -146,10 +139,9 @@ test_queue_clear()
     CU_ASSERT(0 == exit_code);
 }
 
-void
-test_queue_destroy()
+void test_queue_destroy()
 {
-    int      exit_code     = 1;
+    int exit_code = 1;
     queue_t *invalid_queue = NULL;
 
     // Should catch if delete is called on an invalid queue
@@ -166,26 +158,24 @@ test_queue_destroy()
     CU_ASSERT(0 != exit_code);
 }
 
-int
-main(void)
+int main(void)
 {
-    CU_TestInfo suite1_tests[]
-        = { { "Testing queue_init():", test_queue_init },
+    CU_TestInfo suite1_tests[] = {
+        {"Testing queue_init():", test_queue_init},
 
-            { "Testing queue_enqueue():", test_queue_enqueue },
+        {"Testing queue_enqueue():", test_queue_enqueue},
 
-            { "Testing queue_dequeue():", test_queue_dequeue },
+        {"Testing queue_dequeue():", test_queue_dequeue},
 
-            { "Testing queue_peek():", test_queue_peek },
+        {"Testing queue_peek():", test_queue_peek},
 
-            { "Testing queue_clear():", test_queue_clear },
+        {"Testing queue_clear():", test_queue_clear},
 
-            { "Testing queue_destroy():", test_queue_destroy },
-            CU_TEST_INFO_NULL };
+        {"Testing queue_destroy():", test_queue_destroy}, CU_TEST_INFO_NULL};
 
-    CU_SuiteInfo suites[]
-        = { { "Suite-1:", init_suite1, clean_suite1, .pTests = suite1_tests },
-            CU_SUITE_INFO_NULL };
+    CU_SuiteInfo suites[] = {
+        {"Suite-1:", init_suite1, clean_suite1, .pTests = suite1_tests},
+        CU_SUITE_INFO_NULL};
 
     if (0 != CU_initialize_registry())
     {

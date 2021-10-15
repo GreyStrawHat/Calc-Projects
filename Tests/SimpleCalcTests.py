@@ -9,8 +9,8 @@ import string
 FAIL = -1
 PASS = 0
 
-BIN_LOC = "1_SimpleCalc/build/simplecalc"
-TEST_LOC = "Tests/SimpleCalc.tests"
+BIN_LOC = "./build/1_SimpleCalc/simplecalc"
+TEST_LOC = "./Tests/SimpleCalc.tests"
 
 def test_input(op1, operator, op2, ans):
     p = Popen([BIN_LOC, op1, operator, op2], stdin=PIPE, stdout=PIPE, stderr=PIPE)
@@ -66,9 +66,7 @@ def main():
 
     print("\nPassed {} out of {} ".format(numpassed, numtests))
 
-    ret = 0 if numtests == numpassed else -1
-
-    exit(ret)
+    exit(numtests - numpassed)
 
 
 if __name__ == "__main__":

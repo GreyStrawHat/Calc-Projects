@@ -28,8 +28,8 @@ typedef void (*FREE_F)(void *data);
  */
 typedef struct node_t
 {
-    char *         key;
-    void *         data;
+    char *key;
+    void *data;
     struct node_t *next;
 } node_t;
 
@@ -49,7 +49,7 @@ typedef struct hash_table_t
 {
     uint32_t size;
     node_t **table;
-    FREE_F   customfree;
+    FREE_F customfree;
 } hash_table_t;
 
 /**
