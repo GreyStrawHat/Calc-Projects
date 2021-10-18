@@ -40,8 +40,13 @@ def test_valgrind(binary):
         print(err.decode("ascii"))
         return FAIL
 
+def setup():
+    os.chdir("3_DataStructures1/")
+    os.system("./build.sh")
+    os.chdir("..")
 
 def main():
+    setup()
     numtests = 0
     numpassed = 0
 

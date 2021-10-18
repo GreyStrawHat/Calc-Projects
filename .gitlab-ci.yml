@@ -41,7 +41,7 @@ stages:
     - make test "ARGS= -R $CUR_TEST" 
 
 JQRCalc-Build:
-  needs: [ "Common-Lint", "SimpleCalc-Lint", "FileCalc-Lint", "ThreadCalc-Lint" ]
+  needs: [ "Common-Lint", "SimpleCalc-Lint", "FileCalc-Lint", "DataStructures1-Lint", "ThreadCalc-Lint", "NetCalc-Lint"]
   <<: *build
 
 Common-Lint:
@@ -61,10 +61,22 @@ FileCalc-Lint:
     CUR_TEST: TestFileCalc
   <<: *lint
 
+DataStructures1-Lint:
+  variables:
+    CUR_PROJ: 3_DataStructures1
+    CUR_TEST: TestDataStructures1
+  <<: *lint
+
 ThreadCalc-Lint:
   variables:
     CUR_PROJ: 4_ThreadCalc
     CUR_TEST: TestThreadCalc
+  <<: *lint
+
+NetCalc-Lint:
+  variables:
+    CUR_PROJ: 5_NetCalc
+    CUR_TEST: TestNetCalc
   <<: *lint
 
 SimpleCalc-Test:
@@ -81,9 +93,23 @@ FileCalc-Test:
     CUR_TEST: TestFileCalc
   <<: *test
 
+DataStructures1-Test:
+  needs: [ "JQRCalc-Build" ]
+  variables:
+    CUR_PROJ: 3_DataStructures1
+    CUR_TEST: TestDataStructures1
+  <<: *test
+
 ThreadCalc-Test:
   needs: [ "JQRCalc-Build" ]
   variables:
     CUR_PROJ: 4_ThreadCalc
     CUR_TEST: TestThreadCalc
+  <<: *test
+
+NetCalc-Test:
+  needs: [ "JQRCalc-Build" ]
+  variables:
+    CUR_PROJ: 5_NetCalc
+    CUR_TEST: TestNetCalc
   <<: *test
