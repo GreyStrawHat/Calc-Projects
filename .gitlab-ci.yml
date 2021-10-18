@@ -27,10 +27,7 @@ stages:
     - .container
   stage: build
   script:
-    - mkdir -p build
-    - cd build
-    - cmake ..
-    - make -j$(nproc)
+    - bash build.sh
 
 .tester: &test
   extends:

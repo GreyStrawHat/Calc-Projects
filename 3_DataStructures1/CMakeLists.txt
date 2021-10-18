@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(datastructures1 VERSION 0.0.0 LANGUAGES "C")
 
-include_directories(${datastructures1_SOURCE_DIR}/hdrs)
+include_directories(${datastructures1_SOURCE_DIR}/include)
 
 find_program(CLANG_TIDY_PROG clang-tidy)
 if(CLANG_TIDY_PROG)

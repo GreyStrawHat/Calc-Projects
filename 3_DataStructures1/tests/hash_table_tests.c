@@ -92,13 +92,14 @@ void test_hash_table_lookup()
     CU_ASSERT(SUCCESS ==
               hash_table_add(hash_table, (void *)&data[0], test_key));
     return_ptr = hash_table_lookup(hash_table, test_key);
-    CU_ASSERT_FATAL((void *)&test_key != return_ptr);
+    CU_ASSERT((void *)&test_key != return_ptr);
 
+    // check normal returns
     return_ptr = hash_table_lookup(hash_table, "Item two");
-    CU_ASSERT_FATAL((void *)&data[1] != return_ptr);
+    CU_ASSERT(NULL != return_ptr);
 
     return_ptr = hash_table_lookup(hash_table, "Item three");
-    CU_ASSERT_FATAL((void *)&data[3] != return_ptr);
+    CU_ASSERT(NULL != return_ptr);
 }
 
 void test_hash_table_remove()
@@ -110,8 +111,11 @@ void test_hash_table_remove()
     exit_code = hash_table_remove(invalid_table, "Item three");
     CU_ASSERT(FAILURE == exit_code);
 
+    ret_ptr = hash_table_lookup(hash_table, "Item three");
+    CU_ASSERT(NULL != ret_ptr);
+
     exit_code = hash_table_remove(hash_table, "Item three");
-    CU_ASSERT(SUCCESS != exit_code);
+    CU_ASSERT(SUCCESS == exit_code);
 
     ret_ptr = hash_table_lookup(hash_table, "Item three");
     CU_ASSERT_FATAL(NULL == ret_ptr);
@@ -147,37 +151,6 @@ void test_hash_table_destroy()
     CU_ASSERT(FAILURE == exit_code);
 }
 
-void test_hash_function_effectiveness()
-{
-    size_t read = 0;
-    char *line = NULL;
-    size_t len = 0;
-    FILE *dict_pointer = NULL;
-    hash_table_t *dict_table = NULL;
-    void *nullval = NULL;
-    int num_entries = 0;
-
-    dict_table = hash_table_init(400000, NULL);
-
-    dict_pointer = fopen("/usr/share/dict/american-english", "r");
-
-    if (NULL != dict_pointer)
-    {
-        while (-1 != getline(&line, &len, dict_pointer))
-        {
-            hash_table_add(dict_table, &nullval, (char *)line);
-            num_entries++;
-        }
-        printf("Total entries: %d\n", num_entries);
-    }
-    else
-    {
-        printf("\tCouldn't Open Dict for Testing\t");
-    }
-
-    hash_table_destroy(&dict_table);
-}
-
 int main(void)
 {
     CU_TestInfo suite1_tests[] = {
@@ -192,9 +165,6 @@ int main(void)
         {"Testing hash_table_clear():", test_hash_table_clear},
 
         {"Testing hash_table_destroy():", test_hash_table_destroy},
-
-        {"Testing hash_function_effectiveness():",
-         test_hash_function_effectiveness},
 
         CU_TEST_INFO_NULL};
 
