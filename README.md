@@ -1,4 +1,4 @@
-# The training and projects in this repository are still in development.
+# Template Repo for JQR Calc Projects.
 - The recommended order of completion is:
 1. SimpleCalc
 2. FileCalc
