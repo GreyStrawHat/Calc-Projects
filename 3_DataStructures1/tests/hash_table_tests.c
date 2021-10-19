@@ -96,10 +96,10 @@ void test_hash_table_lookup()
 
     // check normal returns
     return_ptr = hash_table_lookup(hash_table, "Item two");
-    CU_ASSERT(NULL != return_ptr);
+    CU_ASSERT_FATAL((void *)&data[1] == return_ptr);
 
     return_ptr = hash_table_lookup(hash_table, "Item three");
-    CU_ASSERT(NULL != return_ptr);
+    CU_ASSERT_FATAL((void *)&data[2] == return_ptr);
 }
 
 void test_hash_table_remove()
