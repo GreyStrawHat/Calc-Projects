@@ -109,4 +109,11 @@ int hash_table_clear(hash_table_t *table);
  */
 int hash_table_destroy(hash_table_t **table_addr);
 
+/**
+ * @brief frees an item and its associated memory
+ *
+ * @param mem_addr pointer of the item to be free'd
+ */
+void custom_free(void *mem_addr);
+
 #endif

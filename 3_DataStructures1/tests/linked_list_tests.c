@@ -9,12 +9,6 @@ list_t *list = NULL;
 // The integer all node data[5] pointers point to
 int data[5] = {1, 2, 3, 4, 5};
 
-//"User defined" free function
-void free_node(void *node)
-{
-    free(node);
-}
-
 static void printlist(list_t *list)
 {
     int i = 1;
@@ -48,8 +42,7 @@ static void printlistmembers(list_t *list)
     }
 }
 
-//"User defined" compare function
-void *compare_node(int value_to_find, void *node)
+void *test_compare_node(int value_to_find, void *node)
 {
     // printf("Checking for: %d, found: %d\n", value_to_find, *(int
     // *)((list_node_t *)node)->data);
@@ -57,7 +50,7 @@ void *compare_node(int value_to_find, void *node)
 
     if (*(int *)((list_node_t *)node)->data == value_to_find)
     {
-        // puts("compare_node FOUND IT\n");
+        // puts("test_compare_node FOUND IT\n");
         retval = node;
     }
 
@@ -91,7 +84,7 @@ void test_list_new()
     list = NULL;
 
     // Verify list was created correctly with all arguments supplied
-    list = list_new((FREE_F)free_node, (CMP_F)compare_node);
+    list = list_new((FREE_F)custom_free, (CMP_F)test_compare_node);
     CU_ASSERT_FATAL(NULL != list); // Function exited correctly
     // NOLINTNEXTLINE
     CU_ASSERT(0 == list->size); // list size is correct
@@ -377,7 +370,7 @@ void test_list_find_all_occurrences()
     CU_ASSERT(NULL == result_list);
 
     // create empty list
-    test_list = list_new((FREE_F)free_node, (CMP_F)compare_node);
+    test_list = list_new((FREE_F)custom_free, (CMP_F)test_compare_node);
 
     // Should catch if function is called on an empty list
     result_list = list_find_all_occurrences(test_list, (void *)&value_to_find);

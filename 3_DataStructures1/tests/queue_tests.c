@@ -25,7 +25,7 @@ void test_queue_init()
     uint32_t capacity = CAPACITY;
 
     // Verify queue was created correctly
-    queue = queue_init(capacity, NULL);
+    queue = queue_init(capacity, custom_free);
     CU_ASSERT_FATAL(NULL != queue);
     // NOLINTNEXTLINE
     CU_ASSERT(CAPACITY == queue->capacity);

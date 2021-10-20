@@ -20,12 +20,6 @@ int clean_suite1(void)
     return 0;
 }
 
-void customfree(void *mem_addr)
-{
-    properly_implemented_free = 0;
-    free(mem_addr);
-}
-
 void test_hash_table_init()
 {
     int exit_code = 1;
@@ -93,6 +87,12 @@ void test_hash_table_lookup()
               hash_table_add(hash_table, (void *)&data[0], test_key));
     return_ptr = hash_table_lookup(hash_table, test_key);
     CU_ASSERT((void *)&test_key != return_ptr);
+
+    // ensure unique nodes are created per key value
+    // each node is created with data fields of the same value
+    return_ptr = hash_table_lookup(hash_table, "key1");
+    CU_ASSERT_FATAL(NULL != return_ptr);
+    CU_ASSERT_FATAL(return_ptr == hash_table_lookup(hash_table, "key2"));
 
     // check normal returns
     return_ptr = hash_table_lookup(hash_table, "Item two");

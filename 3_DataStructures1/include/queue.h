@@ -109,4 +109,11 @@ int queue_clear(queue_t *queue);
  */
 int queue_destroy(queue_t **queue_addr);
 
+/**
+ * @brief frees an item and its associated memory
+ *
+ * @param mem_addr pointer of the item to be free'd
+ */
+void custom_free(void *mem_addr);
+
 #endif

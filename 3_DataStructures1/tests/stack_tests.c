@@ -25,7 +25,7 @@ void test_stack_init()
     uint32_t capacity = CAPACITY;
 
     // Verify stack was created correctly
-    stack = stack_init(capacity, NULL);
+    stack = stack_init(capacity, custom_free);
     CU_ASSERT_FATAL(NULL != stack);
     // NOLINTNEXTLINE
     CU_ASSERT(CAPACITY == stack->capacity);

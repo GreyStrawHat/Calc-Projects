@@ -109,4 +109,11 @@ int stack_clear(stack_t *stack);
  */
 int stack_destroy(stack_t **stack);
 
+/**
+ * @brief frees an item and its associated memory
+ *
+ * @param mem_addr pointer of the item to be free'd
+ */
+void custom_free(void *mem_addr);
+
 #endif
