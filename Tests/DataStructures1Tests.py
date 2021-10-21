@@ -1,10 +1,8 @@
 
 #!/bin/python3
-import time
-import sys
+
 from subprocess import Popen, PIPE
 import os
-import string
 
 FAIL = -1
 PASS = 0

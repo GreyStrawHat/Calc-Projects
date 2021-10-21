@@ -38,7 +38,7 @@ stages:
     - cd build
     - cmake -DDEBUG=1 ..
     - make -j$(nproc)
-    - make test "ARGS= -R $CUR_TEST" 
+    - make test "ARGS= -R $CUR_TEST -V" 
 
 JQRCalc-Build:
   needs: [ "Common-Lint", "SimpleCalc-Lint", "FileCalc-Lint", "DataStructures1-Lint", "ThreadCalc-Lint", "NetCalc-Lint"]

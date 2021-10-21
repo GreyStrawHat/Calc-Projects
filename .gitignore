@@ -4,3 +4,4 @@ build/
 .clang-format
 vgcore*
 *.equ
+__pycache__

@@ -5,15 +5,16 @@ import os
 import socket
 import struct
 
-NET_HDR_SZ = 40
+NET_HDR_SZ = 48
 NET_FNAME_MAX = 24
+NET_NAME_FIELD_SZ = 32
 
 def gen_net_hdr(pkt, efile):
     hdr = b""
-    hdr_len = 40
+    hdr_len = NET_HDR_SZ
     filename_len = len(os.path.basename(efile))
     pkt_len = len(pkt) + NET_HDR_SZ
-    filename = os.path.basename(efile)[:24].ljust(NET_FNAME_MAX, "\x00")
+    filename = os.path.basename(efile)[:NET_FNAME_MAX].ljust(NET_NAME_FIELD_SZ, "\x00")
 
     hdr = struct.pack("!IIQ", hdr_len, filename_len, pkt_len)
     hdr += filename.encode('utf-8')
@@ -32,7 +33,7 @@ def process_file(ip, port, efile):
     equ_packet = gen_equ_pkt(efile)
     net_hdr = gen_net_hdr(equ_packet, efile)
     pkt = net_hdr + equ_packet
-
+    
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((ip, port))
         s.sendall(pkt)
@@ -55,6 +56,7 @@ def main():
             continue
         with open(f"{out_dir}/{f}", "wb") as of:
             of.write(data)
+            
 
 
 if __name__ == "__main__":

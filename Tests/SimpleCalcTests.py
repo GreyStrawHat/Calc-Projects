@@ -1,6 +1,5 @@
 
 #!/bin/python3
-import time
 import sys
 from subprocess import Popen, PIPE
 import os
