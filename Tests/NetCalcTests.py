@@ -42,13 +42,19 @@ def check_nethdr_handling():
 def run_binary():
     os.chdir("./5_NetCalc")
     os.system("./build.sh")
+    print("Starting server in background")
     os.system("./build/netcalc &") # start server in background
     time.sleep(1) #ensure server spinup
     try:
-        check_nethdr_handling
-    except ConnectionError:
+        check_nethdr_handling()
+    except ConnectionRefusedError:
         print("Failed to connect to server; Aborting further tests")
-        exit(-100) 
+        exit(-100)
+    
+    if not os.path.exists("client/client.py"):
+        print("client.py not found; verify location")
+        exit(-100)
+
     os.system("python3 client/client.py -i ../netcalc_tests/unsolved -o ../netcalc_tests/solved")
     os.system("pkill netcalc")
     os.chdir("../")
