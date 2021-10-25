@@ -10,7 +10,7 @@ NET_FNAME_MAX = 24
 
 def gen_net_hdr(pkt_len, efile_name_len):
     hdr = b""
-    hdr_len = 40
+    hdr_len = NET_HDR_SZ
     filename_len = efile_name_len
     pkt_len = pkt_len + NET_HDR_SZ
     filename = "TEST_NAME".ljust(NET_FNAME_MAX, "\x00")
