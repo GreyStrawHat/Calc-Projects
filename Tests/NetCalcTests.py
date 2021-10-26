@@ -6,14 +6,15 @@ import EquGrader
 
 NET_HDR_SZ = 48
 NET_FNAME_MAX = 24
+NET_NAME_FIELD_SZ = 32
 
 
-def gen_net_hdr(pkt_len, efile_name_len):
+def gen_net_hdr(pkt_len, efile_name_len, efile_name):
     hdr = b""
     hdr_len = NET_HDR_SZ
     filename_len = efile_name_len
     pkt_len = pkt_len + NET_HDR_SZ
-    filename = "TEST_NAME".ljust(NET_FNAME_MAX, "\x00")
+    filename = efile_name.ljust(NET_NAME_FIELD_SZ, "\x00")
 
     hdr = struct.pack("!IIQ", hdr_len, filename_len, pkt_len)
     hdr += filename.encode('utf-8')
@@ -26,7 +27,7 @@ def check_nethdr_handling():
 
     tests_passed = 0
 
-    hdrs = [(gen_net_hdr(100, 40), INVALID_HDR_RSP)]
+    hdrs = [(gen_net_hdr(100, 40, "FAKE_FILE"), INVALID_HDR_RSP)]
 
     for h in hdrs:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -35,8 +36,38 @@ def check_nethdr_handling():
             data = s.recv(1024)
             if data == h[1]:
                 tests_passed += 1
+            else:
+                print("Failed to Handle Hdr:", h[1])
     
-    return (len(hdrs) - tests_passed)
+    return tests_passed - len(hdrs)
+
+def check_nethdr_correctness():
+    correct_ret_hdr = (805306368, 335544320, 496)
+    EquGrader.generate_files(1, 32, ".") #create temporary file
+
+    ret = 1
+
+    test_file = ""
+    for i in os.listdir("."):
+        # List files with .py
+        if i.endswith("equ"):
+            test_file = i
+
+    with open(test_file, 'rb') as ef:
+        edata = ef.read()
+        hdr = gen_net_hdr(len(edata), len(test_file), test_file)
+        pkt = hdr + edata
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                    s.connect(("127.0.0.1", 31337))
+                    s.sendall(pkt)
+                    hdr = s.recv(NET_HDR_SZ)
+                    uphdr = struct.unpack("!IIQ", hdr[:16])
+                    if uphdr != correct_ret_hdr:
+                        ret = -1
+
+    os.system("rm ./*.equ") #remove temporary file
+
+    return ret
         
         
 def run_binary():
@@ -46,10 +77,20 @@ def run_binary():
     os.system("./build/netcalc &") # start server in background
     time.sleep(1) #ensure server spinup
     try:
-        check_nethdr_handling()
+        if check_nethdr_handling() < 0:
+            print("Failed to correctly handle bad NetHdrs; Aborting further tests")
+            exit(-100)
     except ConnectionRefusedError:
         print("Failed to connect to server; Aborting further tests")
         exit(-100)
+
+    try:
+        if check_nethdr_correctness() < 0:
+            print("Recived Invalid NetHdr from server; Aborting further tests")
+            exit(-100)
+    except ConnectionRefusedError:
+        print("Failed to connect to server; Aborting further tests")
+        exit(-100)   
     
     if not os.path.exists("client/client.py"):
         print("client.py not found; verify location")
