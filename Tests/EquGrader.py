@@ -343,6 +343,12 @@ class EquGrader():
         self.solheader = UnpackedHeader(self.solfilebuf)
         self.unsolvedlist = self.get_unsolved()
         self.givensols = self.get_solved()
+
+        if self.inheader.numequ != len(self.givensols):
+            print("Error: Number of equations in solution does not match header")
+            self.fail = 1
+            return self.fail
+
         self.checksols = self.solve_all()
         self.errors = self.get_results()
         if len(self.errors) > 0:
