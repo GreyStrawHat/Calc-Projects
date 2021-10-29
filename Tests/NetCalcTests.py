@@ -42,7 +42,7 @@ def check_nethdr_handling():
     return tests_passed - len(hdrs)
 
 def check_nethdr_correctness():
-    correct_ret_hdr = (805306368, 335544320, 496)
+    correct_ret_hdr = (48, 20, 523)
     EquGrader.generate_files(1, 32, ".") #create temporary file
 
     ret = 1
@@ -87,13 +87,16 @@ def run_binary():
     try:
         if check_nethdr_correctness() < 0:
             print("Recived Invalid NetHdr from server; Aborting further tests")
+            os.system("pkill netcalc")
             exit(-100)
     except ConnectionRefusedError:
         print("Failed to connect to server; Aborting further tests")
+        os.system("pkill netcalc")
         exit(-100)   
     
     if not os.path.exists("client/client.py"):
         print("client.py not found; verify location")
+        os.system("pkill netcalc")
         exit(-100)
 
     os.system("python3 client/client.py -i ../netcalc_tests/unsolved -o ../netcalc_tests/solved")
