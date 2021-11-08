@@ -1,4 +1,8 @@
 # Template Repo for JQR Calc Projects.
+
+To create a blank repo for Trainees, create a new repo, use the "Import Project", select "Repo by URL", and set the URL to this repo.
+You may be prompted to enter your DevForce credentials.
+
 - The recommended order of completion is:
 1. SimpleCalc
 2. FileCalc
