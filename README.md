@@ -3,6 +3,8 @@
 To create a blank repo for Trainees, create a new repo, use the "Import Project", select "Repo by URL", and set the URL to this repo.
 You may be prompted to enter your DevForce credentials.
 
+REMEMBER! You must also copy over the .gitlab-ci.yml and .clang-format files!
+
 - The recommended order of completion is:
 1. SimpleCalc
 2. FileCalc
