@@ -1,7 +1,6 @@
 bin/
 build/
 .vscode
-.clang-format
 vgcore*
 *.equ
 __pycache__
