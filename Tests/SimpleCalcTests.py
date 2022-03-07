@@ -11,10 +11,17 @@ PASS = 0
 BIN_LOC = "./build/1_SimpleCalc/simplecalc"
 TEST_LOC = "./Tests/SimpleCalc.tests"
 
+
 def test_input(op1, operator, op2, ans):
-    p = Popen([BIN_LOC, op1, operator, op2], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    p = Popen([BIN_LOC, op1, operator, op2],
+              stdin=PIPE, stdout=PIPE, stderr=PIPE)
     output, err = p.communicate()
+    ret = p.returncode
     str_out = output.decode("ascii")
+
+    # FPE
+    if ret == -8:
+        return FAIL
 
     # if failure occurs, assume first char in error message not decimal
     if (ans == "FAIL"):
@@ -37,8 +44,8 @@ def test_input(op1, operator, op2, ans):
             print(output)
             print(err)
             return FAIL
-            
-            
+
+
 def test_bin():
     if not os.path.exists(BIN_LOC):
         print("Binary Does Not Exist; Check build process", file=sys.stderr)
@@ -61,7 +68,6 @@ def main():
 
             if res == FAIL:
                 print(f"Failed: {equ.strip()}\n")
-
 
     print("\nPassed {} out of {} ".format(numpassed, numtests))
 
