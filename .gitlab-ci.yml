@@ -5,7 +5,7 @@ stages:
   - export
 
 .container:
-  image: registry.cybbh.space/17d/bolc/docker/build:latest
+  image: registry.levelup.cce.af.mil/cdso/containers/base-registry/ubuntu:20.04
   stage: build
   interruptible: true
   allow_failure: false
@@ -25,6 +25,9 @@ stages:
   extends:
     - .container
   stage: build
+  before_script:
+    - apt-get update
+    - apt-get install -y cmake
   script:
     - bash build.sh
 
@@ -32,6 +35,9 @@ stages:
   extends:
     - .container
   stage: test
+  before_script:
+    - apt-get update
+    - apt-get install -y cmake python3
   script:
     - mkdir -p build
     - cd build
@@ -40,7 +46,7 @@ stages:
     - make test "ARGS= -R $CUR_TEST -V" 
 
 JQRCalc-Build:
-  needs: [ "Common-Lint", "SimpleCalc-Lint", "FileCalc-Lint", "DataStructures1-Lint", "ThreadCalc-Lint", "NetCalc-Lint"]
+  needs: []
   <<: *build
 
 Common-Lint:
@@ -112,4 +118,3 @@ NetCalc-Test:
     CUR_PROJ: 5_NetCalc
     CUR_TEST: TestNetCalc
   <<: *test
-
