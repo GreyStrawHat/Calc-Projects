@@ -1,9 +1,9 @@
 import os
 import EquGrader
+from os import path
 
-            
 def run_binary():
-    os.system("./build/4_ThreadCalc/threadcalc ./threadcalc_tests/unsolved ./threadcalc_tests/solved")
+    os.system(f"{os.path.dirname(__file__)}/../4_ThreadCalc/bin/threadcalc ./threadcalc_tests/unsolved ./threadcalc_tests/solved")
 
 
 def main():
@@ -19,7 +19,6 @@ def main():
 
     return result
 
-
-
 if __name__ == "__main__":
-    main()
+    result = main()
+    exit(abs(result))

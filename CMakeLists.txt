@@ -1,36 +1,33 @@
 cmake_minimum_required(VERSION 3.16)
 
-enable_testing()
-set(CTEST_RERUN_FAILED ON)
-set(CTEST_OUTPUT_ON_FAILURE ON)
-
 project(
     JQRCalcProjects
     LANGUAGES "C"
-    DESCRIPTION "JQR Example Projects"
+    DESCRIPTION "JQR Example Projects v1.5"
 )
 
-if (DEBUG EQUAL "1")
-    message("DEBUGGING VERSION")
-    add_compile_definitions(DEBUG)
-else()
-    message("RELEASE VERSION")
-endif()
-
-
+include(jqr_main.cmake)
 
 include_directories(0_Common/include)
 
-# repeat for other projects
-add_subdirectory(0_Common)
-add_subdirectory(1_SimpleCalc)
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/0_Common/CMakeLists.txt")
+    add_subdirectory(0_Common)
+endif()
 
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/1_SimpleCalc/CMakeLists.txt")
+    add_subdirectory(1_SimpleCalc)
+endif()
 
-# repeat for other projects
-add_test(
-    NAME TestSimpleCalc
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    COMMAND bash ${CMAKE_SOURCE_DIR}/local_tester.sh 1_SimpleCalc
-)
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/2_FileCalc/CMakeLists.txt")
+    add_subdirectory(2_FileCalc)
+endif()
 
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/4_ThreadCalc/CMakeLists.txt")
+    add_subdirectory(4_ThreadCalc)
+endif()
 
+if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/5_NetCalc/CMakeLists.txt")
+    add_subdirectory(5_NetCalc)
+endif()
+
+# EOF
