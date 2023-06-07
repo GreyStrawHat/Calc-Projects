@@ -9,7 +9,7 @@ add_executable(tests_threads
     ${CMAKE_CURRENT_LIST_DIR}/thread_tests_main.c
     ${CMAKE_CURRENT_LIST_DIR}/thread_tests.c
 )
-target_link_libraries(tests_threads thread_calc cunit pthread)
+target_link_libraries(tests_threads threadpool cunit pthread)
 INSTALL(TARGETS tests_threads DESTINATION ${PROJECT_SOURCE_DIR}/bin)
 
 add_test(
