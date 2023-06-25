@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <limits.h>
+#include "error_msg.h"
 #include "math_operations.h"
 
 uint32_t rotateLeft(uint32_t value, uint32_t shift)

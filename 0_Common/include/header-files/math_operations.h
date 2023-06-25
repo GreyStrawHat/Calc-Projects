@@ -12,7 +12,4 @@ uint32_t sanitize_lshift(uint32_t arg1, uint32_t arg2);
 uint32_t rotateLeft(uint32_t value, uint32_t shift);
 uint32_t rotateRight(uint32_t value, uint32_t shift);
 
-int32_t signed_result;
-uint32_t unsigned_result;
-
 #endif

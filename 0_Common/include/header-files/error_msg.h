@@ -1,5 +1,5 @@
-#ifndef CALC_H
-#define CALC_H
+#ifndef ERROR_MSG_H
+#define ERROR_MSG_H
 
 void usage(char *program_name);
 int unsigned_int_error();

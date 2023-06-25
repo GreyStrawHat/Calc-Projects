@@ -1,10 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "calc.h"
+#include "args.h"
 #include "math_operations.h"
 #include "error_msg.h"
 
 uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_name)
 {
+    static int32_t signed_result;
+    static uint32_t unsigned_result;
 
     switch (*operator_val)
     {
@@ -27,10 +32,6 @@ uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_
         break;
     case '*':
         signed_result = sanitize_multiplication(sanitize_iarg(operand1), sanitize_iarg(operand2));
-        if (signed_result < 0)
-        {
-            unsigned_int_error();
-        }
         printf("The Result is: %i\n", signed_result);
         break;
     case '&':
@@ -104,4 +105,7 @@ uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_
     }
 
     return 0;
+
+    END:
+        return 0;
 }

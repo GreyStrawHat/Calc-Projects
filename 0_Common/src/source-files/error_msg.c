@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 void usage(char *program_name)
 {
     printf("List of Operators:\n");
