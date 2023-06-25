@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include "calc.h"
 #include "math_operations.h"
 #include "error_msg.h"
 
