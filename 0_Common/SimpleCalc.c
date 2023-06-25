@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "error_msg.h"
 #include "calc.h"
 
 int main(int argc, char **argv)
 {
     if (4 != argc)
     {
-        fprintf(stderr, "Argc error.\n");
+        fprintf(stderr, "Invalid number of arguments.\n");
+        usage(argv[0]);
         goto END;
     }
 
@@ -15,7 +17,8 @@ int main(int argc, char **argv)
 
     if ((0 == strtoull(argv[1], end, 10)) && (strncmp(argv[1], "0\n", 1) != 0))
     {
-        fprintf(stderr, "Argv[1] error.\n");
+        fprintf(stderr, "Integer values only.\n");
+        usage(argv[0]);
         goto END;
     }
     else
