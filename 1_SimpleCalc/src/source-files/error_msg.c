@@ -18,7 +18,6 @@ void usage(char *program_name)
     printf("For Bitwise Rotate Left:\t( <<< )*\n");
     printf("\nOperators with an asterisk require single quotes or escape markers to function.\n\n");
     printf("Usage: %s operand1 \'operator\' operand2 \n\n", program_name);
-    return;
 }
 
 int unsigned_int_error()

@@ -21,11 +21,7 @@ int main(int argc, char **argv)
         usage(argv[0]);
         goto END;
     }
-    else
-    {
-        printf("Success.\n");
-    }
-
+    
     calc(argv[1], argv[2], argv[3], argv[0]);
 
     return 0;

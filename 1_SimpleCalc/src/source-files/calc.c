@@ -46,33 +46,25 @@ uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_
         printf("The Result is: %u\n", unsigned_result);
         break;
     default:
-        if (strncmp(operator_val, "<<<\0", 4) == 0)
+        if (0 == strncmp(operator_val, "<<<\0", 4))
         {
             printf("The Result is: %u\n", rotateLeft(sanitize_uarg(operand1), sanitize_uarg(operand2)));
             break;
         }
-        else if (strncmp(operator_val, ">>>\0", 4) == 0)
+        else if (0 == strncmp(operator_val, ">>>\0", 4))
         {
             printf("The Result is: %u\n", rotateRight(sanitize_uarg(operand1), sanitize_uarg(operand2)));
             break;
         }
-        else if (strncmp(operator_val, ">>\0", 3) == 0)
+        else if (0 == strncmp(operator_val, ">>\0", 3)) 
         {
             unsigned_result = (sanitize_uarg(operand1) >> sanitize_uarg(operand2));
-            if (unsigned_result < 0)
-            {
-                unsigned_int_error();
-            }
             printf("The Result is: %u\n", unsigned_result);
             break;
         }
-        else if (strncmp(operator_val, "<<\0", 3) == 0)
+        else if (0 == strncmp(operator_val, "<<\0", 3))
         {
             unsigned_result = sanitize_lshift(sanitize_uarg(operand1), sanitize_uarg(operand2));
-            if (unsigned_result < 0)
-            {
-                unsigned_int_error();
-            }
             printf("The Result is: %u\n", unsigned_result);
             break;
         }
@@ -80,6 +72,7 @@ uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_
         {
             printf("Invalid operator_val.\n");
             usage(program_name);
+            goto END;
         }
     }
 

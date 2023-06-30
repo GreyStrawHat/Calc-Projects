@@ -13,6 +13,7 @@ uint32_t rotateLeft(uint32_t value, uint32_t shift)
 
 uint32_t rotateRight(uint32_t value, uint32_t shift)
 {
+    shift %= 32;
     //uint32_t rotated_value = ((value >> shift) | sanitize_lshift(value, (32 - shift)));
     uint32_t rotated_value = ((value >> shift) | sanitize_lshift(value, (32 - shift)));
     return rotated_value;
@@ -113,7 +114,7 @@ int32_t sanitize_modulo(int32_t arg1, int32_t arg2)
 
 uint32_t sanitize_lshift(uint32_t arg1, uint32_t arg2)
 {
-    if (((long long)arg1 << (long long)arg2) > UINT32_MAX)
+    if ((arg2 >= 32 || arg1) > (UINT32_MAX >> arg2))
     {
         unsigned_int_error();
     }
