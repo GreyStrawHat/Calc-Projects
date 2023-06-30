@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 
     char **end = NULL;
 
-    if ((0 == strtoull(argv[1], end, 10)) && (strncmp(argv[1], "0\n", 1) != 0))
+    if ((0 == strtoull(argv[1], end, 10)) && (0 != strncmp(argv[1], "0\n", 1)))
     {
         fprintf(stderr, "Integer values only.\n");
         usage(argv[0]);

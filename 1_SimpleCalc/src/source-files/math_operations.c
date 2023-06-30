@@ -85,12 +85,12 @@ int32_t sanitize_multiplication(int32_t arg1, int32_t arg2)
 
 int32_t sanitize_division(int32_t arg1, int32_t arg2)
 {
-    if (arg2 == 0)
+    if (0 == arg2)
     {
         printf("Cannot divide by Zero.\n");
         exit(1);
     }
-    if (((arg1 == LONG_MIN) && (arg2 == -1)))
+    if (((LONG_MIN == arg1) && (-1 == arg2)))
     {
         integer_overflow_error();
     }
@@ -102,7 +102,7 @@ int32_t sanitize_division(int32_t arg1, int32_t arg2)
 
 int32_t sanitize_modulo(int32_t arg1, int32_t arg2)
 {
-    if ((arg2 == 0) || ((arg1 == LONG_MIN) && (arg2 == -1)))
+    if ((0 == arg2) || ((LONG_MIN == arg1) && (-1 == arg2)))
     {
         integer_overflow_error();
     }
