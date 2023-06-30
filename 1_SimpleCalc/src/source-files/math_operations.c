@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include <stdint.h>
 #include <limits.h>
 #include "error_msg.h"
@@ -82,6 +84,11 @@ int32_t sanitize_multiplication(int32_t arg1, int32_t arg2)
 
 int32_t sanitize_division(int32_t arg1, int32_t arg2)
 {
+    if (arg2 == 0)
+    {
+        printf("Cannot divide by Zero.\n");
+        exit(1);
+    }
     if (((arg1 == LONG_MIN) && (arg2 == -1)))
     {
         integer_overflow_error();

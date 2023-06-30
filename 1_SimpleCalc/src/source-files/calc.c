@@ -22,11 +22,6 @@ uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_
         printf("The Result is: %i\n", signed_result);
         break;
     case '/':
-        if (sanitize_iarg(operand2) == 0)
-        {
-            printf("Cannot divide by Zero.\n");
-            exit(1);
-        }
         signed_result = sanitize_division(sanitize_iarg(operand1), sanitize_iarg(operand2));
         printf("The Result is: %i\n", signed_result);
         break;
@@ -36,34 +31,18 @@ uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_
         break;
     case '&':
         unsigned_result = (sanitize_uarg(operand1) & sanitize_uarg(operand2));
-        if (unsigned_result < 0)
-        {
-            unsigned_int_error();
-        }
         printf("The Result is: %i\n", unsigned_result);
         break;
     case '|':
         unsigned_result = (sanitize_uarg(operand1) | sanitize_uarg(operand2));
-        if (unsigned_result < 0)
-        {
-            unsigned_int_error();
-        }
         printf("The Result is: %u\n", unsigned_result);
         break;
     case '%':
         signed_result = sanitize_modulo(sanitize_iarg(operand1), sanitize_iarg(operand2));
-        if (signed_result < 0)
-        {
-            unsigned_int_error();
-        }
         printf("The Result is: %i\n", signed_result);
         break;
     case '^':
         unsigned_result = (sanitize_uarg(operand1) ^ sanitize_uarg(operand2));
-        if (unsigned_result < 0)
-        {
-            unsigned_int_error();
-        }
         printf("The Result is: %u\n", unsigned_result);
         break;
     default:
@@ -104,7 +83,7 @@ uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_
         }
     }
 
-    return 0;
+    goto END;
 
     END:
         return 0;
