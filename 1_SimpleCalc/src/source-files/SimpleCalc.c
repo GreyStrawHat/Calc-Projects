@@ -13,9 +13,9 @@ int main(int argc, char **argv)
         goto END;
     }
 
-    char **end = NULL;
+    char **end_pp = NULL;
 
-    if ((0 == strtoull(argv[1], end, 10)) && (0 != strncmp(argv[1], "0\n", 1)))
+    if ((0 == strtoull(argv[1], end_pp, 10)) && (0 != strncmp(argv[1], "0\n", 1)))
     {
         fprintf(stderr, "Integer values only.\n");
         usage(argv[0]);
