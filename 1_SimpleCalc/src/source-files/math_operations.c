@@ -120,3 +120,5 @@ uint32_t sanitize_lshift(uint32_t arg1, uint32_t arg2)
     }
     return (arg1 << arg2);
 }
+
+/*** end of file ***/

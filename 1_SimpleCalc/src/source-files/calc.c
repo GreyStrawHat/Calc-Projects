@@ -81,3 +81,5 @@ uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_
     END:
         return 0;
 }
+
+/*** end of file ***/
