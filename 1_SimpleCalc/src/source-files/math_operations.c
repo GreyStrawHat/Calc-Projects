@@ -7,21 +7,25 @@
 
 uint32_t rotateLeft(uint32_t value, uint32_t shift)
 {
-    uint32_t rotated_value = (sanitize_lshift(value, shift) | (value >> (32 - shift)));
+    uint32_t rotated_value =
+        (sanitize_lshift(value, shift) | (value >> (32 - shift)));
     return rotated_value;
 }
 
 uint32_t rotateRight(uint32_t value, uint32_t shift)
 {
     shift %= 32;
-    //uint32_t rotated_value = ((value >> shift) | sanitize_lshift(value, (32 - shift)));
-    uint32_t rotated_value = ((value >> shift) | sanitize_lshift(value, (32 - shift)));
+    // uint32_t rotated_value = ((value >> shift) | sanitize_lshift(value, (32 -
+    // shift)));
+    uint32_t rotated_value =
+        ((value >> shift) | sanitize_lshift(value, (32 - shift)));
     return rotated_value;
 }
 
 int32_t sanitize_addition(int32_t arg1, int32_t arg2)
 {
-    if (((arg2 > 0) && (arg1 > (INT32_MAX - arg2))) || ((arg2 < 0) && (arg1 < (INT32_MIN - arg2))))
+    if (((arg2 > 0) && (arg1 > (INT32_MAX - arg2))) ||
+        ((arg2 < 0) && (arg1 < (INT32_MIN - arg2))))
     {
         integer_overflow_error();
     }
@@ -33,7 +37,8 @@ int32_t sanitize_addition(int32_t arg1, int32_t arg2)
 
 int32_t sanitize_subtraction(int32_t arg1, int32_t arg2)
 {
-    if (((arg2 > 0 && arg1 < INT32_MIN + arg2) || (arg2 < 0 && arg1 > INT32_MAX + arg2)))
+    if (((arg2 > 0 && arg1 < INT32_MIN + arg2) ||
+         (arg2 < 0 && arg1 > INT32_MAX + arg2)))
     {
         integer_overflow_error();
     }

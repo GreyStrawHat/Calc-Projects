@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void usage(char *program_name)
+void usage(char * program_name)
 {
     printf("List of Operators:\n");
     printf("For Addition:\t\t\t( + )\n");
@@ -16,13 +16,16 @@ void usage(char *program_name)
     printf("For Bitwise Shift Left:\t\t( << )*\n");
     printf("For Bitwise Rotate Right:\t( >>> )*\n");
     printf("For Bitwise Rotate Left:\t( <<< )*\n");
-    printf("\nOperators with an asterisk require single quotes or escape markers to function.\n\n");
+    printf(
+        "\nOperators with an asterisk require single quotes or escape markers "
+        "to function.\n\n");
     printf("Usage: %s operand1 \'operator\' operand2 \n\n", program_name);
 }
 
 int unsigned_int_error()
 {
-    printf("Operation Failed. \nPotential unsigned integer wrapping detected.\n");
+    printf(
+        "Operation Failed. \nPotential unsigned integer wrapping detected.\n");
     exit(1);
 }
 
