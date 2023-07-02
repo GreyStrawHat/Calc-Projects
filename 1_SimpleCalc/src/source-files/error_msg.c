@@ -3,6 +3,7 @@
 
 void usage(char * program_name)
 {
+    printf("Simple Calculator in C\n");
     printf("List of Operators:\n");
     printf("For Addition:\t\t\t( + )\n");
     printf("For Subtraction:\t\t( - )\n");
@@ -19,6 +20,9 @@ void usage(char * program_name)
     printf(
         "\nOperators with an asterisk require single quotes or escape markers "
         "to function.\n\n");
+    printf(
+        "Negative numbers not accepted for bit related equations (<<, >>, &, "
+        "|, ^, <<<, >>>)");
     printf("Usage: %s operand1 \'operator\' operand2 \n\n", program_name);
 }
 

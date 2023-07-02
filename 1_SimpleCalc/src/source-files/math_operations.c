@@ -15,8 +15,6 @@ uint32_t rotateLeft(uint32_t value, uint32_t shift)
 uint32_t rotateRight(uint32_t value, uint32_t shift)
 {
     shift %= 32;
-    // uint32_t rotated_value = ((value >> shift) | sanitize_lshift(value, (32 -
-    // shift)));
     uint32_t rotated_value =
         ((value >> shift) | sanitize_lshift(value, (32 - shift)));
     return rotated_value;
