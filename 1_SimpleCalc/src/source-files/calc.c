@@ -6,10 +6,10 @@
 #include "math_operations.h"
 #include "error_msg.h"
 
-uint32_t calc(char * operand1,
-              char * operator_val,
-              char * operand2,
-              char * program_name)
+void calc(char * operand1,
+          char * operator_val,
+          char * operand2,
+          char * program_name)
 {
     static int32_t  signed_result;
     static uint32_t unsigned_result;
@@ -96,7 +96,7 @@ uint32_t calc(char * operand1,
     goto END;
 
 END:
-    return 0;
+    return;
 }
 
 /*** end of file ***/

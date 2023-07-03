@@ -2,6 +2,14 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/**
+ * @brief Converts an operand string to an unsigned integer and checks if it's
+ * safe
+ *
+ * @param arg The operand to convert
+ * @return uint32_t or -1 if the value is unsafe
+ */
+
 uint32_t sanitize_uarg(char * arg)
 {
     char *             end_p;
@@ -10,13 +18,20 @@ uint32_t sanitize_uarg(char * arg)
     if ((argument < 0) || (argument > UINT32_MAX))
     {
         printf("Unsafe value detected.\n");
-        exit(1);
+        return -1;
     }
     else
     {
         return (uint32_t)argument;
     }
 }
+
+/**
+ * @brief Converts an operand string to a signed integer and checks if it's safe
+ *
+ * @param arg The operand to convert
+ * @return int32_t or -1 if the value is unsafe
+ */
 
 int32_t sanitize_iarg(char * arg)
 {
@@ -26,7 +41,7 @@ int32_t sanitize_iarg(char * arg)
     if ((argument < INT32_MIN) || (argument > INT32_MAX))
     {
         printf("Unsafe value detected.\n");
-        exit(1);
+        return -1;
     }
     else
     {
