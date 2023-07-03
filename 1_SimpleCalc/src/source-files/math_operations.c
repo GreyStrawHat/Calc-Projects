@@ -164,7 +164,7 @@ int32_t sanitize_division(int32_t arg1, int32_t arg2)
     if (0 == arg2)
     {
         printf("Cannot divide by zero.\n");
-        return -1;
+        return -2;
     }
     if (((LONG_MIN == arg1) && (-1 == arg2)))
     {

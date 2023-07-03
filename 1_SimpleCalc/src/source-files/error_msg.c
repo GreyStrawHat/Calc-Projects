@@ -3,17 +3,17 @@
 
 /**
  * @brief Prints usage information for SimpleCalc prgram.
- * 
+ *
  * This function displays the list of operators supported by SimpleCalc
  * and provides an example of how to use the program.
- * 
+ *
  * @param program_name Name of program.
  */
 
 void usage(char * program_name)
 {
-    printf("Simple Calculator in C\n");
-    printf("List of Operators:\n");
+    printf("Simple Calculator in C\n\n");
+    printf("List of Operators:\n\n");
     printf("For Addition:\t\t\t( + )\n");
     printf("For Subtraction:\t\t( - )\n");
     printf("For Division:\t\t\t( / )\n");
@@ -25,13 +25,13 @@ void usage(char * program_name)
     printf("For Bitwise Shift Right:\t( >> )*\n");
     printf("For Bitwise Shift Left:\t\t( << )*\n");
     printf("For Bitwise Rotate Right:\t( >>> )*\n");
-    printf("For Bitwise Rotate Left:\t( <<< )*\n");
+    printf("For Bitwise Rotate Left:\t( <<< )*\n\n");
     printf(
-        "\nOperators with an asterisk require single quotes or escape markers "
+        "Operators with an asterisk require single quotes or escape markers "
         "to function.\n\n");
     printf(
         "Negative numbers not accepted for bit related equations (<<, >>, &, "
-        "|, ^, <<<, >>>)");
+        "|, ^, <<<, >>>)\n\n");
     printf("Usage: ./%s operand1 \'operator\' operand2 \n\n", program_name);
 }
 

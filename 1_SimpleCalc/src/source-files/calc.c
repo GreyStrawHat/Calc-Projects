@@ -17,41 +17,107 @@ void calc(char * operand1,
     switch (*operator_val)
     {
         case '+':
+            if (-1 == sanitize_iarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_iarg(operand2))
+            {
+                goto END;
+            }
             signed_result = sanitize_addition(sanitize_iarg(operand1),
                                               sanitize_iarg(operand2));
             printf("The Result is: %i\n", signed_result);
             break;
         case '-':
+            if (-1 == sanitize_iarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_iarg(operand2))
+            {
+                goto END;
+            }
             signed_result = sanitize_subtraction(sanitize_iarg(operand1),
                                                  sanitize_iarg(operand2));
             printf("The Result is: %i\n", signed_result);
             break;
         case '/':
+            if (-1 == sanitize_iarg(operand1))
+            {
+                goto END;
+            }
+            if ((-1 == sanitize_iarg(operand2)) ||
+                (-2 == sanitize_division(sanitize_iarg(operand1),
+                                         sanitize_iarg(operand2))))
+            {
+                goto END;
+            }
             signed_result = sanitize_division(sanitize_iarg(operand1),
                                               sanitize_iarg(operand2));
             printf("The Result is: %i\n", signed_result);
             break;
         case '*':
+            if (-1 == sanitize_iarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_iarg(operand2))
+            {
+                goto END;
+            }
             signed_result = sanitize_multiplication(sanitize_iarg(operand1),
                                                     sanitize_iarg(operand2));
             printf("The Result is: %i\n", signed_result);
             break;
         case '&':
+            if (-1 == sanitize_uarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_uarg(operand2))
+            {
+                goto END;
+            }
             unsigned_result =
                 (sanitize_uarg(operand1) & sanitize_uarg(operand2));
             printf("The Result is: %i\n", unsigned_result);
             break;
         case '|':
+            if (-1 == sanitize_uarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_uarg(operand2))
+            {
+                goto END;
+            }
             unsigned_result =
                 (sanitize_uarg(operand1) | sanitize_uarg(operand2));
             printf("The Result is: %u\n", unsigned_result);
             break;
         case '%':
+            if (-1 == sanitize_iarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_iarg(operand2))
+            {
+                goto END;
+            }
             signed_result = sanitize_modulo(sanitize_iarg(operand1),
                                             sanitize_iarg(operand2));
             printf("The Result is: %i\n", signed_result);
             break;
         case '^':
+            if (-1 == sanitize_uarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_uarg(operand2))
+            {
+                goto END;
+            }
             unsigned_result =
                 (sanitize_uarg(operand1) ^ sanitize_uarg(operand2));
             printf("The Result is: %u\n", unsigned_result);
@@ -59,6 +125,14 @@ void calc(char * operand1,
         default:
             if (0 == strncmp(operator_val, "<<<\0", 4))
             {
+                if (-1 == sanitize_uarg(operand1))
+                {
+                    goto END;
+                }
+                if (-1 == sanitize_uarg(operand2))
+                {
+                    goto END;
+                }
                 printf("The Result is: %u\n",
                        rotateLeft(sanitize_uarg(operand1),
                                   sanitize_uarg(operand2)));
@@ -66,6 +140,14 @@ void calc(char * operand1,
             }
             else if (0 == strncmp(operator_val, ">>>\0", 4))
             {
+                if (-1 == sanitize_uarg(operand1))
+                {
+                    goto END;
+                }
+                if (-1 == sanitize_uarg(operand2))
+                {
+                    goto END;
+                }
                 printf("The Result is: %u\n",
                        rotateRight(sanitize_uarg(operand1),
                                    sanitize_uarg(operand2)));
@@ -73,6 +155,14 @@ void calc(char * operand1,
             }
             else if (0 == strncmp(operator_val, ">>\0", 3))
             {
+                if (-1 == sanitize_uarg(operand1))
+                {
+                    goto END;
+                }
+                if (-1 == sanitize_uarg(operand2))
+                {
+                    goto END;
+                }
                 unsigned_result =
                     (sanitize_uarg(operand1) >> sanitize_uarg(operand2));
                 printf("The Result is: %u\n", unsigned_result);
@@ -80,6 +170,14 @@ void calc(char * operand1,
             }
             else if (0 == strncmp(operator_val, "<<\0", 3))
             {
+                if (-1 == sanitize_uarg(operand1))
+                {
+                    goto END;
+                }
+                if (-1 == sanitize_uarg(operand2))
+                {
+                    goto END;
+                }
                 unsigned_result = sanitize_lshift(sanitize_uarg(operand1),
                                                   sanitize_uarg(operand2));
                 printf("The Result is: %u\n", unsigned_result);
@@ -92,8 +190,6 @@ void calc(char * operand1,
                 goto END;
             }
     }
-
-    goto END;
 
 END:
     return;

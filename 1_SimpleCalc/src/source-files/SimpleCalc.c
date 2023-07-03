@@ -8,7 +8,7 @@ int main(int argc, char ** argv)
 {
     if (4 != argc)
     {
-        fprintf(stderr, "Invalid number of arguments.\n");
+        fprintf(stderr, "Invalid number of arguments.\n\n");
         usage(argv[0]);
         goto END;
     }
