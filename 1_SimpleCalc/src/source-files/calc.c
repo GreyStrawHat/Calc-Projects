@@ -6,24 +6,30 @@
 #include "math_operations.h"
 #include "error_msg.h"
 
-void calc(char * operand1,
-          char * operator_val,
-          char * operand2,
-          char * program_name)
+int calc(char * operand1,
+         char * operator_val,
+         char * operand2,
+         char * program_name)
 {
-    static int32_t  signed_result;
-    static uint32_t unsigned_result;
+    static int32_t  signed_result   = 0;
+    static uint32_t unsigned_result = 0;
 
     switch (*operator_val)
     {
         case '+':
             if (-1 == sanitize_iarg(operand1))
             {
-                goto END;
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
             }
             if (-1 == sanitize_iarg(operand2))
             {
-                goto END;
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
             }
             signed_result = sanitize_addition(sanitize_iarg(operand1),
                                               sanitize_iarg(operand2));
@@ -32,11 +38,17 @@ void calc(char * operand1,
         case '-':
             if (-1 == sanitize_iarg(operand1))
             {
-                goto END;
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
             }
             if (-1 == sanitize_iarg(operand2))
             {
-                goto END;
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
             }
             signed_result = sanitize_subtraction(sanitize_iarg(operand1),
                                                  sanitize_iarg(operand2));
@@ -45,13 +57,17 @@ void calc(char * operand1,
         case '/':
             if (-1 == sanitize_iarg(operand1))
             {
-                goto END;
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
             }
-            if ((-1 == sanitize_iarg(operand2)) ||
-                (-2 == sanitize_division(sanitize_iarg(operand1),
-                                         sanitize_iarg(operand2))))
+            if (-1 == sanitize_iarg(operand2))
             {
-                goto END;
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
             }
             signed_result = sanitize_division(sanitize_iarg(operand1),
                                               sanitize_iarg(operand2));
@@ -60,11 +76,17 @@ void calc(char * operand1,
         case '*':
             if (-1 == sanitize_iarg(operand1))
             {
-                goto END;
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
             }
             if (-1 == sanitize_iarg(operand2))
             {
-                goto END;
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
             }
             signed_result = sanitize_multiplication(sanitize_iarg(operand1),
                                                     sanitize_iarg(operand2));
@@ -99,11 +121,17 @@ void calc(char * operand1,
         case '%':
             if (-1 == sanitize_iarg(operand1))
             {
-                goto END;
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
             }
             if (-1 == sanitize_iarg(operand2))
             {
-                goto END;
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
             }
             signed_result = sanitize_modulo(sanitize_iarg(operand1),
                                             sanitize_iarg(operand2));
@@ -191,8 +219,10 @@ void calc(char * operand1,
             }
     }
 
+    return 0;
+
 END:
-    return;
+    return -1;
 }
 
 /*** end of file ***/

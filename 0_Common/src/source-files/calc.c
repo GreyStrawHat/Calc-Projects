@@ -6,106 +6,223 @@
 #include "math_operations.h"
 #include "error_msg.h"
 
-uint32_t calc(char* operand1, char* operator_val, char* operand2, char* program_name)
+int calc(char * operand1,
+         char * operator_val,
+         char * operand2,
+         char * program_name)
 {
-    static int32_t signed_result;
-    static uint32_t unsigned_result;
+    static int32_t  signed_result   = 0;
+    static uint32_t unsigned_result = 0;
 
     switch (*operator_val)
     {
-    case '+':
-        signed_result = sanitize_addition(sanitize_iarg(operand1), sanitize_iarg(operand2));
-        printf("The Result is: %i\n", signed_result);
-        break;
-    case '-':
-        signed_result = sanitize_subtraction(sanitize_iarg(operand1), sanitize_iarg(operand2));
-        printf("The Result is: %i\n", signed_result);
-        break;
-    case '/':
-        if (sanitize_iarg(operand2) == 0)
-        {
-            printf("Cannot divide by Zero.\n");
-            exit(1);
-        }
-        signed_result = sanitize_division(sanitize_iarg(operand1), sanitize_iarg(operand2));
-        printf("The Result is: %i\n", signed_result);
-        break;
-    case '*':
-        signed_result = sanitize_multiplication(sanitize_iarg(operand1), sanitize_iarg(operand2));
-        printf("The Result is: %i\n", signed_result);
-        break;
-    case '&':
-        unsigned_result = (sanitize_uarg(operand1) & sanitize_uarg(operand2));
-        if (unsigned_result < 0)
-        {
-            unsigned_int_error();
-        }
-        printf("The Result is: %i\n", unsigned_result);
-        break;
-    case '|':
-        unsigned_result = (sanitize_uarg(operand1) | sanitize_uarg(operand2));
-        if (unsigned_result < 0)
-        {
-            unsigned_int_error();
-        }
-        printf("The Result is: %lu\n", unsigned_result);
-        break;
-    case '%':
-        signed_result = sanitize_modulo(sanitize_iarg(operand1), sanitize_iarg(operand2));
-        if (signed_result < 0)
-        {
-            unsigned_int_error();
-        }
-        printf("The Result is: %i\n", signed_result);
-        break;
-    case '^':
-        unsigned_result = (sanitize_uarg(operand1) ^ sanitize_uarg(operand2));
-        if (unsigned_result < 0)
-        {
-            unsigned_int_error();
-        }
-        printf("The Result is: %lu\n", unsigned_result);
-        break;
-    default:
-        if (strncmp(operator_val, "<<<\0", 4) == 0)
-        {
-            printf("The Result is: %lu\n", rotateLeft(sanitize_uarg(operand1), sanitize_uarg(operand2)));
-            break;
-        }
-        else if (strncmp(operator_val, ">>>\0", 4) == 0)
-        {
-            printf("The Result is: %lu\n", rotateRight(sanitize_uarg(operand1), sanitize_uarg(operand2)));
-            break;
-        }
-        else if (strncmp(operator_val, ">>\0", 3) == 0)
-        {
-            unsigned_result = (sanitize_uarg(operand1) >> sanitize_uarg(operand2));
-            if (unsigned_result < 0)
+        case '+':
+            if (-1 == sanitize_iarg(operand1))
             {
-                unsigned_int_error();
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
             }
-            printf("The Result is: %lu\n", unsigned_result);
-            break;
-        }
-        else if (strncmp(operator_val, "<<\0", 3) == 0)
-        {
-            unsigned_result = sanitize_lshift(sanitize_uarg(operand1), sanitize_uarg(operand2));
-            if (unsigned_result < 0)
+            if (-1 == sanitize_iarg(operand2))
             {
-                unsigned_int_error();
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
             }
-            printf("The Result is: %lu\n", unsigned_result);
+            signed_result = sanitize_addition(sanitize_iarg(operand1),
+                                              sanitize_iarg(operand2));
+            printf("The Result is: %i\n", signed_result);
             break;
-        }
-        else
-        {
-            printf("Invalid operator_val.\n");
-            usage(program_name);
-        }
+        case '-':
+            if (-1 == sanitize_iarg(operand1))
+            {
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
+            }
+            if (-1 == sanitize_iarg(operand2))
+            {
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
+            }
+            signed_result = sanitize_subtraction(sanitize_iarg(operand1),
+                                                 sanitize_iarg(operand2));
+            printf("The Result is: %i\n", signed_result);
+            break;
+        case '/':
+            if (-1 == sanitize_iarg(operand1))
+            {
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
+            }
+            if (-1 == sanitize_iarg(operand2))
+            {
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
+            }
+            signed_result = sanitize_division(sanitize_iarg(operand1),
+                                              sanitize_iarg(operand2));
+            printf("The Result is: %i\n", signed_result);
+            break;
+        case '*':
+            if (-1 == sanitize_iarg(operand1))
+            {
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
+            }
+            if (-1 == sanitize_iarg(operand2))
+            {
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
+            }
+            signed_result = sanitize_multiplication(sanitize_iarg(operand1),
+                                                    sanitize_iarg(operand2));
+            printf("The Result is: %i\n", signed_result);
+            break;
+        case '&':
+            if (-1 == sanitize_uarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_uarg(operand2))
+            {
+                goto END;
+            }
+            unsigned_result =
+                (sanitize_uarg(operand1) & sanitize_uarg(operand2));
+            printf("The Result is: %i\n", unsigned_result);
+            break;
+        case '|':
+            if (-1 == sanitize_uarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_uarg(operand2))
+            {
+                goto END;
+            }
+            unsigned_result =
+                (sanitize_uarg(operand1) | sanitize_uarg(operand2));
+            printf("The Result is: %u\n", unsigned_result);
+            break;
+        case '%':
+            if (-1 == sanitize_iarg(operand1))
+            {
+                if (-1 != atoi(operand1))
+                {
+                    goto END;
+                }
+            }
+            if (-1 == sanitize_iarg(operand2))
+            {
+                if (-1 != atoi(operand2))
+                {
+                    goto END;
+                }
+            }
+            signed_result = sanitize_modulo(sanitize_iarg(operand1),
+                                            sanitize_iarg(operand2));
+            printf("The Result is: %i\n", signed_result);
+            break;
+        case '^':
+            if (-1 == sanitize_uarg(operand1))
+            {
+                goto END;
+            }
+            if (-1 == sanitize_uarg(operand2))
+            {
+                goto END;
+            }
+            unsigned_result =
+                (sanitize_uarg(operand1) ^ sanitize_uarg(operand2));
+            printf("The Result is: %u\n", unsigned_result);
+            break;
+        default:
+            if (0 == strncmp(operator_val, "<<<\0", 4))
+            {
+                if (-1 == sanitize_uarg(operand1))
+                {
+                    goto END;
+                }
+                if (-1 == sanitize_uarg(operand2))
+                {
+                    goto END;
+                }
+                printf("The Result is: %u\n",
+                       rotateLeft(sanitize_uarg(operand1),
+                                  sanitize_uarg(operand2)));
+                break;
+            }
+            else if (0 == strncmp(operator_val, ">>>\0", 4))
+            {
+                if (-1 == sanitize_uarg(operand1))
+                {
+                    goto END;
+                }
+                if (-1 == sanitize_uarg(operand2))
+                {
+                    goto END;
+                }
+                printf("The Result is: %u\n",
+                       rotateRight(sanitize_uarg(operand1),
+                                   sanitize_uarg(operand2)));
+                break;
+            }
+            else if (0 == strncmp(operator_val, ">>\0", 3))
+            {
+                if (-1 == sanitize_uarg(operand1))
+                {
+                    goto END;
+                }
+                if (-1 == sanitize_uarg(operand2))
+                {
+                    goto END;
+                }
+                unsigned_result =
+                    (sanitize_uarg(operand1) >> sanitize_uarg(operand2));
+                printf("The Result is: %u\n", unsigned_result);
+                break;
+            }
+            else if (0 == strncmp(operator_val, "<<\0", 3))
+            {
+                if (-1 == sanitize_uarg(operand1))
+                {
+                    goto END;
+                }
+                if (-1 == sanitize_uarg(operand2))
+                {
+                    goto END;
+                }
+                unsigned_result = sanitize_lshift(sanitize_uarg(operand1),
+                                                  sanitize_uarg(operand2));
+                printf("The Result is: %u\n", unsigned_result);
+                break;
+            }
+            else
+            {
+                printf("Invalid operator_val.\n");
+                usage(program_name);
+                goto END;
+            }
     }
 
     return 0;
 
-    END:
-        return 0;
+END:
+    return -1;
 }
+
+/*** end of file ***/
