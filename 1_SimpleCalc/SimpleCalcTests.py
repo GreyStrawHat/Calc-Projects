@@ -8,7 +8,7 @@ import string
 FAIL = -1
 PASS = 0
 
-BIN_LOC = "./build/SimpleCalc"
+BIN_LOC = "../build/SimpleCalc"
 TEST_LOC = "../Tests/SimpleCalc.tests"
 
 

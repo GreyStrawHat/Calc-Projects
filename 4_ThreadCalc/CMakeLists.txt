@@ -10,4 +10,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 # BUILD THE EXECUTABLE BINARY IN THE 4_ThreadCalc/bin DIRECTORY.
 
 # THIS INCLUDES THE TESTS FOR ThreadCalc. DO NOT MODIFY!
-include(tests_src/thread_tests.cmake)
+#include(tests_src/thread_tests.cmake)

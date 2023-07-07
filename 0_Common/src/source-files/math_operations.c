@@ -35,8 +35,8 @@ int32_t sanitize_addition(int32_t arg1, int32_t arg2)
 
 int32_t sanitize_subtraction(int32_t arg1, int32_t arg2)
 {
-    if (((arg2 > 0 && arg1 < INT32_MIN + arg2) ||
-         (arg2 < 0 && arg1 > INT32_MAX + arg2)))
+    if ((((arg2 > 0) && (arg1 < (INT32_MIN + arg2))) ||
+         ((arg2 < 0) && (arg1 > (INT32_MAX + arg2)))))
     {
         integer_overflow_error();
     }
@@ -93,7 +93,7 @@ int32_t sanitize_division(int32_t arg1, int32_t arg2)
         printf("Cannot divide by zero.\n");
         return -2;
     }
-    if (((LONG_MIN == arg1) && (-1 == arg2)))
+    if (((INT_MIN == arg1) && (-1 == arg2)))
     {
         integer_overflow_error();
     }
@@ -105,7 +105,7 @@ int32_t sanitize_division(int32_t arg1, int32_t arg2)
 
 int32_t sanitize_modulo(int32_t arg1, int32_t arg2)
 {
-    if ((0 == arg2) || ((LONG_MIN == arg1) && (-1 == arg2)))
+    if ((0 == arg2) || ((INT_MIN == arg1) && (-1 == arg2)))
     {
         integer_overflow_error();
     }

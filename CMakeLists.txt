@@ -1,14 +1,22 @@
 cmake_minimum_required(VERSION 3.16)
 
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
 project(
     JQRCalcProjects
     LANGUAGES "C"
     DESCRIPTION "JQR Example Projects v1.5"
 )
 
+project(
+    SimpleCalc
+    LANGUAGES "C"
+)
+
 include(jqr_main.cmake)
 
-include_directories(0_Common/include)
+include_directories(0_Common/include/header-files)
 
 if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/0_Common/CMakeLists.txt")
     add_subdirectory(0_Common)
@@ -29,5 +37,9 @@ endif()
 if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/5_NetCalc/CMakeLists.txt")
     add_subdirectory(5_NetCalc)
 endif()
+
+add_executable(SimpleCalc "1_SimpleCalc/src/source-files/simplecalc_main.c")
+
+target_link_libraries(SimpleCalc lib1 lib2)
 
 # EOF
