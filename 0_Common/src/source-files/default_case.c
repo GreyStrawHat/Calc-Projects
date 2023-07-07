@@ -4,10 +4,14 @@
 #include "args.h"
 #include "math_operations.h"
 
-int default_case(char *operand1, char *operator_val, char *operand2, uint32_t *uarg_1, uint32_t *uarg_2)
+int default_case(char *     operand1,
+                 char *     operator_val,
+                 char *     operand2,
+                 uint32_t * uarg_1,
+                 uint32_t * uarg_2)
 {
     uint32_t unsigned_result = 0;
-    int error_status = 0;
+    int      error_status    = 0;
 
     if (0 == strncmp(operator_val, "<<<\0", 4))
     {
@@ -54,13 +58,13 @@ int default_case(char *operand1, char *operator_val, char *operand2, uint32_t *u
         goto END;
     }
 
-    END:
-        if (0 < error_status)
-        {
-            error_status = 1;
-        }
+END:
+    if (0 < error_status)
+    {
+        error_status = 1;
+    }
 
-        return error_status;
+    return error_status;
 }
 
 /*** end of file ***/

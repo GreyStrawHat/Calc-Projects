@@ -9,7 +9,7 @@ uint32_t sanitize_uarg(char * arg)
     unsigned long argument     = strtoul(arg, &end_p, BASE_TEN);
     uint32_t      return_value = 0;
 
-    if ((argument < 0) || (argument > UINT32_MAX))
+    if (argument > UINT32_MAX)
     {
         printf("Unsafe value detected.\n\n");
         return_value = 1;
