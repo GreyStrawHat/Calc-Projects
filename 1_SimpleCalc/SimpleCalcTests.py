@@ -8,8 +8,8 @@ import string
 FAIL = -1
 PASS = 0
 
-BIN_LOC = "../build/SimpleCalc"
-TEST_LOC = "../Tests/SimpleCalc.tests"
+BIN_LOC = "/home/kimi/JQR/calculator-project/build/SimpleCalc"
+TEST_LOC = "/home/kimi/JQR/calculator-project/Tests/SimpleCalc.tests"
 
 
 def test_input(op1, operator, op2, ans):

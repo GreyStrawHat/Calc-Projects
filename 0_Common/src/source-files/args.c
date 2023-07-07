@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "magic_num.h"
 
 uint32_t sanitize_uarg(char * arg)
@@ -41,51 +42,34 @@ int32_t sanitize_iarg(char * arg)
     return return_value;
 }
 
-int sanitize_two_uargs(char *     arg1,
-                       char *     arg2,
-                       uint32_t * san_out1,
-                       uint32_t * san_out2)
+bool unsigned_error_checker(char * operand1, char * operand2)
 {
     char * end_p        = NULL;
-    int    return_value = 0;
-    if (((1 == sanitize_uarg(arg1)) &&
-         (1 != strtoul(arg1, &end_p, BASE_TEN))) ||
-        ((1 == sanitize_uarg(arg2)) && (1 != strtoul(arg2, &end_p, BASE_TEN))))
-    {
-        return_value++;
-    }
+    bool   return_value = false;
 
-    if (return_value != 0)
+    if (((1 == sanitize_uarg(operand1)) &&
+         (1 != strtoul(operand1, &end_p, BASE_TEN))) ||
+        ((1 == sanitize_uarg(operand2)) &&
+         (1 != strtoul(operand2, &end_p, BASE_TEN))))
     {
-        return_value = 1;
+        return_value = true;
     }
-
-    *san_out1 = sanitize_uarg(arg1);
-    *san_out2 = sanitize_uarg(arg2);
 
     return return_value;
 }
 
-int sanitize_two_iargs(char *    arg1,
-                       char *    arg2,
-                       int32_t * san_out1,
-                       int32_t * san_out2)
+bool signed_error_checker(char * operand1, char * operand2)
 {
     char * end_p        = NULL;
-    int    return_value = 0;
-    if (((-1 == sanitize_iarg(arg1)) &&
-         (-1 != strtol(arg1, &end_p, BASE_TEN))) ||
-        ((-1 == sanitize_iarg(arg2)) && (-1 != strtol(arg2, &end_p, BASE_TEN))))
-    {
-        return_value++;
-    }
-    if (return_value != 0)
-    {
-        return_value = -1;
-    }
+    bool   return_value = false;
 
-    *san_out1 = sanitize_iarg(arg1);
-    *san_out2 = sanitize_iarg(arg2);
+    if (((-1 == sanitize_iarg(operand1)) &&
+         (-1 != strtol(operand1, &end_p, BASE_TEN))) ||
+        ((-1 == sanitize_iarg(operand2)) &&
+         (-1 != strtol(operand2, &end_p, BASE_TEN))))
+    {
+        return_value = true;
+    }
 
     return return_value;
 }

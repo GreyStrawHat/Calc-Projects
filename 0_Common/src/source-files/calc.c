@@ -7,102 +7,87 @@
 
 int calc(char * operand1, char * operator_val, char * operand2)
 {
-    int32_t  result       = 0;
-    int      error_status = 0;
-    int32_t  iarg_1       = 0;
-    int32_t  iarg_2       = 0;
-    uint32_t uarg_1       = 0;
-    uint32_t uarg_2       = 0;
+    int32_t result       = 0;
+    int     error_status = 0;
 
     switch (*operator_val)
     {
         case '+':
-            if ((-1 ==
-                 sanitize_two_iargs(operand1, operand2, &iarg_1, &iarg_2)))
+            if (signed_error_checker(operand1, operand2))
             {
                 error_status++;
-                goto END;
             }
-            result = sanitize_addition(iarg_1, iarg_2);
+            result = sanitize_addition(sanitize_iarg(operand1),
+                                       sanitize_iarg(operand2));
             printf("The Result is: %i\n", result);
             break;
         case '-':
-            if ((-1 ==
-                 sanitize_two_iargs(operand1, operand2, &iarg_1, &iarg_2)))
+            if (signed_error_checker(operand1, operand2))
             {
                 error_status++;
-                goto END;
             }
-            result = sanitize_subtraction(iarg_1, iarg_2);
+            result = sanitize_subtraction(sanitize_iarg(operand1),
+                                          sanitize_iarg(operand2));
             printf("The Result is: %i\n", result);
             break;
         case '/':
-            if ((-1 ==
-                 sanitize_two_iargs(operand1, operand2, &iarg_1, &iarg_2)))
+            if (signed_error_checker(operand1, operand2))
             {
                 error_status++;
-                goto END;
             }
-            result = sanitize_division(iarg_1, iarg_2);
+            result = sanitize_division(sanitize_iarg(operand1),
+                                       sanitize_iarg(operand2));
             printf("The Result is: %i\n", result);
             break;
         case '*':
-            if ((-1 ==
-                 sanitize_two_iargs(operand1, operand2, &iarg_1, &iarg_2)))
+            if (signed_error_checker(operand1, operand2))
             {
                 error_status++;
-                goto END;
             }
-            result = sanitize_multiplication(iarg_1, iarg_2);
+            result = sanitize_multiplication(sanitize_iarg(operand1),
+                                             sanitize_iarg(operand2));
             printf("The Result is: %i\n", result);
             break;
         case '&':
-            if ((1 == sanitize_two_uargs(operand1, operand2, &uarg_1, &uarg_2)))
+            if (unsigned_error_checker(operand1, operand2))
             {
                 error_status++;
-                goto END;
             }
-            result = (uarg_1 & uarg_2);
+            result = (sanitize_uarg(operand1) & sanitize_uarg(operand2));
             printf("The Result is: %u\n", (uint32_t)result);
             break;
         case '|':
-            if ((1 == sanitize_two_uargs(operand1, operand2, &uarg_1, &uarg_2)))
+            if (unsigned_error_checker(operand1, operand2))
             {
                 error_status++;
-                goto END;
             }
-            result = (uarg_1 | uarg_2);
+            result = (sanitize_uarg(operand1) | sanitize_uarg(operand2));
             printf("The Result is: %u\n", (uint32_t)result);
             break;
         case '%':
-            if ((-1 ==
-                 sanitize_two_iargs(operand1, operand2, &iarg_1, &iarg_2)))
+            if (signed_error_checker(operand1, operand2))
             {
                 error_status++;
-                goto END;
             }
-            result = sanitize_modulo(iarg_1, iarg_2);
+            result = sanitize_modulo(sanitize_iarg(operand1),
+                                     sanitize_iarg(operand2));
             printf("The Result is: %i\n", result);
             break;
         case '^':
-            if ((1 == sanitize_two_uargs(operand1, operand2, &uarg_1, &uarg_2)))
+            if (unsigned_error_checker(operand1, operand2))
             {
                 error_status++;
-                goto END;
             }
-            result = (uarg_1 ^ uarg_2);
+            result = (sanitize_uarg(operand1) ^ sanitize_uarg(operand2));
             printf("The Result is: %u\n", (uint32_t)result);
             break;
         default:
-            if (1 == default_case(
-                         operand1, operator_val, operand2, &uarg_1, &uarg_2))
+            if (1 == default_case(operand1, operator_val, operand2))
             {
                 error_status++;
-                goto END;
             }
     }
 
-END:
     if (0 != error_status)
     {
         error_status = -1;

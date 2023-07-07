@@ -2,6 +2,7 @@
 #define ARGS_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 /**
  * @brief Checks that the supplied value falls within the range of 32-bit
@@ -22,30 +23,23 @@ uint32_t sanitize_uarg(char * arg);
 int32_t sanitize_iarg(char * arg);
 
 /**
- * @brief Checks that arguments 1 and 2 fall within the range of 32-bit
- * unsigned integers then updates those values by reference.
+ * @brief Checks the return value of the sanitize_iargs function for false positives
  * 
- * @param arg1 expects first 32-bit signed operand
- * @param arg2 expects second 32-bit signed operand
- * @param out1 takes memory address to store the santized value of operand 1
- * @param out2 takes memory address to store the santized value of operand 2
+ * @param operand1 Takes first 32-bit signed operand
+ * @param operand2 Takes second 32-bit signed operand
+ * @return true if there is an error
+ * @return false if there is a false flag
  */
-int sanitize_two_uargs(char *     arg1,
-                        char *     arg2,
-                        uint32_t * san_out1,
-                        uint32_t * san_out2);
+bool signed_error_checker(char * operand1, char *operand2);
 
 /**
- * @brief Checks that arguments 1 and 2 fall within the range of 32-bit
- * signed integers then updates those values by reference.
+ * @brief Checks the return value of the sanitize_uargs function for false positives
  * 
- * @param arg1 expects first 32-bit unsigned operand
- * @param arg2 expects second 32-bit unsigned operand
- * @param out1 takes memory address to store the santized value of operand 1
- * @param out2 takes memory address to store the santized value of operand 2
+ * @param operand1 Takes first 32-bit unsigned operand
+ * @param operand2 Takes second 32-bit unsigned operand
+ * @return true if there is an error
+ * @return false if there is a false flag
  */
-int sanitize_two_iargs(char *     arg1,
-                        char *     arg2,
-                        int32_t * san_out1,
-                        int32_t * san_out2);
+bool unsigned_error_checker(char * operand1, char *operand2);
+
 #endif

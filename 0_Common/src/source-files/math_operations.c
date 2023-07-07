@@ -27,10 +27,8 @@ int32_t sanitize_addition(int32_t arg1, int32_t arg2)
     {
         integer_overflow_error();
     }
-    else
-    {
-        return (arg1 + arg2);
-    }
+
+    return (arg1 + arg2);
 }
 
 int32_t sanitize_subtraction(int32_t arg1, int32_t arg2)
@@ -40,46 +38,25 @@ int32_t sanitize_subtraction(int32_t arg1, int32_t arg2)
     {
         integer_overflow_error();
     }
-    else
-    {
-        return (arg1 - arg2);
-    }
+    return (arg1 - arg2);
 }
 
 int32_t sanitize_multiplication(int32_t arg1, int32_t arg2)
 {
     if (arg1 > 0)
     {
-        if (arg2 > 0)
+        if (((arg2 > 0) && (arg1 > (INT32_MAX / arg2))) ||
+            ((arg2 < 0) && (arg2 < (INT32_MIN / arg1))))
         {
-            if (arg1 > (INT32_MAX / arg2))
-            {
-                integer_overflow_error();
-            }
-        }
-        else
-        {
-            if (arg2 < (INT32_MIN / arg1))
-            {
-                integer_overflow_error();
-            }
+            integer_overflow_error();
         }
     }
-    else
+    else if (arg1 < 0)
     {
-        if (arg2 > 0)
+        if (((arg2 > 0) && (arg1 < (INT32_MIN / arg2))) ||
+            ((arg2 < 0) && (arg1 != 0) && (arg2 < (INT32_MAX / arg1))))
         {
-            if (arg1 < (INT32_MIN / arg2))
-            {
-                integer_overflow_error();
-            }
-        }
-        else
-        {
-            if (arg1 != 0 && arg2 < (INT32_MAX / arg1))
-            {
-                integer_overflow_error();
-            }
+            integer_overflow_error();
         }
     }
 
@@ -91,28 +68,23 @@ int32_t sanitize_division(int32_t arg1, int32_t arg2)
     if (0 == arg2)
     {
         printf("Cannot divide by zero.\n");
-        return -2;
+        return -1;
     }
-    if (((INT_MIN == arg1) && (-1 == arg2)))
+    else if (((INT32_MIN == arg1) && (-1 == arg2)))
     {
         integer_overflow_error();
     }
-    else
-    {
-        return (arg1 / arg2);
-    }
+
+    return (arg1 / arg2);
 }
 
 int32_t sanitize_modulo(int32_t arg1, int32_t arg2)
 {
-    if ((0 == arg2) || ((INT_MIN == arg1) && (-1 == arg2)))
+    if ((0 == arg2) || ((INT32_MIN == arg1) && (-1 == arg2)))
     {
         integer_overflow_error();
     }
-    else
-    {
-        return (arg1 % arg2);
-    }
+    return (arg1 % arg2);
 }
 
 uint32_t sanitize_lshift(uint32_t arg1, uint32_t arg2)
