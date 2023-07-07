@@ -7,3 +7,4 @@ __pycache__
 updates/
 0_Common/build/
 1_SimpleCalc/build/
+1_SimpleCalc/bin/

@@ -8,7 +8,7 @@ import string
 FAIL = -1
 PASS = 0
 
-BIN_LOC = "/home/kimi/JQR/calculator-project/build/SimpleCalc"
+BIN_LOC = "/home/kimi/JQR/calculator-project/build/1_SimpleCalc/bin/SimpleCalc"
 TEST_LOC = "/home/kimi/JQR/calculator-project/Tests/SimpleCalc.tests"
 
 

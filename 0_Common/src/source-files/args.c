@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "magic_num.h"
+#include "error_msg.h"
 
 uint32_t sanitize_uarg(char * arg)
 {
@@ -32,7 +33,7 @@ int32_t sanitize_iarg(char * arg)
     if ((argument < INT32_MIN) || (argument > INT32_MAX))
     {
         printf("Unsafe value detected.\n");
-        return_value = -1;
+        return_value = ERROR_CODE;
     }
     else
     {
@@ -63,10 +64,10 @@ bool signed_error_checker(char * operand1, char * operand2)
     char * end_p        = NULL;
     bool   return_value = false;
 
-    if (((-1 == sanitize_iarg(operand1)) &&
-         (-1 != strtol(operand1, &end_p, BASE_TEN))) ||
-        ((-1 == sanitize_iarg(operand2)) &&
-         (-1 != strtol(operand2, &end_p, BASE_TEN))))
+    if (((ERROR_CODE == sanitize_iarg(operand1)) &&
+         (ERROR_CODE != strtol(operand1, &end_p, BASE_TEN))) ||
+        ((ERROR_CODE == sanitize_iarg(operand2)) &&
+         (ERROR_CODE != strtol(operand2, &end_p, BASE_TEN))))
     {
         return_value = true;
     }

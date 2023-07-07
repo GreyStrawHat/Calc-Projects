@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <error_msg.h>
 
 void usage(char * program_name)
 {
@@ -30,13 +31,19 @@ int unsigned_int_error()
 {
     printf(
         "Operation Failed. \nPotential unsigned integer wrapping detected.\n");
-    return -1;
+    return ERROR_CODE;
 }
 
 int integer_overflow_error()
 {
     printf("Operation Failed. \nPotential integer overflow detected.\n");
-    return -1;
+    return ERROR_CODE;
+}
+
+int division_by_zero()
+{
+    printf("Cannot divide by zero.\n");
+    return ERROR_CODE;
 }
 
 /*** end of file ***/

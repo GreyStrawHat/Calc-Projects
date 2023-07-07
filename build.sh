@@ -27,6 +27,7 @@ fi
 
 # Compile according to arg flags
 mkdir -p build
+mkdir -p build/1_SimpleCalc/bin
 cd build
 set -e # Allows cicd pipline to report error
 cmake .. -DCMAKE_BUILD_TYPE=${1}

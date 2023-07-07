@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "args.h"
-#include "math_operations.h"
+#include "unsigned_math_operations.h"
+#include "signed_math_operations.h"
 
 int default_case(char * operand1, char * operator_val, char * operand2)
 {
@@ -58,7 +59,7 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     }
 
 END:
-    if (0 < error_status)
+    if (0 != error_status)
     {
         error_status = 1;
     }

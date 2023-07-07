@@ -1,5 +1,7 @@
 #ifndef ERROR_MSG_H
 #define ERROR_MSG_H
+#define ERROR_CODE -1
+#define UNSIGNED_ERROR_CODE 1
 
 /**
  * @brief Displays SimpleCalc usage information.
@@ -21,5 +23,11 @@ int unsigned_int_error();
  * @return int returns a negative value to indicate an error.
  */
 int integer_overflow_error();
+
+/**
+ * @brief Prints error message when divison by zero is detected
+ * 
+ */
+int division_by_zero();
 
 #endif
