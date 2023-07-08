@@ -30,13 +30,16 @@ void usage(char * program_name)
 int unsigned_int_error()
 {
     printf(
-        "[Error] - Operation Failed. \nPotential unsigned integer wrapping detected.\n");
+        "[Error] - Operation Failed potential unsigned integer wrapping "
+        "detected.\n\n");
     return ERROR_CODE;
 }
 
 int integer_overflow_error()
 {
-    printf("[Error] - Operation Failed. \nPotential integer overflow detected.\n");
+    printf(
+        "[Error] - Operation Failed. potential integer overflow "
+        "detected.\n\n");
     return ERROR_CODE;
 }
 

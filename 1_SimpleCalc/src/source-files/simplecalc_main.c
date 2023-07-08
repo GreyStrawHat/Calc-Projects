@@ -34,7 +34,8 @@ int main(int argc, char ** argv)
                        "0\n",
                        1)))) // Checks for non integer characters in operands
     {
-        fprintf(stderr, "[Error] - Integer values only.\n\n");
+        fprintf(stderr,
+                "[Error] - 32-bit Signed or Unsigned Integer values only.\n\n");
         usage(argv[0]);
         error_status = ERROR_CODE;
         goto END;
@@ -51,16 +52,20 @@ int main(int argc, char ** argv)
             printf("[DEBUG] operand1 value at memory address [ %p ] = [ %d ]\n",
                    (void *)&arg1_test,
                    arg1_test);
-            printf("[DEBUG] operand1 length at memory address [ %p ] = [ %d ]\n",
-                   (void *)&arg1_length,
-                   arg1_length);
+            printf(
+                "[DEBUG] operand1 length at memory address [ %p ] = [ %d ]\n",
+                (void *)&arg1_length,
+                arg1_length);
             printf("[DEBUG] operand2 value at memory address [ %p ] = [ %d ]\n",
                    (void *)&arg3_test,
                    arg3_test);
-            printf("[DEBUG] operand2 length at memory address [ %p ] = [ %d ]\n\n",
-                   (void *)&arg3_length,
-                   arg3_length);
-            fprintf(stderr, "[Error] - Integer values only.\n\n");
+            printf(
+                "[DEBUG] operand2 length at memory address [ %p ] = [ %d ]\n\n",
+                (void *)&arg3_length,
+                arg3_length);
+            fprintf(stderr,
+                    "[Error] - 32-bit Signed or 32-bit Unsigned Integer values "
+                    "only.\n\n");
             usage(argv[0]);
             error_status = ERROR_CODE;
             goto END;

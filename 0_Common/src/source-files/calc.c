@@ -5,11 +5,12 @@
 #include "ec_operations1.h"
 #include "unsigned_math_operations.h"
 #include "ec_operations2.h"
+#include "ec_operations4.h"
 #include "default_case.h"
 
 int calc(char * operand1, char * operator_val, char * operand2)
 {
-    int32_t result       = 0;
+    //int32_t result       = 0;
     int     error_status = 0;
 
     switch (*operator_val)
@@ -43,20 +44,18 @@ int calc(char * operand1, char * operator_val, char * operand2)
             }
             break;
         case '&':
-            if (unsigned_error_checker(operand1, operand2))
+            if (ec_bitwise_AND(operand1, operand2))
             {
                 error_status = ERROR_CODE;
+                goto END;
             }
-            result = (sanitize_uarg(operand1) & sanitize_uarg(operand2));
-            printf("The Result is: %u\n\n", (uint32_t)result);
             break;
         case '|':
-            if (unsigned_error_checker(operand1, operand2))
+            if (ec_bitwise_OR(operand1, operand2))
             {
                 error_status = ERROR_CODE;
+                goto END;
             }
-            result = (sanitize_uarg(operand1) | sanitize_uarg(operand2));
-            printf("The Result is: %u\n\n", (uint32_t)result);
             break;
         case '%':
             if (ec_modulo(operand1, operand2))
@@ -66,12 +65,11 @@ int calc(char * operand1, char * operator_val, char * operand2)
             }
             break;
         case '^':
-            if (unsigned_error_checker(operand1, operand2))
+            if (ec_bitwise_XOR(operand1, operand2))
             {
                 error_status = ERROR_CODE;
+                goto END;
             }
-            result = (sanitize_uarg(operand1) ^ sanitize_uarg(operand2));
-            printf("The Result is: %u\n\n", (uint32_t)result);
             break;
         default:
             if (UNSIGNED_ERROR_CODE ==

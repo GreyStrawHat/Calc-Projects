@@ -10,6 +10,8 @@ set(SOURCE_FILES
     src/source-files/unsigned_math_operations.c
     src/source-files/ec_operations1.c
     src/source-files/ec_operations2.c
+    src/source-files/ec_operations3.c
+    src/source-files/ec_operations4.c
     src/source-files/default_case.c
 )
 set(HEADER_FILES
@@ -20,6 +22,8 @@ set(HEADER_FILES
     "include/header-files/unsigned_math_operations.h"
     "include/header-files/ec_operations1.h"
     "include/header-files/ec_operations2.h"
+    "include/header-files/ec_operations3.h"
+    "include/header-files/ec_operations4.h"
     "include/header-files/magic_num.h"
     "include/header-files/default_case.h")
 

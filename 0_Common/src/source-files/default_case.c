@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "args.h"
+#include "ec_operations3.h"
 #include "error_msg.h"
 #include "unsigned_math_operations.h"
 #include "signed_math_operations.h"
@@ -13,23 +13,19 @@ int default_case(char * operand1, char * operator_val, char * operand2)
 
     if (0 == strncmp(operator_val, "<<<\0", 4))
     {
-        if (unsigned_error_checker(operand1, operand2))
-        {
-            error_status = ERROR_CODE;
-            goto END;
-        }
-        printf("The Result is: %u\n",
-               rotateLeft(sanitize_uarg(operand1), sanitize_uarg(operand2)));
+        if (ec_rotateLeft(operand1, operand2))
+            {
+                error_status = ERROR_CODE;
+                goto END;
+            }
     }
     else if (0 == strncmp(operator_val, ">>>\0", 4))
     {
-        if (unsigned_error_checker(operand1, operand2))
-        {
-            error_status = ERROR_CODE;
-            goto END;
-        }
-        printf("The Result is: %u\n",
-               rotateRight(sanitize_uarg(operand1), sanitize_uarg(operand2)));
+        if (ec_rotateRight(operand1, operand2))
+            {
+                error_status = ERROR_CODE;
+                goto END;
+            }
     }
     else if (0 == strncmp(operator_val, ">>\0", 3))
     {
@@ -43,14 +39,11 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     }
     else if (0 == strncmp(operator_val, "<<\0", 3))
     {
-        if (unsigned_error_checker(operand1, operand2))
-        {
-            error_status = ERROR_CODE;
-            goto END;
-        }
-        unsigned_result =
-            sanitize_lshift(sanitize_uarg(operand1), sanitize_uarg(operand2));
-        printf("The Result is: %u\n", unsigned_result);
+        if (ec_rotateRight(operand1, operand2))
+            {
+                error_status = ERROR_CODE;
+                goto END;
+            }
     }
     else
     {
