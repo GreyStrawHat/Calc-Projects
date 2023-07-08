@@ -1,0 +1,78 @@
+#include "magic_num.h"
+#include "ec_operations1.h"
+#include "ec_operations2.h"
+
+bool ec_division(char * operand1, char * operand2)
+{
+    int32_t result       = 0;
+    char ** end_pp       = NULL;
+    bool    return_value = false;
+
+    if (signed_error_checker(operand1, operand2))
+    {
+        return_value = true;
+        goto END;
+    }
+
+    if (0 == sanitize_iarg(operand2))
+    {
+        printf("Cannot Divide by Zero.\n\n");
+        return_value = true;
+        goto END;
+    }
+
+    if ((ERROR_CODE ==
+         sanitize_division(sanitize_iarg(operand1), sanitize_iarg(operand2))) &&
+        (ERROR_CODE != ((strtol(operand1, end_pp, BASE_TEN)) /
+                        (strtol(operand2, end_pp, BASE_TEN)))))
+    {
+        return_value = true;
+        goto END;
+    }
+    result =
+        sanitize_division(sanitize_iarg(operand1), sanitize_iarg(operand2));
+    printf("[DEBUG] operand1 at %p = %s\n", (void *)operand1, operand1);
+    printf("[DEBUG] operand2 at %p = %s\n", (void *)operand2, operand2);
+    printf("The Result is: %i\n", result);
+
+END:
+    return return_value;
+}
+
+bool ec_modulo(char * operand1, char * operand2)
+{
+    int32_t result       = 0;
+    char ** end_pp       = NULL;
+    bool    return_value = false;
+
+    if (signed_error_checker(operand1, operand2))
+    {
+        return_value = true;
+        goto END;
+    }
+
+    if (0 == sanitize_iarg(operand2))
+    {
+        printf("Cannot Divide by Zero.\n\n");
+        return_value = true;
+        goto END;
+    }
+
+    if ((ERROR_CODE ==
+         sanitize_modulo(sanitize_iarg(operand1), sanitize_iarg(operand2))) &&
+        (ERROR_CODE != ((strtol(operand1, end_pp, BASE_TEN)) %
+                        (strtol(operand2, end_pp, BASE_TEN)))))
+    {
+        return_value = true;
+        goto END;
+    }
+    result = sanitize_modulo(sanitize_iarg(operand1), sanitize_iarg(operand2));
+    printf("[DEBUG] operand1 at %p = %s\n", (void *)operand1, operand1);
+    printf("[DEBUG] operand2 at %p = %s\n", (void *)operand2, operand2);
+    printf("The Result is: %i\n", result);
+
+END:
+    return return_value;
+}
+
+/*** end of file ***/

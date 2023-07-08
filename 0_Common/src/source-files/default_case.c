@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "args.h"
+#include "error_msg.h"
 #include "unsigned_math_operations.h"
 #include "signed_math_operations.h"
 
@@ -14,7 +15,7 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     {
         if (unsigned_error_checker(operand1, operand2))
         {
-            error_status++;
+            error_status = ERROR_CODE;
             goto END;
         }
         printf("The Result is: %u\n",
@@ -24,7 +25,7 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     {
         if (unsigned_error_checker(operand1, operand2))
         {
-            error_status++;
+            error_status = ERROR_CODE;
             goto END;
         }
         printf("The Result is: %u\n",
@@ -34,7 +35,7 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     {
         if (unsigned_error_checker(operand1, operand2))
         {
-            error_status++;
+            error_status = ERROR_CODE;
             goto END;
         }
         unsigned_result = (sanitize_uarg(operand1) >> sanitize_uarg(operand2));
@@ -44,7 +45,7 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     {
         if (unsigned_error_checker(operand1, operand2))
         {
-            error_status++;
+            error_status = ERROR_CODE;
             goto END;
         }
         unsigned_result =
@@ -54,7 +55,7 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     else
     {
         printf("Invalid operator_val.\n");
-        error_status++;
+        error_status = ERROR_CODE;
         goto END;
     }
 

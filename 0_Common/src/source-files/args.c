@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "signed_math_operations.h"
 #include "magic_num.h"
 #include "error_msg.h"
 

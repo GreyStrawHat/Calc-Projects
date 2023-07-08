@@ -8,6 +8,8 @@ set(SOURCE_FILES
     src/source-files/error_msg.c
     src/source-files/signed_math_operations.c
     src/source-files/unsigned_math_operations.c
+    src/source-files/ec_operations1.c
+    src/source-files/ec_operations2.c
     src/source-files/default_case.c
 )
 set(HEADER_FILES
@@ -16,6 +18,8 @@ set(HEADER_FILES
     "include/header-files/error_msg.h"
     "include/header-files/signed_math_operations.h"
     "include/header-files/unsigned_math_operations.h"
+    "include/header-files/ec_operations1.h"
+    "include/header-files/ec_operations2.h"
     "include/header-files/magic_num.h"
     "include/header-files/default_case.h")
 
