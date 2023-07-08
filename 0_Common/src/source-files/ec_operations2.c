@@ -16,7 +16,7 @@ bool ec_division(char * operand1, char * operand2)
 
     if (0 == sanitize_iarg(operand2))
     {
-        printf("Cannot Divide by Zero.\n\n");
+        printf("[Error] - Cannot Divide by Zero.\n\n");
         return_value = true;
         goto END;
     }
@@ -31,8 +31,13 @@ bool ec_division(char * operand1, char * operand2)
     }
     result =
         sanitize_division(sanitize_iarg(operand1), sanitize_iarg(operand2));
-    printf("[DEBUG] operand1 at %p = %s\n", (void *)operand1, operand1);
-    printf("[DEBUG] operand2 at %p = %s\n", (void *)operand2, operand2);
+    printf("Simple Calculator in C.\n\n");
+    printf("[DEBUG] operand1 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand1,
+           operand1);
+    printf("[DEBUG] operand2 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand2,
+           operand2);
     printf("The Result is: %i\n", result);
 
 END:
@@ -53,7 +58,7 @@ bool ec_modulo(char * operand1, char * operand2)
 
     if (0 == sanitize_iarg(operand2))
     {
-        printf("Cannot Divide by Zero.\n\n");
+        fprintf(stderr, "[Error] - Cannot Divide by Zero.\n\n");
         return_value = true;
         goto END;
     }
@@ -67,8 +72,13 @@ bool ec_modulo(char * operand1, char * operand2)
         goto END;
     }
     result = sanitize_modulo(sanitize_iarg(operand1), sanitize_iarg(operand2));
-    printf("[DEBUG] operand1 at %p = %s\n", (void *)operand1, operand1);
-    printf("[DEBUG] operand2 at %p = %s\n", (void *)operand2, operand2);
+    printf("Simple Calculator in C.\n\n");
+    printf("[DEBUG] operand1 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand1,
+           operand1);
+    printf("[DEBUG] operand2 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand2,
+           operand2);
     printf("The Result is: %i\n", result);
 
 END:

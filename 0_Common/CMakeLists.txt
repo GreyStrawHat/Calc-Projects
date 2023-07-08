@@ -23,7 +23,7 @@ set(HEADER_FILES
     "include/header-files/magic_num.h"
     "include/header-files/default_case.h")
 
-add_library(lib1 ${SOURCE_FILES} ${HEADER_FILES})
+add_library(common_lib ${SOURCE_FILES} ${HEADER_FILES})
 
 #project("SimpleCalc")
 

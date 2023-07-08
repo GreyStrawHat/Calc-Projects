@@ -13,6 +13,6 @@ include_directories("include/header-files" "src/source-files")
 
 #target_sources(SimpleCalc PRIVATE ${SOURCE_FILES})
 
-add_library(lib2 "src/source-files/simplecalc_main.c" "include/header-files/simplecalc_main.h")
+add_library(simplecalc_lib "src/source-files/simplecalc_main.c" "include/header-files/simplecalc_main.h")
 
 #EOF

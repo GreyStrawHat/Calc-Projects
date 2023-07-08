@@ -22,8 +22,13 @@ bool ec_lshift(char * operand1, char * operand2)
     }
 
     result = sanitize_lshift(sanitize_uarg(operand1), sanitize_uarg(operand2));
-    printf("[DEBUG] operand1 at %p = %s\n", (void *)operand1, operand1);
-    printf("[DEBUG] operand2 at %p = %s\n", (void *)operand2, operand2);
+    printf("Simple Calculator in C.\n\n");
+    printf("[DEBUG] operand1 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand1,
+           operand1);
+    printf("[DEBUG] operand2 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand2,
+           operand2);
     printf("The Result is: %u\n", result);
 
 END:
@@ -51,8 +56,13 @@ bool ec_rotateLeft(char * operand1, char * operand2)
     }
 
     result = rotateLeft(sanitize_uarg(operand1), sanitize_uarg(operand2));
-    printf("[DEBUG] operand1 at %p = %s\n", (void *)operand1, operand1);
-    printf("[DEBUG] operand2 at %p = %s\n", (void *)operand2, operand2);
+    printf("Simple Calculator in C.\n\n");
+    printf("[DEBUG] operand1 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand1,
+           operand1);
+    printf("[DEBUG] operand2 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand2,
+           operand2);
     printf("The Result is: %u\n", result);
 
 END:
@@ -80,8 +90,13 @@ bool ec_rotateRight(char * operand1, char * operand2)
     }
 
     result = rotateRight(sanitize_uarg(operand1), sanitize_uarg(operand2));
-    printf("[DEBUG] operand1 at %p = %s\n", (void *)operand1, operand1);
-    printf("[DEBUG] operand2 at %p = %s\n", (void *)operand2, operand2);
+    printf("Simple Calculator in C.\n\n");
+    printf("[DEBUG] operand1 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand1,
+           operand1);
+    printf("[DEBUG] operand2 at memory address [ %p ] = [ %s ]\n",
+           (void *)operand2,
+           operand2);
     printf("The Result is: %u\n", result);
 
 END:

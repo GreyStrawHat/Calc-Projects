@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
 
     if (EQUATION_ARGS != argc)
     {
-        fprintf(stderr, "Invalid number of arguments.\n\n");
+        fprintf(stderr, "[Error] - Invalid number of arguments.\n\n");
         usage(argv[0]);
         error_status = ERROR_CODE;
         goto END;
@@ -34,7 +34,7 @@ int main(int argc, char ** argv)
                        "0\n",
                        1)))) // Checks for non integer characters in operands
     {
-        fprintf(stderr, "Integer values only.\n\n");
+        fprintf(stderr, "[Error] - Integer values only.\n\n");
         usage(argv[0]);
         error_status = ERROR_CODE;
         goto END;
@@ -48,19 +48,19 @@ int main(int argc, char ** argv)
                 (unsigned long)
                     arg3_length) // Print debug info for troubleshooting
         {
-            printf("[DEBUG] arg1_test at %p = %d\n",
+            printf("[DEBUG] operand1 value at memory address [ %p ] = [ %d ]\n",
                    (void *)&arg1_test,
                    arg1_test);
-            printf("[DEBUG] arg1_length at %p = %d\n",
+            printf("[DEBUG] operand1 length at memory address [ %p ] = [ %d ]\n",
                    (void *)&arg1_length,
                    arg1_length);
-            printf("[DEBUG] arg3_test at %p = %d\n",
+            printf("[DEBUG] operand2 value at memory address [ %p ] = [ %d ]\n",
                    (void *)&arg3_test,
                    arg3_test);
-            printf("[DEBUG] arg3_length at %p = %d\n\n",
+            printf("[DEBUG] operand2 length at memory address [ %p ] = [ %d ]\n\n",
                    (void *)&arg3_length,
                    arg3_length);
-            fprintf(stderr, "Integer values only.\n\n");
+            fprintf(stderr, "[Error] - Integer values only.\n\n");
             usage(argv[0]);
             error_status = ERROR_CODE;
             goto END;

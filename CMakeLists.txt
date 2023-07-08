@@ -40,7 +40,7 @@ endif()
 
 add_executable(SimpleCalc "1_SimpleCalc/src/source-files/simplecalc_main.c")
 
-target_link_libraries(SimpleCalc lib1 lib2)
+target_link_libraries(SimpleCalc common_lib simplecalc_lib)
 
 set_target_properties(SimpleCalc PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/1_SimpleCalc/bin)
