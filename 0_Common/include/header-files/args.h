@@ -1,6 +1,10 @@
 #ifndef ARGS_H
 #define ARGS_H
+#define BASE_TEN 10
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "error_msg.h"
 #include <stdint.h>
 #include <stdbool.h>
 

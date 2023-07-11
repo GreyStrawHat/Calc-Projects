@@ -3,6 +3,7 @@
 #define BIT_WIDTH 32
 
 #include <stdint.h>
+#include "error_msg.h"
 
 /**
  * @brief Perform a bitwise left shift on a 32-bit unsigned integer.

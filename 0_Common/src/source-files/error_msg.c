@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <error_msg.h>
+#include "error_msg.h"
 
 void usage(char * program_name)
 {

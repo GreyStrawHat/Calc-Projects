@@ -1,10 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "ec_operations3.h"
-#include "error_msg.h"
-#include "unsigned_math_operations.h"
-#include "signed_math_operations.h"
+#include "default_case.h"
 
 int default_case(char * operand1, char * operator_val, char * operand2)
 {
@@ -39,7 +33,7 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     }
     else if (0 == strncmp(operator_val, "<<\0", 3))
     {
-        if (ec_rotateRight(operand1, operand2))
+        if (ec_lshift(operand1, operand2))
             {
                 error_status = ERROR_CODE;
                 goto END;

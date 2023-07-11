@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <limits.h>
-#include "error_msg.h"
 #include "unsigned_math_operations.h"
 
 static int return_value = 0;

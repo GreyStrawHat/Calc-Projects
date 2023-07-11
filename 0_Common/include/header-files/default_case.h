@@ -1,7 +1,12 @@
 #ifndef DCASE_H
 #define DCASE_H
+#define BASE_TEN 10
 
 #include <stdint.h>
+#include <string.h>
+#include "error_msg.h"
+#include "args.h"
+#include "unsigned_ec_operations.h"
 
 /**
  * @brief Performs calculations on two operands based on the provided bitwise

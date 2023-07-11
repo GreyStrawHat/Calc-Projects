@@ -2,7 +2,9 @@
 #define SIGNED_MATHOP_H
 #define BIT_WIDTH 32
 
+#include <stdlib.h>
 #include <stdint.h>
+#include "error_msg.h"
 
 /**
  * @brief Safe addition operation for signed 32-bit integers.
