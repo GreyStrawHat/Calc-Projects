@@ -5,7 +5,7 @@ bool ec_bitwise_AND(char * operand1, char * operand2)
     uint32_t result       = 0;
     bool     return_value = false;
 
-    if (unsigned_error_checker(operand1, operand2))
+    if (true == unsigned_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -28,7 +28,7 @@ bool ec_bitwise_OR(char * operand1, char * operand2)
     uint32_t result       = 0;
     bool     return_value = false;
 
-    if (unsigned_error_checker(operand1, operand2))
+    if (true == unsigned_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -51,7 +51,7 @@ bool ec_bitwise_XOR(char * operand1, char * operand2)
     uint32_t result       = 0;
     bool     return_value = false;
 
-    if (unsigned_error_checker(operand1, operand2))
+    if (true == unsigned_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -74,7 +74,7 @@ bool ec_lshift(char * operand1, char * operand2)
     uint32_t result       = 0;
     bool     return_value = false;
 
-    if (unsigned_error_checker(operand1, operand2))
+    if (UNSIGNED_ERROR_CODE == sanitize_lshift(sanitize_uarg(operand1), sanitize_uarg(operand2)))
     {
         return_value = true;
         goto END;
@@ -102,7 +102,7 @@ bool ec_rotateLeft(char * operand1, char * operand2)
     uint32_t result       = 0;
     bool     return_value = false;
 
-    if (unsigned_error_checker(operand1, operand2))
+    if (true == unsigned_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -130,7 +130,7 @@ bool ec_rotateRight(char * operand1, char * operand2)
     uint32_t result       = 0;
     bool     return_value = false;
 
-    if (unsigned_error_checker(operand1, operand2))
+    if (true == unsigned_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;

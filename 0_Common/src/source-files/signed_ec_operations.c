@@ -5,7 +5,7 @@ bool ec_addition(char * operand1, char * operand2)
     int32_t result       = 0;
     bool    return_value = false;
 
-    if (signed_error_checker(operand1, operand2))
+    if (true == signed_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -35,7 +35,7 @@ bool ec_subtraction(char * operand1, char * operand2)
     int32_t result       = 0;
     bool    return_value = false;
 
-    if (signed_error_checker(operand1, operand2))
+    if (true == signed_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -65,7 +65,7 @@ bool ec_multiplication(char * operand1, char * operand2)
     int32_t result       = 0;
     bool    return_value = false;
 
-    if (signed_error_checker(operand1, operand2))
+    if (true == signed_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -95,7 +95,7 @@ bool ec_division(char * operand1, char * operand2)
     int32_t result       = 0;
     bool    return_value = false;
 
-    if (signed_error_checker(operand1, operand2))
+    if (true == signed_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -132,7 +132,7 @@ bool ec_modulo(char * operand1, char * operand2)
     int32_t result       = 0;
     bool    return_value = false;
 
-    if (signed_error_checker(operand1, operand2))
+    if (true == signed_error_checker(operand1, operand2))
     {
         return_value = true;
         goto END;
