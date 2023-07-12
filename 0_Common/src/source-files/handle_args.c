@@ -10,7 +10,7 @@ int handle_int_args(char * operand1, char * operand2)
 
     int32_t int_arg1_tracker = strtol(arg1_p, &error_tracker_p, BASE_TEN);
 
-    if ((0 != errno) || (NULL == arg1_p) || ('\0' != *error_tracker_p))
+    if ((0 != errno) || (NULL == arg1_p) || (NULL_BYTE != *error_tracker_p))
     {
         printf("[ERROR] - Invalid character(s)s found in Operand 1.\n");
         printf("[DEBUG] - The value at memory address [ %p ] is [ %d ]\n",
@@ -26,7 +26,7 @@ int handle_int_args(char * operand1, char * operand2)
 
     int32_t int_arg2_tracker = strtol(arg2_p, &error_tracker_p, BASE_TEN);
 
-    if ((0 != errno) || (NULL == arg2_p) || ('\0' != *error_tracker_p))
+    if ((0 != errno) || (NULL == arg2_p) || (NULL_BYTE != *error_tracker_p))
     {
         printf("[ERROR] - Invalid character(s)s found in Operand 2.\n");
         printf("[DEBUG] - The value at memory address [ %p ] is [ %d ]\n",
@@ -54,7 +54,7 @@ int handle_uint_args(char * operand1, char * operand2)
 
     uint32_t uint_arg1_tracker = strtoul(arg1_p, &error_tracker_p, BASE_TEN);
 
-    if ((0 != errno) || (NULL == arg1_p) || ('\0' != *error_tracker_p))
+    if ((0 != errno) || (NULL == arg1_p) || (NULL_BYTE != *error_tracker_p))
     {
         printf("[ERROR] - Invalid character(s)s found in Operand 1.\n");
         printf("[DEBUG] - The value at memory address [ %p ] is [ %d ]\n",
@@ -70,7 +70,7 @@ int handle_uint_args(char * operand1, char * operand2)
 
     uint32_t uint_arg2_tracker = strtoul(arg2_p, &error_tracker_p, BASE_TEN);
 
-    if ((0 != errno) || (NULL == arg2_p) || ('\0' != *error_tracker_p)) //Checks for invalid character(s)s in operands 1 or 2
+    if ((0 != errno) || (NULL == arg2_p) || (NULL_BYTE != *error_tracker_p)) //Checks for invalid character(s)s in operands 1 or 2
     {
         printf("[ERROR] - Invalid character(s)s found in Operand 2.\n");
         printf("[DEBUG] - The value at memory address [ %p ] is [ %d ]",

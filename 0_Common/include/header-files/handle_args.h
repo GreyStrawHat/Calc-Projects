@@ -2,6 +2,7 @@
 #define HANDLE_ARGS_H
 #define BASE_TEN   10
 #define ERROR_CODE -1
+#define NULL_BYTE '\0'
 
 #include <stdio.h>
 #include <stdlib.h>
