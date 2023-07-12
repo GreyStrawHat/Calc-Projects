@@ -83,7 +83,7 @@ bool ec_lshift(char * operand1, char * operand2)
     if ((UNSIGNED_ERROR_CODE ==
          sanitize_lshift(sanitize_uarg(operand1), sanitize_uarg(operand2))) &&
         (UNSIGNED_ERROR_CODE != ((strtoul(operand1, end_pp, BASE_TEN))
-                        << (strtoul(operand2, end_pp, BASE_TEN)))))
+                                 << (strtoul(operand2, end_pp, BASE_TEN)))))
     {
         return_value = true;
         goto END;
@@ -114,8 +114,9 @@ bool ec_rotateLeft(char * operand1, char * operand2)
     }
     if ((UNSIGNED_ERROR_CODE ==
          rotateLeft(sanitize_uarg(operand1), sanitize_uarg(operand2))) &&
-        (UNSIGNED_ERROR_CODE != rotateLeft(strtoul(operand1, end_pp, BASE_TEN),
-                                  strtoul(operand2, end_pp, BASE_TEN))))
+        (UNSIGNED_ERROR_CODE !=
+         rotateLeft(strtoul(operand1, end_pp, BASE_TEN),
+                    strtoul(operand2, end_pp, BASE_TEN))))
     {
         return_value = true;
         goto END;
@@ -146,8 +147,9 @@ bool ec_rotateRight(char * operand1, char * operand2)
     }
     if ((UNSIGNED_ERROR_CODE ==
          rotateRight(sanitize_uarg(operand1), sanitize_uarg(operand2))) &&
-        (UNSIGNED_ERROR_CODE != rotateLeft(strtoul(operand1, end_pp, BASE_TEN),
-                                  strtoul(operand2, end_pp, BASE_TEN))))
+        (UNSIGNED_ERROR_CODE !=
+         rotateLeft(strtoul(operand1, end_pp, BASE_TEN),
+                    strtoul(operand2, end_pp, BASE_TEN))))
     {
         return_value = true;
         goto END;

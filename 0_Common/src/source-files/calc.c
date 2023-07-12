@@ -2,7 +2,7 @@
 
 int calc(char * operand1, char * operator_val, char * operand2)
 {
-    int     error_status = 0;
+    int error_status = 0;
 
     switch (*operator_val)
     {

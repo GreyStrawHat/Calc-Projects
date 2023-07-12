@@ -11,11 +11,13 @@ set(SOURCE_FILES
     src/source-files/signed_ec_operations.c
     src/source-files/unsigned_ec_operations.c
     src/source-files/default_case.c
+    src/source-files/handle_args.c
 )
 set(HEADER_FILES
     "include/header-files/args.h"
     "include/header-files/calc.h"
     "include/header-files/error_msg.h"
+    "include/header-files/handle_args.h"
     "include/header-files/signed_math_operations.h"
     "include/header-files/unsigned_math_operations.h"
     "include/header-files/signed_ec_operations.h"

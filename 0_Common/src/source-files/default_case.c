@@ -8,18 +8,18 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     if (0 == strncmp(operator_val, "<<<\0", 4))
     {
         if (ec_rotateLeft(operand1, operand2))
-            {
-                error_status = ERROR_CODE;
-                goto END;
-            }
+        {
+            error_status = ERROR_CODE;
+            goto END;
+        }
     }
     else if (0 == strncmp(operator_val, ">>>\0", 4))
     {
         if (ec_rotateRight(operand1, operand2))
-            {
-                error_status = ERROR_CODE;
-                goto END;
-            }
+        {
+            error_status = ERROR_CODE;
+            goto END;
+        }
     }
     else if (0 == strncmp(operator_val, ">>\0", 3))
     {
@@ -34,10 +34,10 @@ int default_case(char * operand1, char * operator_val, char * operand2)
     else if (0 == strncmp(operator_val, "<<\0", 3))
     {
         if (ec_lshift(operand1, operand2))
-            {
-                error_status = ERROR_CODE;
-                goto END;
-            }
+        {
+            error_status = ERROR_CODE;
+            goto END;
+        }
     }
     else
     {

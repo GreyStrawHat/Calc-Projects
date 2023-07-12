@@ -2,13 +2,13 @@
 
 uint32_t sanitize_uarg(char * arg)
 {
-    char *        end_p        = NULL;
-    uint32_t unsigned_return_value = 0;
-    unsigned long argument     = strtoul(arg, &end_p, BASE_TEN);
+    char *        end_p                 = NULL;
+    uint32_t      unsigned_return_value = 0;
+    unsigned long argument              = strtoul(arg, &end_p, BASE_TEN);
 
     if (argument > UINT32_MAX)
     {
-        printf("Unsafe value detected.\n\n");
+        printf("[Error] - Unsafe value detected.\n\n");
         unsigned_return_value = 1;
     }
     else
@@ -21,13 +21,13 @@ uint32_t sanitize_uarg(char * arg)
 
 int32_t sanitize_iarg(char * arg)
 {
-    char *      end_p        = NULL;
-    int32_t  signed_return_value   = 0;
-    signed long argument     = strtol(arg, &end_p, BASE_TEN);
+    char *      end_p               = NULL;
+    int32_t     signed_return_value = 0;
+    signed long argument            = strtol(arg, &end_p, BASE_TEN);
 
     if ((argument < INT32_MIN) || (argument > INT32_MAX))
     {
-        printf("Unsafe value detected.\n");
+        printf("[Error] - Unsafe value detected.\n");
         signed_return_value = ERROR_CODE;
     }
     else
@@ -40,8 +40,8 @@ int32_t sanitize_iarg(char * arg)
 
 bool unsigned_error_checker(char * operand1, char * operand2)
 {
-    char * end_p        = NULL;
-    bool ec_return_value = false;
+    char * end_p           = NULL;
+    bool   ec_return_value = false;
 
     if (((1 == sanitize_uarg(operand1)) &&
          (1 != strtoul(operand1, &end_p, BASE_TEN))) ||
@@ -56,8 +56,8 @@ bool unsigned_error_checker(char * operand1, char * operand2)
 
 bool signed_error_checker(char * operand1, char * operand2)
 {
-    char * end_p        = NULL;
-    bool ec_return_value = false;
+    char * end_p           = NULL;
+    bool   ec_return_value = false;
 
     if (((ERROR_CODE == sanitize_iarg(operand1)) &&
          (ERROR_CODE != strtol(operand1, &end_p, BASE_TEN))) ||

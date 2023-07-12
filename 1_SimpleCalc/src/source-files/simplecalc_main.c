@@ -1,23 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include "handle_args.h"
 #include "error_msg.h"
 #include "calc.h"
-#include "magic_num.h"
-#define SINGLE_BYTE 1
+#include <errno.h>
+#define SINGLE_BYTE   1
+#define EQUATION_ARGS 4
+#define BASE_TEN      10
 
 int main(int argc, char ** argv)
 {
-    char **  end_pp                       = NULL;
-    int      error_status                 = 0;
-    uint32_t arg1_test                    = strtol(argv[1], end_pp, BASE_TEN);
-    uint32_t arg3_test                    = strtol(argv[3], end_pp, BASE_TEN);
-    int32_t  arg1_length                  = strlen(argv[1]);
-    int32_t  arg3_length                  = strlen(argv[3]);
-    char     arg1str[DEFAULT_BUFFER_SIZE] = "0";
-    char     arg3str[DEFAULT_BUFFER_SIZE] = "0";
-    snprintf(arg1str, sizeof(arg1str), "%d", arg1_test);
-    snprintf(arg3str, sizeof(arg3str), "%d", arg3_test);
+    int error_status = 0;
+    errno            = 0;
 
     if (EQUATION_ARGS != argc)
     {
@@ -27,49 +23,14 @@ int main(int argc, char ** argv)
         goto END;
     }
 
-    if (((0 == strtoul(argv[1], end_pp, BASE_TEN)) &&
-         (0 != strncmp(argv[1], "0\n", SINGLE_BYTE))) ||
-        ((0 == strtoul(argv[3], end_pp, BASE_TEN)) &&
-         (0 != strncmp(argv[3],
-                       "0\n",
-                       1)))) // Checks for non integer characters in operands
+    if ((ERROR_CODE == handle_int_args(argv[1], argv[3])) ||
+        (ERROR_CODE == handle_uint_args(argv[1], argv[3])))
     {
         fprintf(stderr,
-                "[Error] - 32-bit Signed or Unsigned Integer values only.\n\n");
-        usage(argv[0]);
+                "32-bit Signed or 32-bit Unsigned Integer values "
+                "only.\n\n");
         error_status = ERROR_CODE;
         goto END;
-    }
-
-    if ((arg1_length > 1) ||
-        (arg3_length > 1)) // Checks if operands contain non integer values.
-    {
-        if ((strlen(arg1str) != (unsigned long)arg1_length) ||
-            (strlen(arg3str)) !=
-                (unsigned long)
-                    arg3_length) // Print debug info for troubleshooting
-        {
-            printf("[DEBUG] operand1 value at memory address [ %p ] = [ %d ]\n",
-                   (void *)&arg1_test,
-                   arg1_test);
-            printf(
-                "[DEBUG] operand1 length at memory address [ %p ] = [ %d ]\n",
-                (void *)&arg1_length,
-                arg1_length);
-            printf("[DEBUG] operand2 value at memory address [ %p ] = [ %d ]\n",
-                   (void *)&arg3_test,
-                   arg3_test);
-            printf(
-                "[DEBUG] operand2 length at memory address [ %p ] = [ %d ]\n\n",
-                (void *)&arg3_length,
-                arg3_length);
-            fprintf(stderr,
-                    "[Error] - 32-bit Signed or 32-bit Unsigned Integer values "
-                    "only.\n\n");
-            usage(argv[0]);
-            error_status = ERROR_CODE;
-            goto END;
-        }
     }
 
     if (ERROR_CODE == calc(argv[1], argv[2], argv[3]))
