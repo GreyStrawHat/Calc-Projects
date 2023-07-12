@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <errno.h>
 #include "handle_args.h"
 #include "error_msg.h"
 #include "calc.h"
-#include <errno.h>
 #define SINGLE_BYTE   1
 #define EQUATION_ARGS 4
 #define BASE_TEN      10

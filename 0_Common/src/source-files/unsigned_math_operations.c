@@ -19,7 +19,7 @@ uint32_t rotateRight(uint32_t value, uint32_t shift)
 
 uint32_t sanitize_lshift(uint32_t arg1, uint32_t arg2)
 {
-    if ((arg2 >= (BIT_WIDTH || arg1)) > (UINT32_MAX >> arg2))
+    if ((arg2 >= BIT_WIDTH) || (arg1 > (UINT32_MAX >> arg2)))
     {
         unsigned_int_error();
         return_value = UNSIGNED_ERROR_CODE;
