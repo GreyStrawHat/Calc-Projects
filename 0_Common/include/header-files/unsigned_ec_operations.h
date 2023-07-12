@@ -8,6 +8,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "error_msg.h"
+#include "handle_args.h"
+#include "unsigned_math_operations.h"
+#include "args.h"
 
 
 /**

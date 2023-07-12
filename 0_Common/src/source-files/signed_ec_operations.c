@@ -3,7 +3,6 @@
 bool ec_addition(char * operand1, char * operand2)
 {
     int32_t result       = 0;
-    char ** end_pp       = NULL;
     bool    return_value = false;
 
     if (signed_error_checker(operand1, operand2))
@@ -11,10 +10,7 @@ bool ec_addition(char * operand1, char * operand2)
         return_value = true;
         goto END;
     }
-    if ((ERROR_CODE ==
-         sanitize_addition(sanitize_iarg(operand1), sanitize_iarg(operand2))) &&
-        (ERROR_CODE != ((strtol(operand1, end_pp, BASE_TEN)) +
-                        (strtol(operand2, end_pp, BASE_TEN)))))
+    if (ERROR_CODE == handle_int_args(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -37,7 +33,6 @@ END:
 bool ec_subtraction(char * operand1, char * operand2)
 {
     int32_t result       = 0;
-    char ** end_pp       = NULL;
     bool    return_value = false;
 
     if (signed_error_checker(operand1, operand2))
@@ -45,10 +40,7 @@ bool ec_subtraction(char * operand1, char * operand2)
         return_value = true;
         goto END;
     }
-    if ((ERROR_CODE == sanitize_subtraction(sanitize_iarg(operand1),
-                                            sanitize_iarg(operand2))) &&
-        (ERROR_CODE != ((strtol(operand1, end_pp, BASE_TEN)) -
-                        (strtol(operand2, end_pp, BASE_TEN)))))
+    if (ERROR_CODE == handle_int_args(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -71,7 +63,6 @@ END:
 bool ec_multiplication(char * operand1, char * operand2)
 {
     int32_t result       = 0;
-    char ** end_pp       = NULL;
     bool    return_value = false;
 
     if (signed_error_checker(operand1, operand2))
@@ -79,10 +70,7 @@ bool ec_multiplication(char * operand1, char * operand2)
         return_value = true;
         goto END;
     }
-    if ((ERROR_CODE == sanitize_multiplication(sanitize_iarg(operand1),
-                                               sanitize_iarg(operand2))) &&
-        (ERROR_CODE != ((strtol(operand1, end_pp, BASE_TEN)) *
-                        (strtol(operand2, end_pp, BASE_TEN)))))
+    if (ERROR_CODE == handle_int_args(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -105,7 +93,6 @@ END:
 bool ec_division(char * operand1, char * operand2)
 {
     int32_t result       = 0;
-    char ** end_pp       = NULL;
     bool    return_value = false;
 
     if (signed_error_checker(operand1, operand2))
@@ -116,15 +103,12 @@ bool ec_division(char * operand1, char * operand2)
 
     if (0 == sanitize_iarg(operand2))
     {
-        printf("[Error] - Cannot Divide by Zero.\n\n");
+        printf("[ERROR] - Cannot Divide by Zero.\n\n");
         return_value = true;
         goto END;
     }
 
-    if ((ERROR_CODE ==
-         sanitize_division(sanitize_iarg(operand1), sanitize_iarg(operand2))) &&
-        (ERROR_CODE != ((strtol(operand1, end_pp, BASE_TEN)) /
-                        (strtol(operand2, end_pp, BASE_TEN)))))
+    if (ERROR_CODE == handle_int_args(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -146,7 +130,6 @@ END:
 bool ec_modulo(char * operand1, char * operand2)
 {
     int32_t result       = 0;
-    char ** end_pp       = NULL;
     bool    return_value = false;
 
     if (signed_error_checker(operand1, operand2))
@@ -162,10 +145,7 @@ bool ec_modulo(char * operand1, char * operand2)
         goto END;
     }
 
-    if ((ERROR_CODE ==
-         sanitize_modulo(sanitize_iarg(operand1), sanitize_iarg(operand2))) &&
-        (ERROR_CODE != ((strtol(operand1, end_pp, BASE_TEN)) %
-                        (strtol(operand2, end_pp, BASE_TEN)))))
+    if (ERROR_CODE == handle_int_args(operand1, operand2))
     {
         return_value = true;
         goto END;

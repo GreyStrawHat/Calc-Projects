@@ -72,7 +72,6 @@ END:
 bool ec_lshift(char * operand1, char * operand2)
 {
     uint32_t result       = 0;
-    char **  end_pp       = NULL;
     bool     return_value = false;
 
     if (unsigned_error_checker(operand1, operand2))
@@ -80,10 +79,7 @@ bool ec_lshift(char * operand1, char * operand2)
         return_value = true;
         goto END;
     }
-    if ((UNSIGNED_ERROR_CODE ==
-         sanitize_lshift(sanitize_uarg(operand1), sanitize_uarg(operand2))) &&
-        (UNSIGNED_ERROR_CODE != ((strtoul(operand1, end_pp, BASE_TEN))
-                                 << (strtoul(operand2, end_pp, BASE_TEN)))))
+    if (ERROR_CODE == handle_uint_args(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -104,7 +100,6 @@ END:
 bool ec_rotateLeft(char * operand1, char * operand2)
 {
     uint32_t result       = 0;
-    char **  end_pp       = NULL;
     bool     return_value = false;
 
     if (unsigned_error_checker(operand1, operand2))
@@ -112,11 +107,7 @@ bool ec_rotateLeft(char * operand1, char * operand2)
         return_value = true;
         goto END;
     }
-    if ((UNSIGNED_ERROR_CODE ==
-         rotateLeft(sanitize_uarg(operand1), sanitize_uarg(operand2))) &&
-        (UNSIGNED_ERROR_CODE !=
-         rotateLeft(strtoul(operand1, end_pp, BASE_TEN),
-                    strtoul(operand2, end_pp, BASE_TEN))))
+    if (ERROR_CODE == handle_uint_args(operand1, operand2))
     {
         return_value = true;
         goto END;
@@ -137,7 +128,6 @@ END:
 bool ec_rotateRight(char * operand1, char * operand2)
 {
     uint32_t result       = 0;
-    char **  end_pp       = NULL;
     bool     return_value = false;
 
     if (unsigned_error_checker(operand1, operand2))
@@ -145,11 +135,7 @@ bool ec_rotateRight(char * operand1, char * operand2)
         return_value = true;
         goto END;
     }
-    if ((UNSIGNED_ERROR_CODE ==
-         rotateRight(sanitize_uarg(operand1), sanitize_uarg(operand2))) &&
-        (UNSIGNED_ERROR_CODE !=
-         rotateLeft(strtoul(operand1, end_pp, BASE_TEN),
-                    strtoul(operand2, end_pp, BASE_TEN))))
+    if (ERROR_CODE == handle_uint_args(operand1, operand2))
     {
         return_value = true;
         goto END;

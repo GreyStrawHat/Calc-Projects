@@ -17,7 +17,7 @@ int main(int argc, char ** argv)
 
     if (EQUATION_ARGS != argc)
     {
-        fprintf(stderr, "[Error] - Invalid number of arguments.\n\n");
+        fprintf(stderr, "[ERROR] - Invalid number of arguments.\n\n");
         usage(argv[0]);
         error_status = ERROR_CODE;
         goto END;
@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
         (ERROR_CODE == handle_uint_args(argv[1], argv[3])))
     {
         fprintf(stderr,
-                "32-bit Signed or 32-bit Unsigned Integer values "
+                "[INFO]  - 32-bit Signed or 32-bit Unsigned Integer values "
                 "only.\n\n");
         error_status = ERROR_CODE;
         goto END;
