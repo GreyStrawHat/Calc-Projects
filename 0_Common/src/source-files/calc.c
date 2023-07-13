@@ -1,5 +1,4 @@
 #include "calc.h"
-#include "error_msg.h"
 
 int calc(char * operand1, char * operator_val, char * operand2)
 {

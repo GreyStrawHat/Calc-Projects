@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "signed_ec_operations.h"
 #include "default_case.h"
+#include "error_msg.h"
 
 
 /**
