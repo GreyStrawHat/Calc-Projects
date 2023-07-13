@@ -73,7 +73,7 @@ int handle_uint_args(char * operand1, char * operand2)
     if ((0 != errno) || (NULL == arg2_p) || (NULL_BYTE != *error_tracker_p)) //Checks for invalid character(s)s in operands 1 or 2
     {
         printf("[ERROR] - Invalid character(s)s found in Operand 2.\n");
-        printf("[DEBUG] - The value at memory address [ %p ] is [ %d ]",
+        printf("[DEBUG] - The value at memory address [ %p ] is [ %d ]\n",
                (void *)&uint_arg2_tracker,
                uint_arg2_tracker);
         printf("[DEBUG] - errno: %d, arg1_p: %s, Found Invalid Character(s): %s\n",
