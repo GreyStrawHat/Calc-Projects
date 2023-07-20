@@ -14,6 +14,11 @@ project(
     LANGUAGES "C"
 )
 
+project(
+    FileCalc
+    LANGUAGES "C"
+)
+
 include(jqr_main.cmake)
 
 include_directories(0_Common/include/header-files)
@@ -40,9 +45,18 @@ endif()
 
 add_executable(SimpleCalc "1_SimpleCalc/src/source-files/simplecalc_main.c")
 
+add_executable(FileCalc "2_FileCalc/src/source-files/filecalc_main.c")
+
 target_link_libraries(SimpleCalc common_lib simplecalc_lib)
+
+target_link_libraries(FileCalc filecalc_lib)
+
+target_include_directories(FileCalc PRIVATE "2_FileCalc/include/header-files")
 
 set_target_properties(SimpleCalc PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/1_SimpleCalc/bin)
+
+set_target_properties(FileCalc PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/2_FileCalc/bin)
 
 # EOF
