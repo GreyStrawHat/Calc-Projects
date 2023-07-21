@@ -11,6 +11,8 @@
 #include "equation_types.h"
 #include "return_solved_struct.h"
 
+extern int loop_tracker;
+
 int parse_unsolved_file(Unsolved_Equation *uequation, struct dirent *directory_entry, char *input_dir_arg, char *output_dir_arg);
 
 #endif
