@@ -37,6 +37,4 @@ add_library(filecalc_lib ${FILECALC_SOURCE_FILES} ${FILECALC_HEADER_FILES})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/header-files)
 
-target_include_directories(filecalc_lib PRIVATE "include/header-files")
-
 #EOF

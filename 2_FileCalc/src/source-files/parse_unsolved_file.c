@@ -3,13 +3,13 @@
 int parse_unsolved_file(Unsolved_Equation *uequation, struct dirent *directory_entry, char *input_dir_arg, char *output_dir_arg)
 {
 
-    size_t path_size = strlen(directory_entry->d_name) + strlen(input_dir_arg) + 2;
+    char *input_filepath = realpath(input_dir_arg, NULL);
 
-    char *input_filepath = NULL;
+    strncat(input_filepath, "/", 2);
 
-    input_filepath = (char *)calloc(path_size, sizeof(char));
+    strncat(input_filepath, directory_entry->d_name, sizeof(directory_entry->d_name) + 1);
 
-    snprintf(input_filepath, path_size, "%s/%s", input_dir_arg, directory_entry->d_name);
+    //snprintf(input_filepath, path_size, "%s/%s", input_dir_arg, directory_entry->d_name);
 
     int fd = open(input_filepath, O_RDONLY| O_CLOEXEC);
     if (fd == -1)
