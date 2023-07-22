@@ -8,6 +8,7 @@
 #include "parse_solved_file.h"
 #include "filecalc.h"
 
-Solved_Equation *return_solved_struct(Unsolved_Equation *Equation, char *output_dir_arg);
+Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
+                                       char *              output_dir_arg);
 
 #endif

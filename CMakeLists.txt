@@ -9,16 +9,6 @@ project(
     DESCRIPTION "JQR Example Projects v1.5"
 )
 
-project(
-    SimpleCalc
-    LANGUAGES "C"
-)
-
-project(
-    FileCalc
-    LANGUAGES "C"
-)
-
 include(jqr_main.cmake)
 
 include_directories(0_Common/include/header-files)
@@ -44,14 +34,12 @@ if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/5_NetCalc/CMakeLists.txt")
 endif()
 
 add_executable(SimpleCalc "1_SimpleCalc/src/source-files/simplecalc_main.c")
-
-add_executable(FileCalc "2_FileCalc/src/source-files/filecalc_main.c")
-
 target_link_libraries(SimpleCalc common_lib simplecalc_lib)
 
-target_link_libraries(FileCalc filecalc_lib)
+add_executable(FileCalc "2_FileCalc/src/source-files/filecalc_main.c")
+target_link_libraries(FileCalc common_lib filecalc_lib)
 
-target_include_directories(FileCalc PRIVATE "2_FileCalc/include/header-files")
+add_dependencies(filecalc_lib common_lib)
 
 set_target_properties(SimpleCalc PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/1_SimpleCalc/bin)

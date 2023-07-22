@@ -1,5 +1,5 @@
-#ifndef ERROR_MSG_H
-#define ERROR_MSG_H
+#ifndef ERROR_MSG_64_H
+#define ERROR_MSG_64_H
 #define ERROR_CODE          -1
 #define UNSIGNED_ERROR_CODE 1
 

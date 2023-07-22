@@ -9,7 +9,6 @@ int main(int argc, char ** argv)
     }
 
     Unsolved_Equation * Input_File;
-    // Solved_Equation *Output_File;
 
     // Make a function to open/create an output directory and store the file
     // data there.
@@ -19,24 +18,21 @@ int main(int argc, char ** argv)
 
     if (Input_File == NULL)
     {
-        printf("Error Parsing files\n");
+        printf("Error Parsing Unsolved Equation File\n");
         free(Input_File);
-        // free(Output_File);
         return -1;
     }
 
     if (Input_File->magic_num != MAG_NUM)
     {
-        printf("Magic Number Error\n");
+        DEBUG_PRINT("Magic Number: %X\n", Input_File->magic_num);
         free(Input_File);
-        // free(Output_File);
         return -1;
     }
 
-    printf("Success.\n");
+    printf("Execution Successful.\n");
 
     free(Input_File);
-    // free(Output_File);
     return 0;
 }
 

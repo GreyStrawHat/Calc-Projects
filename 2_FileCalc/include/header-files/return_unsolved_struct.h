@@ -8,6 +8,7 @@
 #include "equation_types.h"
 #include "parse_unsolved_file.h"
 
-Unsolved_Equation *return_unsolved_struct(char *input_dir_arg, char *output_dir_arg);
+Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
+                                           char * output_dir_arg);
 
 #endif

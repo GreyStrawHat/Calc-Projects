@@ -22,16 +22,10 @@ set(HEADER_FILES
     "include/header-files/unsigned_math_operations.h"
     "include/header-files/signed_ec_operations.h"
     "include/header-files/unsigned_ec_operations.h"
-    "include/header-files/default_case.h")
+    "include/header-files/default_case.h"
+    )
 
 add_library(common_lib ${SOURCE_FILES} ${HEADER_FILES})
 
-#project("SimpleCalc")
-
-#add_executable(SimpleCalc)
-
-#add_executable(SimpleCalc "SimpleCalc.c" "include/header-files/*" "src/source-files/*")
-
-#nclude_directories("include/header-files" "src/source-files")
-
-#target_sources(SimpleCalc PRIVATE ${SOURCE_FILES})
+target_include_directories(common_lib PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/header-files)
