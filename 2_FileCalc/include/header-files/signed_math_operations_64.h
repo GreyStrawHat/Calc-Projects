@@ -2,9 +2,11 @@
 #define SIGNED_MATHOP64_H
 #define BIT_WIDTH 64
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include "error_msg.h"
+#include "font.h"
 
 /**
  * @brief Safe addition operation for signed 64-bit integers.

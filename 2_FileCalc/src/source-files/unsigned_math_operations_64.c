@@ -2,14 +2,14 @@
 
 static int return_value = 0;
 
-uint64_t rotateLeft(uint64_t value, uint64_t shift)
+uint64_t rotateLeft64(uint64_t value, uint64_t shift)
 {
     uint64_t rotated_value =
         (lshift64(value, shift) | (value >> (BIT_WIDTH - shift)));
     return rotated_value;
 }
 
-uint64_t rotateRight(uint64_t value, uint64_t shift)
+uint64_t rotateRight64(uint64_t value, uint64_t shift)
 {
     shift %= BIT_WIDTH;
     uint64_t rotated_value =

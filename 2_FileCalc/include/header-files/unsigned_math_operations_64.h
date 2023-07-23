@@ -3,7 +3,9 @@
 #define BIT_WIDTH 64
 
 #include <stdint.h>
+#include <stdio.h>
 #include "error_msg.h"
+#include "font.h"
 
 /**
  * @brief Perform a bitwise left shift on a 64-bit unsigned integer.

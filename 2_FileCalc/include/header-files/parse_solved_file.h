@@ -1,7 +1,8 @@
 #ifndef PARSE_SOLVED_H
 #define PARSE_SOLVED_H
-#define FILENAME_BUFFER 255
-#define NULL_BYTE_SIZE  1
+#define FILENAME_BUFFER        255
+#define NULL_BYTE_SIZE         1
+#define SOLVED_EQUATION_LENGTH 14
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -10,6 +10,8 @@
 #include <stdbool.h>
 #include "error_msg.h"
 #include "signed_math_operations_64.h"
+#include "debug.h"
+#include "font.h"
 
 /**
  * @brief Function that checks and validates errors then outputs the results of

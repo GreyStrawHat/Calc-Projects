@@ -6,13 +6,23 @@ bool ec_bitwise_AND64(uint64_t operand1, uint64_t operand2)
     bool     return_value = false;
 
     result = (operand1 & operand2);
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %lu ]\n",
-           (void *)&operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %lu ]\n\n",
-           (void *)&operand2,
-           operand2);
-    printf("The Result is: %lu\n", result);
+
+    printf(YELLOW);
+    printf("Operation: %lu & %lu\n", operand1, operand2);
+    printf(RESET);
+
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %lu\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
     return return_value;
 }
@@ -23,13 +33,23 @@ bool ec_bitwise_OR64(uint64_t operand1, uint64_t operand2)
     bool     return_value = false;
 
     result = (operand1 | operand2);
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %lu ]\n",
-           (void *)&operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %lu ]\n\n",
-           (void *)&operand2,
-           operand2);
-    printf("The Result is: %lu\n", result);
+
+    printf(YELLOW);
+    printf("Operation: %lu | %lu\n", operand1, operand2);
+    printf(RESET);
+
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %lu\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
     return return_value;
 }
@@ -39,14 +59,23 @@ bool ec_bitwise_XOR64(uint64_t operand1, uint64_t operand2)
     uint64_t result       = 0;
     bool     return_value = false;
 
+    printf(YELLOW);
+    printf("Operation: %lu ^ %lu\n", operand1, operand2);
+    printf(RESET);
+
     result = (operand1 ^ operand2);
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %lu ]\n",
-           (void *)&operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %lu ]\n\n",
-           (void *)&operand2,
-           operand2);
-    printf("The Result is: %lu\n", result);
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %lu\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
     return return_value;
 }
@@ -55,6 +84,10 @@ bool ec_lshift64(uint64_t operand1, uint64_t operand2)
 {
     uint64_t result       = 0;
     bool     return_value = false;
+
+    printf(YELLOW);
+    printf("Operation: %lu << %lu\n", operand1, operand2);
+    printf(RESET);
 
     if (UNSIGNED_ERROR_CODE == lshift64(operand1, operand2) &&
         UNSIGNED_ERROR_CODE != (operand1 << operand2))
@@ -65,13 +98,18 @@ bool ec_lshift64(uint64_t operand1, uint64_t operand2)
 
     result = lshift64(operand1, operand2);
 
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %lu ]\n",
-           (void *)&operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %lu ]\n\n",
-           (void *)&operand2,
-           operand2);
-    printf("The Result is: %lu\n", result);
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %lu\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
 END:
     return return_value;
@@ -83,13 +121,23 @@ bool ec_rotateLeft64(uint64_t operand1, uint64_t operand2)
     bool     return_value = false;
 
     result = rotateLeft64(operand1, operand2);
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %lu ]\n",
-           (void *)&operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %lu ]\n",
-           (void *)&operand2,
-           operand2);
-    printf("The Result is: %lu\n", result);
+
+    printf(YELLOW);
+    printf("Operation: %lu <<< %lu\n", operand1, operand2);
+    printf(RESET);
+
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %lu\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
     return return_value;
 }
@@ -100,13 +148,23 @@ bool ec_rotateRight64(uint64_t operand1, uint64_t operand2)
     bool     return_value = false;
 
     result = rotateRight64(operand1, operand2);
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %lu ]\n",
-           (void *)&operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %lu ]\n\n",
-           (void *)&operand2,
-           operand2);
-    printf("The Result is: %lu\n", result);
+
+    printf(YELLOW);
+    printf("Operation: %lu >>> %lu\n", operand1, operand2);
+    printf(RESET);
+
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %lu\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
     return return_value;
 }

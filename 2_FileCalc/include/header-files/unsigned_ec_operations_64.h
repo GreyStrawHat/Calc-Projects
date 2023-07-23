@@ -4,13 +4,14 @@
 #define UNSIGNED_ERROR_CODE 1
 #define BASE_TEN            10
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include "error_msg.h"
-#include "handle_args.h"
 #include "unsigned_math_operations_64.h"
-#include "args.h"
+#include "debug.h"
+#include "font.h"
 
 /**
  * @brief Function that checks and validates errors then outputs the results of

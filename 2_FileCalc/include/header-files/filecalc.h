@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "equation_types.h"
 #include "signed_ec_operations_64.h"
+#include "default_case64.h"
 
 Solved_Equation * filecalc(Unsolved_Equation * Equation,
                            Solved_Equation *   sequation);

@@ -13,13 +13,18 @@ bool ec_addition64(int64_t operand1, int64_t operand2)
         goto END;
     }
 
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand2,
-           operand2);
-    printf("The Result is: %li\n", result);
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %li\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
 END:
     return return_value;
@@ -38,13 +43,18 @@ bool ec_subtraction64(int64_t operand1, int64_t operand2)
         goto END;
     }
 
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand2,
-           operand2);
-    printf("The Result is: %li\n", result);
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %li\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
 END:
     return return_value;
@@ -63,13 +73,18 @@ bool ec_multiplication64(int64_t operand1, int64_t operand2)
         goto END;
     }
 
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand2,
-           operand2);
-    printf("The Result is: %li\n", result);
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %li\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
 END:
     return return_value;
@@ -95,13 +110,18 @@ bool ec_division64(int64_t operand1, int64_t operand2)
         goto END;
     }
 
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand2,
-           operand2);
-    printf("The Result is: %li\n", result);
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %li\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
 END:
     return return_value;
@@ -127,13 +147,18 @@ bool ec_modulo64(int64_t operand1, int64_t operand2)
         goto END;
     }
 
-    printf("[DEBUG] - operand1 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand1,
-           operand1);
-    printf("[DEBUG] - operand2 at memory address [ %p ] = [ %li ]\n",
-           (void *)operand2,
-           operand2);
-    printf("The Result is: %li\n", result);
+    DEBUG_PRINT("operand1 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand1,
+                operand1);
+    DEBUG_PRINT("operand2 at memory address [ %p ] = [ %016lX ]\n",
+                (void *)&operand2,
+                operand2);
+    printf(GREEN);
+    printf("Result: %li\n", result);
+    DEBUG_PRINT("result at memory address [ %p ] = [ %016lX ]\n\n",
+                (void *)&result,
+                result);
+    printf(RESET);
 
 END:
     return return_value;

@@ -21,12 +21,7 @@ int open_output_dir(char * output_dir_arg)
         DEBUG_PRINT("Error opening directory %s\n", output_dir_arg);
         return -1;
     }
-    else
-    {
-        printf("Opening Directory %s\n", output_dir_arg);
-    }
 
-    printf("Closing Directory %s\n", output_dir_arg);
     closedir(output_directory);
 
     return 0;

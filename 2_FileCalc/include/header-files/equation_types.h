@@ -1,8 +1,11 @@
 #ifndef EQU_TYPES_H
 #define EQU_TYPES_H
+#define ERROR_CODE        -1
+#define EQU_HEADER_LENGTH 27
 
 #include <stdint.h>
 #include "debug.h"
+#include "font.h"
 
 typedef struct
 {

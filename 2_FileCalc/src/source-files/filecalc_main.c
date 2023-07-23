@@ -30,7 +30,7 @@ int main(int argc, char ** argv)
         return -1;
     }
 
-    printf("Execution Successful.\n");
+    printf("\nOperations Successful.\n");
 
     free(Input_File);
     return 0;

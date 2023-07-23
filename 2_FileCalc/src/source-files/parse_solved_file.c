@@ -9,13 +9,7 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
         return -1;
     }
 
-    static int loop_tracker = 0; // tracks times function has been called for
-                                 // writing equations to file
-
-    if (loop_tracker == sequation->num_of_e)
-    {
-        loop_tracker = 0;
-    }
+    static int loop_tracker = 0;
 
     char * output_filepath = realpath(output_dir_arg, NULL);
 
@@ -35,20 +29,15 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
             reversed_byteorder_filename,
             strlen(reversed_byteorder_filename));
 
-    strncat(output_filepath, ".data", (strlen(".data") + NULL_BYTE_SIZE));
+    strncat(output_filepath, ".sol", (strlen(".sol") + NULL_BYTE_SIZE));
 
-    if (access(output_filepath, F_OK) == 0)
-    {
-        printf("File: %s already exists, skipping..\n", output_filepath);
-        free(output_filepath);
-        output_filepath = NULL;
-        return 0;
-    }
+    printf("Storing results in solution file: %s\n", output_filepath);
 
-    printf("File: %s doesn't exist, creating it now..\n", output_filepath);
+    ssize_t file_size =
+        (sequation->num_of_e * SOLVED_EQUATION_LENGTH) + EQU_HEADER_LENGTH;
 
     int fd = open(output_filepath,
-                  O_RDWR | O_CREAT | O_CLOEXEC,
+                  O_RDWR | O_CREAT | O_CLOEXEC | O_APPEND,
                   S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
     if (fd == -1)
     {
@@ -58,8 +47,21 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
         return -1;
     }
 
+    if (lseek(fd, 0, SEEK_END) >= file_size)
+    {
+        free(output_filepath);
+        output_filepath = NULL;
+        return 0;
+    }
+
+    if (errno == 2)
+    {
+        errno = 0;
+    }
+
     if (loop_tracker == 0)
     {
+        printf("Writing header to file..\n");
         lseek(fd, 0, SEEK_SET);
         write(fd, &sequation->magic_num, sizeof(sequation->magic_num));
         write(fd, &sequation->file_id, sizeof(sequation->file_id));
@@ -84,8 +86,13 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
     free(output_filepath);
     output_filepath = NULL;
 
-    printf("Closing output Directory\n");
+    DEBUG_PRINT(" Loop Tracker: %d\n", loop_tracker);
     loop_tracker++;
+
+    if ((loop_tracker) == sequation->num_of_e)
+    {
+        loop_tracker = 0;
+    }
 
     return 0;
 }

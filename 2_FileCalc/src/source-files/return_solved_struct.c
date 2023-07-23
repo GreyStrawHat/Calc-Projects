@@ -20,14 +20,6 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
     sequation->num_of_opt_headers = Equation->num_of_opt_headers;
     sequation->equation_id        = Equation->equation_id;
 
-    if (Equation->operator_value == 1)
-    {
-        printf("%ld + %ld = %ld\n",
-               Equation->operand1,
-               Equation->operand2,
-               (Equation->operand1 + Equation->operand2));
-    }
-
     // create function that takes Unsolved equation parameter and performs the
     // operation and returns the result to sequation->result
 
@@ -35,20 +27,21 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
 
     sequation = filecalc(Equation, sequation);
 
-    printf("Equation Result: %ld\n\n", sequation->result);
+    // printf("Equation Result: %ld\n\n", sequation->result);
 
     if (parse_solved_file(sequation, output_dir_arg) == -1)
     {
         printf("Error parsing solved file\n");
         free(sequation);
         sequation = NULL;
-        errno += 1;
+        return NULL;
     }
-
-    printf("Errno: %d\n", errno);
 
     if (errno != 0)
     {
+        DEBUG_PRINT("Errno: %d\n", errno);
+        free(sequation);
+        sequation = NULL;
         return NULL;
     }
 

@@ -23,9 +23,10 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
         return -1;
     }
 
-    printf("Opening Unsolved Equation File %s\n", directory_entry->d_name);
+    printf("\nTarget Equation File: %s\n", directory_entry->d_name);
 
     ssize_t file_size = lseek(fd, 0, SEEK_END);
+    printf("File Size: %ld\n", file_size);
 
     lseek(fd, 0, SEEK_SET);
 
@@ -37,6 +38,8 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
     read(fd,
          &uequation->num_of_opt_headers,
          sizeof(uequation->num_of_opt_headers));
+
+    printf("Number of Equations: %ld\n", uequation->num_of_e);
 
     int iterator = 0;
 
@@ -77,6 +80,7 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
         Solved_Equation * sequation =
             return_solved_struct(uequation, output_dir_arg);
         free(sequation);
+        sequation = NULL;
 
         iterator++;
     }

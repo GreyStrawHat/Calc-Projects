@@ -9,6 +9,7 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
     switch (Equation->operator_value)
     {
         case ADDITION:
+            sequation->data_type = 1;
             if (true == ec_addition64(Equation->operand1, Equation->operand2))
             {
                 printf("Addition Error\n");
@@ -18,6 +19,7 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
             sequation->result = Equation->operand1 + Equation->operand2;
             break;
         case SUBTRACTION:
+            sequation->data_type = 1;
             if (true ==
                 ec_subtraction64(Equation->operand1, Equation->operand2))
             {
@@ -28,6 +30,7 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
             sequation->result = Equation->operand1 - Equation->operand2;
             break;
         case MULTIPLICATION:
+            sequation->data_type = 1;
             if (true ==
                 ec_multiplication64(Equation->operand1, Equation->operand2))
             {
@@ -47,6 +50,7 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
             sequation->result = Equation->operand1 / Equation->operand2;
             break;
         case MODULUS:
+            sequation->data_type = 1;
             if (true == ec_modulo64(Equation->operand1, Equation->operand2))
             {
                 printf("Modulus Error\n");
@@ -57,7 +61,8 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
 
             break;
         default:
-            printf("Invalid Operator\n");
+            sequation->data_type = 2;
+            default_case64(Equation, sequation);
             goto END;
     }
 
