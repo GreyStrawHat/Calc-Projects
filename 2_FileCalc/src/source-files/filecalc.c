@@ -63,8 +63,9 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
         default:
             if (Equation->operator_value > RIGHT_ROTATE)
             {
-                printf(
-                    "[ERROR] - Operation Failed invalid operator detected\n");
+                printf(RED
+                       "[ERROR] - Operation Failed invalid operator "
+                       "detected\n" RESET);
                 error_status = 1;
                 goto END;
             }

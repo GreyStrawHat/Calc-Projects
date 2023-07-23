@@ -19,4 +19,11 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
                         char *              input_dir_arg,
                         char *              output_dir_arg);
 
+Unsolved_Equation * parse_unsolved_header(int                 fd,
+                                          Unsolved_Equation * uequation);
+
+int read_unsolved_equations(int                 fd,
+                            Unsolved_Equation * uequation,
+                            char *              output_dir_arg);
+
 #endif

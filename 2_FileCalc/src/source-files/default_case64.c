@@ -17,11 +17,9 @@ Solved_Equation * default_case64(Unsolved_Equation * Equation,
             sequation->result = Equation->operand1 << Equation->operand2;
             break;
         case RIGHT_SHIFT:
-            printf(YELLOW);
-            printf("Operation: %lu >> %lu\n",
+            printf(YELLOW "Operation: %lu >> %lu\n" RESET,
                    Equation->operand1,
                    Equation->operand2);
-            printf(RESET);
             sequation->result = Equation->operand1 >> Equation->operand2;
             break;
         case LEFT_ROTATE:

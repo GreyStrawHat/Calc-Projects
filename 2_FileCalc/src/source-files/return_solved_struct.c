@@ -20,10 +20,8 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
     sequation->num_of_opt_headers = Equation->num_of_opt_headers;
     sequation->equation_id        = Equation->equation_id;
 
-    // create function that takes Unsolved equation parameter and performs the
-    // operation and returns the result to sequation->result
-
-    // sequation->result = Equation->operand1 + Equation->operand2;
+    // create function that takes Unsolved equation and
+    // eturns the result to sequation->result
 
     sequation = filecalc(Equation, sequation);
 

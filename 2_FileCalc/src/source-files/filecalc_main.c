@@ -4,18 +4,13 @@ int main(int argc, char ** argv)
 {
     if (argc != 3)
     {
-        printf("Invalid number of arguments\n");
+        printf(RED "Invalid number of arguments\n" RESET);
         return -1;
     }
 
     Unsolved_Equation * Input_Dir;
 
-    // Make a function to open/create an output directory and store the file
-    // data there.
-
     Input_Dir = return_unsolved_struct(argv[1], argv[2]);
-    // Output_File = return_solved_struct(Input_Dir, argv[2]);
-
     if (Input_Dir == NULL)
     {
         printf(RED "Operation Failed\n\n" RESET);
