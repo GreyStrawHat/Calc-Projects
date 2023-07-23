@@ -8,31 +8,26 @@ int main(int argc, char ** argv)
         return -1;
     }
 
-    Unsolved_Equation * Input_File;
+    Unsolved_Equation * Input_Dir;
 
     // Make a function to open/create an output directory and store the file
     // data there.
 
-    Input_File = return_unsolved_struct(argv[1], argv[2]);
-    // Output_File = return_solved_struct(Input_File, argv[2]);
+    Input_Dir = return_unsolved_struct(argv[1], argv[2]);
+    // Output_File = return_solved_struct(Input_Dir, argv[2]);
 
-    if (Input_File == NULL)
+    if (Input_Dir == NULL)
     {
-        printf("Error Parsing Unsolved Equation File\n");
-        free(Input_File);
-        return -1;
-    }
-
-    if (Input_File->magic_num != MAG_NUM)
-    {
-        DEBUG_PRINT("Magic Number: %X\n", Input_File->magic_num);
-        free(Input_File);
+        printf(RED "Operation Failed\n\n" RESET);
+        printf(RED BOLD "Usage: %s <input_dir> <output_dir>\n\n" RESET,
+               argv[0]);
+        free(Input_Dir);
         return -1;
     }
 
     printf("\nOperations Successful.\n");
 
-    free(Input_File);
+    free(Input_Dir);
     return 0;
 }
 

@@ -39,6 +39,28 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
          &uequation->num_of_opt_headers,
          sizeof(uequation->num_of_opt_headers));
 
+    if (uequation->magic_num != MAG_NUM)
+    {
+        fprintf(stderr,
+                RED "[ERROR] - Invalid Magic Number: %X\n" RESET,
+                uequation->magic_num);
+        free(input_filepath);
+        input_filepath = NULL;
+        close(fd);
+        return -1;
+    }
+
+    if (uequation->header_flag != 0)
+    {
+        fprintf(stderr,
+                RED "[ERROR] - Invalid Header_Flag Value: %02X\n" RESET,
+                uequation->header_flag);
+        free(input_filepath);
+        input_filepath = NULL;
+        close(fd);
+        return -1;
+    }
+
     printf("Number of Equations: %ld\n", uequation->num_of_e);
 
     int iterator = 0;

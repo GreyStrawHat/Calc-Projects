@@ -3,6 +3,7 @@
 #define EQU_HEADER_LENGTH        27
 #define UNSOLVED_EQUATION_LENGTH 32
 #define NULL_BYTE_SIZE           1
+#define MAG_NUM                  (int32_t)0xDD77BB55
 
 #include <stdio.h>
 #include <stdlib.h>

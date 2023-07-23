@@ -19,7 +19,7 @@ uint64_t lshift64(uint64_t arg1, uint64_t arg2)
 {
     uint64_t return_value = 0;
 
-    if ((arg2 > BIT_WIDTH) || (arg1 == UINT64_MAX))
+    if ((arg2 > BIT_WIDTH) || (arg1 >= UINT64_MAX))
     {
         unsigned_int_error();
         return_value = UNSIGNED_ERROR_CODE;

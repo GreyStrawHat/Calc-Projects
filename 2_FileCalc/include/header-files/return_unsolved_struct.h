@@ -5,6 +5,9 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include "equation_types.h"
 #include "parse_unsolved_file.h"
 
