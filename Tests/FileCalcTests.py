@@ -3,7 +3,7 @@ import EquGrader
 
             
 def run_binary():
-    os.system("./build/2_FileCalc/filecalc ./filecalc_tests/unsolved ./filecalc_tests/solved")
+    os.system("./build/2_FileCalc/bin/FileCalc ./filecalc_tests/unsolved ./filecalc_tests/solved")
 
 
 def main():

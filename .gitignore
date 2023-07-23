@@ -5,6 +5,7 @@ vgcore*
 *.equ
 __pycache__
 updates/
+Solutions/
 0_Common/build/
 1_SimpleCalc/build/
 1_SimpleCalc/bin/
