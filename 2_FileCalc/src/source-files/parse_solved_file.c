@@ -37,7 +37,7 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
         (sequation->num_of_e * SOLVED_EQUATION_LENGTH) + EQU_HEADER_LENGTH;
 
     int fd = open(output_filepath,
-                  O_RDWR | O_CREAT | O_CLOEXEC | O_APPEND,
+                  O_RDWR | O_CREAT | O_CLOEXEC,
                   S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
     if (fd == -1)
     {

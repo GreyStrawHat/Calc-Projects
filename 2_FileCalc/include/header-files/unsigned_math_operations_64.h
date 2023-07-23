@@ -1,6 +1,7 @@
 #ifndef UNSIGNED_MATHOP64_H
 #define UNSIGNED_MATHOP64_H
-#define BIT_WIDTH 64
+#define BIT_WIDTH      64
+#define INT64_BIT_MASK 0xFFFFFFFFFFFFFFFF
 
 #include <stdint.h>
 #include <stdio.h>

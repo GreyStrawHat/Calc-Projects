@@ -27,8 +27,6 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
 
     sequation = filecalc(Equation, sequation);
 
-    // printf("Equation Result: %ld\n\n", sequation->result);
-
     if (parse_solved_file(sequation, output_dir_arg) == -1)
     {
         printf("Error parsing solved file\n");

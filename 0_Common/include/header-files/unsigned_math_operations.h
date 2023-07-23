@@ -1,6 +1,7 @@
 #ifndef UNSIGNED_MATHOP_H
 #define UNSIGNED_MATHOP_H
-#define BIT_WIDTH 32
+#define BIT_WIDTH      32
+#define INT32_BIT_MASK 0xFFFFFFFF
 
 #include <stdint.h>
 #include "error_msg.h"

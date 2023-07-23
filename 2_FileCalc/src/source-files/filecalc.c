@@ -61,8 +61,19 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
 
             break;
         default:
+            if (Equation->operator_value > RIGHT_ROTATE)
+            {
+                printf(
+                    "[ERROR] - Operation Failed invalid operator detected\n");
+                error_status = 1;
+                goto END;
+            }
             sequation->data_type = 2;
-            default_case64(Equation, sequation);
+            sequation            = default_case64(Equation, sequation);
+            if (sequation->solved_flag == 0)
+            {
+                error_status = 1;
+            }
             goto END;
     }
 

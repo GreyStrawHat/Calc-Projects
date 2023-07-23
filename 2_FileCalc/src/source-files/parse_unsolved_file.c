@@ -69,7 +69,7 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
 
         if (uequation->header_flag != 0)
         {
-            DEBUG_PRINT("[ERROR] - Invalid Header Value: %02x\n",
+            DEBUG_PRINT("[ERROR] - Invalid Header Value: %02X\n",
                         uequation->header_flag);
             free(input_filepath);
             input_filepath = NULL;

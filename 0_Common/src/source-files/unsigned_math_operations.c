@@ -4,8 +4,8 @@ static int return_value = 0;
 
 uint32_t rotateLeft(uint32_t value, uint32_t shift)
 {
-    uint32_t rotated_value =
-        (sanitize_lshift(value, shift) | (value >> (BIT_WIDTH - shift)));
+    shift %= BIT_WIDTH;
+    uint32_t rotated_value = (sanitize_lshift(value, shift) & INT32_BIT_MASK);
     return rotated_value;
 }
 

@@ -1,11 +1,9 @@
 #include "unsigned_math_operations_64.h"
 
-static int return_value = 0;
-
 uint64_t rotateLeft64(uint64_t value, uint64_t shift)
 {
-    uint64_t rotated_value =
-        (lshift64(value, shift) | (value >> (BIT_WIDTH - shift)));
+    shift %= BIT_WIDTH;
+    uint64_t rotated_value = (lshift64(value, shift)) & INT64_BIT_MASK;
     return rotated_value;
 }
 
@@ -19,6 +17,8 @@ uint64_t rotateRight64(uint64_t value, uint64_t shift)
 
 uint64_t lshift64(uint64_t arg1, uint64_t arg2)
 {
+    uint64_t return_value = 0;
+
     if ((arg2 >= (BIT_WIDTH || arg1)) > (UINT64_MAX >> arg2))
     {
         unsigned_int_error();
