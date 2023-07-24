@@ -6,29 +6,36 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
 {
     Solved_Equation * return_value = NULL;
     errno                          = 0;
-    Solved_Equation * sequation =
+    Solved_Equation * sequation_p =
         (Solved_Equation *)calloc(1, sizeof(Solved_Equation));
-    if (NULL == sequation)
+    if (NULL == sequation_p)
     {
         fprintf(stderr, "Calloc Error\n");
         return_value = NULL;
         goto END;
     }
 
-    sequation->magic_num          = Equation->magic_num;
-    sequation->file_id            = Equation->file_id;
-    sequation->num_of_e           = Equation->num_of_e;
-    sequation->header_flag        = SOLVED;
-    sequation->equation_offset    = Equation->equation_offset;
-    sequation->num_of_opt_headers = Equation->num_of_opt_headers;
-    sequation->equation_id        = Equation->equation_id;
+    if ((NULL == Equation) || (NULL == output_dir_arg))
+    {
+        fprintf(stderr, RED "Error: NULL pointer\n");
+        return_value = NULL;
+        goto END;
+    }
+
+    sequation_p->magic_num          = Equation->magic_num;
+    sequation_p->file_id            = Equation->file_id;
+    sequation_p->num_of_e           = Equation->num_of_e;
+    sequation_p->header_flag        = SOLVED;
+    sequation_p->equation_offset    = Equation->equation_offset;
+    sequation_p->num_of_opt_headers = Equation->num_of_opt_headers;
+    sequation_p->equation_id        = Equation->equation_id;
 
     // create function that takes Unsolved equation and
-    // returns the result to sequation->result
+    // returns the result to sequation_p->result
 
-    sequation = filecalc(Equation, sequation);
+    sequation_p = filecalc(Equation, sequation_p);
 
-    if (true == sequation->solved_flag)
+    if (true == sequation_p->solved_flag)
     {
         printf(BOLD "Sucessfully solved equation\n" RESET);
     }
@@ -39,7 +46,7 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
         goto END;
     }
 
-    if (ERROR_CODE == parse_solved_file(sequation, output_dir_arg))
+    if (ERROR_CODE == parse_solved_file(sequation_p, output_dir_arg))
     {
         fprintf(stderr, "Error parsing solved file\n");
         return_value = NULL;
@@ -53,12 +60,12 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
         goto END;
     }
 
-    return_value = sequation;
+    return_value = sequation_p;
 END:
     if (NULL == return_value)
     {
-        free(sequation);
-        sequation = NULL;
+        free(sequation_p);
+        sequation_p = NULL;
     }
     return return_value;
 }

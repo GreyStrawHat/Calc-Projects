@@ -6,8 +6,15 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
     static int loop_tracker = 0;
     ssize_t    file_size =
         (sequation->num_of_e * SOLVED_EQUATION_LENGTH) + EQU_HEADER_LENGTH;
-    int    fd              = ERROR_CODE;
-    char * output_filepath = realpath(output_dir_arg, NULL);
+    int    fd                = ERROR_CODE;
+    char * output_filepath_p = realpath(output_dir_arg, NULL);
+
+    if ((NULL == sequation) || (NULL == output_dir_arg))
+    {
+        fprintf(stderr, RED "Error: NULL pointer\n");
+        return_value = ERROR_CODE;
+        goto END;
+    }
 
     if (ERROR_CODE == open_output_dir(output_dir_arg))
     {
@@ -18,7 +25,6 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
 
     char reversed_byteorder_filename[FILENAME_BUFFER];
     memset(reversed_byteorder_filename, NULL_BYTE, FILENAME_BUFFER);
-
     char solved_filename[FILENAME_BUFFER];
     memset(solved_filename, NULL_BYTE, FILENAME_BUFFER);
 
@@ -26,22 +32,20 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
 
     reverse_string_byte_order(solved_filename, reversed_byteorder_filename);
 
-    strncat(output_filepath, "/", (strlen("/") + NULL_BYTE_SIZE));
-
-    strncat(output_filepath,
+    strncat(output_filepath_p, "/", (strlen("/") + NULL_BYTE_SIZE));
+    strncat(output_filepath_p,
             reversed_byteorder_filename,
             strlen(reversed_byteorder_filename));
+    strncat(output_filepath_p, ".sol", (strlen(".sol") + NULL_BYTE_SIZE));
 
-    strncat(output_filepath, ".sol", (strlen(".sol") + NULL_BYTE_SIZE));
+    printf("Storing results in solution file: %s\n", output_filepath_p);
 
-    printf("Storing results in solution file: %s\n", output_filepath);
-
-    fd = open(output_filepath,
+    fd = open(output_filepath_p,
               O_RDWR | O_CREAT | O_CLOEXEC,
               S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
     if (ERROR_CODE == fd)
     {
-        DEBUG_PRINT("Error opening solved file %s\n", output_filepath);
+        DEBUG_PRINT("Error opening solved file %s\n", output_filepath_p);
         return_value = ERROR_CODE;
         goto END;
     }
@@ -72,7 +76,6 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
               &sequation->num_of_opt_headers,
               sizeof(sequation->num_of_opt_headers));
     }
-
     lseek(fd, 0, SEEK_END);
     write(fd, &sequation->equation_id, sizeof(sequation->equation_id));
     write(fd, &sequation->solved_flag, sizeof(sequation->solved_flag));
@@ -82,16 +85,16 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
     close(fd);
 
     DEBUG_PRINT(" Loop Tracker: %d\n", loop_tracker);
-    loop_tracker++;
 
+    loop_tracker++;
     if (loop_tracker == sequation->num_of_e)
     {
         loop_tracker = 0;
     }
 
 END:
-    free(output_filepath);
-    output_filepath = NULL;
+    free(output_filepath_p);
+    output_filepath_p = NULL;
     return return_value;
 }
 

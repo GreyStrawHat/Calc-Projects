@@ -4,11 +4,18 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
                                            char * output_dir_arg)
 {
     Unsolved_Equation * return_value = NULL;
-    Unsolved_Equation * uequation    = NULL;
+    Unsolved_Equation * uequation_p  = NULL;
     struct stat *       path_st      = calloc(1, sizeof(struct stat));
     if (path_st == NULL)
     {
         fprintf(stderr, RED "Calloc Error\n");
+        return_value = NULL;
+        goto END;
+    }
+
+    if ((NULL == input_dir_arg) || (NULL == output_dir_arg))
+    {
+        fprintf(stderr, RED "Error: NULL pointer\n");
         return_value = NULL;
         goto END;
     }
@@ -34,8 +41,8 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
         goto END;
     }
 
-    uequation = (Unsolved_Equation *)calloc(1, sizeof(Unsolved_Equation));
-    if (NULL == uequation)
+    uequation_p = (Unsolved_Equation *)calloc(1, sizeof(Unsolved_Equation));
+    if (NULL == uequation_p)
     {
         fprintf(stderr, "Calloc Error\n");
         return_value = NULL;
@@ -58,9 +65,10 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
     {
         if (DT_REG == directory_entry->d_type)
         {
-            if (ERROR_CODE ==
-                parse_unsolved_file(
-                    uequation, directory_entry, input_dir_arg, output_dir_arg))
+            if (ERROR_CODE == parse_unsolved_file(uequation_p,
+                                                  directory_entry,
+                                                  input_dir_arg,
+                                                  output_dir_arg))
             {
                 fprintf(stderr,
                         RED "Error Parsing Equation File %s\n" RESET,
@@ -73,17 +81,17 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
 
     if (0 != errno)
     {
-        free(uequation);
-        uequation    = NULL;
+        free(uequation_p);
+        uequation_p  = NULL;
         return_value = NULL;
         goto END;
     }
-    return_value = uequation;
+    return_value = uequation_p;
 END:
     if (NULL == return_value)
     {
-        free(uequation);
-        uequation = NULL;
+        free(uequation_p);
+        uequation_p = NULL;
     }
     free(path_st);
     return return_value;

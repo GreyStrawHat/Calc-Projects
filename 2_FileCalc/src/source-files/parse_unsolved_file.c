@@ -5,20 +5,28 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
                         char *              input_dir_arg,
                         char *              output_dir_arg)
 {
-    int     return_value   = 0;
-    ssize_t file_size      = 0;
-    char *  input_filepath = realpath(input_dir_arg, NULL);
+    int     return_value     = 0;
+    ssize_t file_size        = 0;
+    char *  input_filepath_p = realpath(input_dir_arg, NULL);
 
-    strncat(input_filepath, "/", (strlen("/") + NULL_BYTE_SIZE));
+    if ((NULL == uequation) || (NULL == output_dir_arg) ||
+        (NULL == directory_entry) || (NULL == input_dir_arg))
+    {
+        fprintf(stderr, RED "Error: NULL pointer\n");
+        return_value = ERROR_CODE;
+        goto END;
+    }
 
-    strncat(input_filepath,
+    strncat(input_filepath_p, "/", (strlen("/") + NULL_BYTE_SIZE));
+
+    strncat(input_filepath_p,
             directory_entry->d_name,
             sizeof(directory_entry->d_name) + 1);
 
-    int fd = open(input_filepath, O_RDONLY | O_CLOEXEC);
+    int fd = open(input_filepath_p, O_RDONLY | O_CLOEXEC);
     if (ERROR_CODE == fd)
     {
-        DEBUG_PRINT("[ERROR] - Failed to open file %s\n", input_filepath);
+        DEBUG_PRINT("[ERROR] - Failed to open file %s\n", input_filepath_p);
         return_value = ERROR_CODE;
         goto END;
     }
@@ -48,8 +56,8 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
     close(fd);
 
 END:
-    free(input_filepath);
-    input_filepath = NULL;
+    free(input_filepath_p);
+    input_filepath_p = NULL;
     return return_value;
 }
 
@@ -85,7 +93,7 @@ int read_unsolved_equations(int                 fd,
 {
     int               return_value = 0;
     int               iterator     = 0;
-    Solved_Equation * sequation    = NULL;
+    Solved_Equation * sequation_p  = NULL;
 
     while (iterator < uequation->num_of_e)
     {
@@ -124,11 +132,11 @@ int read_unsolved_equations(int                 fd,
             goto END;
         }
 
-        sequation = return_solved_struct(uequation, output_dir_arg);
+        sequation_p = return_solved_struct(uequation, output_dir_arg);
 
         iterator++;
-        free(sequation);
-        sequation = NULL;
+        free(sequation_p);
+        sequation_p = NULL;
     }
 
 END:

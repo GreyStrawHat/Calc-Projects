@@ -1,8 +1,16 @@
 #include "open_output_dir.h"
+#include "font.h"
 
 int open_output_dir(char * output_dir_arg)
 {
     int return_value = 0;
+
+    if (NULL == output_dir_arg)
+    {
+        fprintf(stderr, RED "Error: NULL pointer\n");
+        return_value = ERROR_CODE;
+        goto END;
+    }
 
     DIR * output_directory = opendir(output_dir_arg);
 
