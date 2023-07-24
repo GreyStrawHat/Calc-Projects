@@ -31,7 +31,7 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
     }
     else
     {
-        printf("Error solving equation\n");
+        printf(RED "Error solving equation\n" RESET);
         free(sequation);
         sequation = NULL;
         return NULL;

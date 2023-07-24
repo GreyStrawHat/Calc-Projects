@@ -16,6 +16,19 @@
 #include "reverse_byte_string_order.h"
 #include "open_output_dir.h"
 
+/**
+ * @brief Parse the Solved_Equation and store results in a solution file.
+ *
+ * This function takes a Solved_Equation and an output directory path as input.
+ * It creates or opens the specified output directory and writes the results of
+ * the Solved_Equation to a solution file in the directory. If the file already
+ * exists, it appends the results to the file.
+ *
+ * @param sequation Pointer to the Solved_Equation to be stored in the file.
+ * @param output_dir_arg The path to the output directory where the solution
+ * file will be stored.
+ * @return 0 on success, or an error code on failure.
+ */
 int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg);
 
 #endif
