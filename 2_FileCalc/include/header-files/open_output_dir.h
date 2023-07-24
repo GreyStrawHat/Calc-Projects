@@ -1,6 +1,7 @@
 #ifndef OUTPUT_DIR_H
 #define OUTPUT_DIR_H
-#define RWXRXRX 0755
+#define RWXRXRX    0755
+#define ERROR_CODE -1
 
 #include <stdio.h>
 #include <stdlib.h>

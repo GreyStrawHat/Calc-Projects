@@ -6,7 +6,7 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
     errno = 0;
     Solved_Equation * sequation =
         (Solved_Equation *)calloc(1, sizeof(Solved_Equation));
-    if (sequation == NULL)
+    if (NULL == sequation)
     {
         printf("Calloc Error\n");
         return NULL;
@@ -21,11 +21,23 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
     sequation->equation_id        = Equation->equation_id;
 
     // create function that takes Unsolved equation and
-    // eturns the result to sequation->result
+    // returns the result to sequation->result
 
     sequation = filecalc(Equation, sequation);
 
-    if (parse_solved_file(sequation, output_dir_arg) == -1)
+    if (true == sequation->solved_flag)
+    {
+        printf(BOLD "Sucessfully solved equation\n" RESET);
+    }
+    else
+    {
+        printf("Error solving equation\n");
+        free(sequation);
+        sequation = NULL;
+        return NULL;
+    }
+
+    if (ERROR_CODE == parse_solved_file(sequation, output_dir_arg))
     {
         printf("Error parsing solved file\n");
         free(sequation);
@@ -33,7 +45,7 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
         return NULL;
     }
 
-    if (errno != 0)
+    if (0 != errno)
     {
         DEBUG_PRINT("Errno: %d\n", errno);
         free(sequation);

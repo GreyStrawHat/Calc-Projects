@@ -15,12 +15,12 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
             sizeof(directory_entry->d_name) + 1);
 
     int fd = open(input_filepath, O_RDONLY | O_CLOEXEC);
-    if (fd == -1)
+    if (ERROR_CODE == fd)
     {
         DEBUG_PRINT("[ERROR] - Failed to open file %s\n", input_filepath);
         free(input_filepath);
         input_filepath = NULL;
-        return -1;
+        return ERROR_CODE;
     }
 
     printf("\nTarget Equation File: %s\n", directory_entry->d_name);
@@ -41,7 +41,7 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
         free(input_filepath);
         input_filepath = NULL;
         close(fd);
-        return -1;
+        return ERROR_CODE;
     }
 
     read_unsolved_equations(fd, uequation, output_dir_arg);
@@ -109,15 +109,15 @@ int read_unsolved_equations(int                 fd,
             fprintf(stderr,
                     RED "[ERROR] - Failed to read equation from file\n" RESET);
             close(fd);
-            return -1;
+            return ERROR_CODE;
         }
 
-        if (uequation->header_flag != 0)
+        if (0 != uequation->header_flag)
         {
             DEBUG_PRINT("[ERROR] - Invalid Header Value: %02X\n",
                         uequation->header_flag);
             close(fd);
-            return -1;
+            return ERROR_CODE;
         }
 
         Solved_Equation * sequation =

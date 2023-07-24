@@ -3,6 +3,7 @@
 Solved_Equation * filecalc(Unsolved_Equation * Equation,
                            Solved_Equation *   sequation)
 {
+    printf(BLUE "Target Equation: 0x%X\n" RESET, sequation->equation_id);
 
     int error_status = 0;
 
@@ -71,7 +72,7 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
             }
             sequation->data_type = 2;
             sequation            = default_case64(Equation, sequation);
-            if (sequation->solved_flag == 0)
+            if (0 == sequation->solved_flag)
             {
                 error_status = 1;
             }

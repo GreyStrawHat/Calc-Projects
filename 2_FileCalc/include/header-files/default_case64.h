@@ -18,6 +18,18 @@
 #include "equation_types.h"
 #include "unsigned_ec_operations_64.h"
 
+/**
+ * @brief Solve an equation based on the operator_value.
+ *
+ * This function takes an Unsolved_Equation and Solved_Equation as input and
+ * solves the equation based on the operator_value specified in the
+ * Unsolved_Equation. The result is stored in the Solved_Equation.
+ *
+ * @param Equation Pointer to the Unsolved_Equation to be solved.
+ * @param sequation Pointer to the Solved_Equation where the result will be
+ * stored.
+ * @return Pointer to the Solved_Equation with the result of the equation.
+ */
 Solved_Equation * default_case64(Unsolved_Equation * Equation,
                                  Solved_Equation *   sequation);
 

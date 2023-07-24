@@ -12,7 +12,7 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
 
     stat(input_dir_arg, path_st);
 
-    if (S_ISDIR(path_st->st_mode) == 0)
+    if (0 == S_ISDIR(path_st->st_mode))
     {
         printf(RED "[ERROR] %s is not a directory\n" RESET, input_dir_arg);
         free(path_st);
@@ -21,7 +21,7 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
 
     stat(output_dir_arg, path_st);
 
-    if (S_ISDIR(path_st->st_mode) == 0)
+    if (0 == S_ISDIR(path_st->st_mode))
     {
         printf(RED "[ERROR] %s is not a directory\n" RESET, output_dir_arg);
         free(path_st);
@@ -32,14 +32,14 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
 
     Unsolved_Equation * uequation =
         (Unsolved_Equation *)calloc(1, sizeof(Unsolved_Equation));
-    if (uequation == NULL)
+    if (NULL == uequation)
     {
         printf("Calloc Error\n");
         return NULL;
     }
 
     DIR * input_directory = opendir(input_dir_arg);
-    if (input_directory == NULL)
+    if (NULL == input_directory)
     {
         DEBUG_PRINT("Error opening dir %s..\n", input_dir_arg);
         free(uequation);
@@ -51,14 +51,13 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
 
     struct dirent * directory_entry;
 
-    while ((directory_entry = readdir(input_directory)) != NULL)
+    while (NULL != (directory_entry = readdir(input_directory)))
     {
-        if (directory_entry->d_type == DT_REG)
+        if (DT_REG == directory_entry->d_type)
         {
-            if (parse_unsolved_file(uequation,
-                                    directory_entry,
-                                    input_dir_arg,
-                                    output_dir_arg) == -1)
+            if (ERROR_CODE ==
+                parse_unsolved_file(
+                    uequation, directory_entry, input_dir_arg, output_dir_arg))
             {
                 fprintf(stderr,
                         RED "Error Parsing Equation File %s\n" RESET,
@@ -69,7 +68,7 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
 
     closedir(input_directory);
 
-    if (errno != 0)
+    if (0 != errno)
     {
         free(uequation);
         uequation = NULL;

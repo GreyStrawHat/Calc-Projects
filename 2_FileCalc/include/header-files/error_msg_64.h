@@ -4,7 +4,7 @@
 #define UNSIGNED_ERROR_CODE 1
 
 /**
- * @brief Displays SimpleCalc usage information.
+ * @brief Displays FileCalc usage information.
  *
  * @param program_name Name of program
  */
