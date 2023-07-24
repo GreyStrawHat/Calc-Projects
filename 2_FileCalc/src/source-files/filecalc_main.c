@@ -2,28 +2,33 @@
 
 int main(int argc, char ** argv)
 {
+    int                 return_value = 0;
+    Unsolved_Equation * Input_Dir    = NULL;
+
     if (3 != argc)
     {
-        printf(RED "Invalid number of arguments\n" RESET);
-        return ERROR_CODE;
+        fprintf(stderr, RED "Invalid number of arguments\n" RESET);
+        printf(RED BOLD "Usage: %s <input_dir> <output_dir>\n\n" RESET,
+               argv[0]);
+        return_value = ERROR_CODE;
+        goto END;
     }
-
-    Unsolved_Equation * Input_Dir;
 
     Input_Dir = return_unsolved_struct(argv[1], argv[2]);
     if (NULL == Input_Dir)
     {
-        printf(RED "Operation Failed\n\n" RESET);
+        fprintf(stderr, RED "Operation Failed\n\n" RESET);
         printf(RED BOLD "Usage: %s <input_dir> <output_dir>\n\n" RESET,
                argv[0]);
-        free(Input_Dir);
-        return ERROR_CODE;
+        return_value = ERROR_CODE;
+        goto END;
     }
 
     printf("\nOperations Successful.\n");
 
+END:
     free(Input_Dir);
-    return 0;
+    return return_value;
 }
 
 /*** end of file ***/

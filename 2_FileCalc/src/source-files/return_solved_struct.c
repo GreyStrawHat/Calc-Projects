@@ -1,21 +1,24 @@
 #include "return_solved_struct.h"
+#define SOLVED 0x01
 
 Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
                                        char *              output_dir_arg)
 {
-    errno = 0;
+    Solved_Equation * return_value = NULL;
+    errno                          = 0;
     Solved_Equation * sequation =
         (Solved_Equation *)calloc(1, sizeof(Solved_Equation));
     if (NULL == sequation)
     {
-        printf("Calloc Error\n");
-        return NULL;
+        fprintf(stderr, "Calloc Error\n");
+        return_value = NULL;
+        goto END;
     }
 
     sequation->magic_num          = Equation->magic_num;
     sequation->file_id            = Equation->file_id;
     sequation->num_of_e           = Equation->num_of_e;
-    sequation->header_flag        = 1;
+    sequation->header_flag        = SOLVED;
     sequation->equation_offset    = Equation->equation_offset;
     sequation->num_of_opt_headers = Equation->num_of_opt_headers;
     sequation->equation_id        = Equation->equation_id;
@@ -31,29 +34,33 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
     }
     else
     {
-        printf(RED "Error solving equation\n" RESET);
-        free(sequation);
-        sequation = NULL;
-        return NULL;
+        fprintf(stderr, RED "Error solving equation\n" RESET);
+        return_value = NULL;
+        goto END;
     }
 
     if (ERROR_CODE == parse_solved_file(sequation, output_dir_arg))
     {
-        printf("Error parsing solved file\n");
-        free(sequation);
-        sequation = NULL;
-        return NULL;
+        fprintf(stderr, "Error parsing solved file\n");
+        return_value = NULL;
+        goto END;
     }
 
     if (0 != errno)
     {
         DEBUG_PRINT("Errno: %d\n", errno);
-        free(sequation);
-        sequation = NULL;
-        return NULL;
+        return_value = NULL;
+        goto END;
     }
 
-    return sequation;
+    return_value = sequation;
+END:
+    if (NULL == return_value)
+    {
+        free(sequation);
+        sequation = NULL;
+    }
+    return return_value;
 }
 
 /*** end of file ***/

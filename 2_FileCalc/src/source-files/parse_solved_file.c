@@ -2,16 +2,19 @@
 
 int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
 {
+    int        return_value = 0;
+    static int loop_tracker = 0;
+    ssize_t    file_size =
+        (sequation->num_of_e * SOLVED_EQUATION_LENGTH) + EQU_HEADER_LENGTH;
+    int    fd              = ERROR_CODE;
+    char * output_filepath = realpath(output_dir_arg, NULL);
 
     if (ERROR_CODE == open_output_dir(output_dir_arg))
     {
-        printf("Error opening output directory\n");
-        return ERROR_CODE;
+        fprintf(stderr, RED "Error opening output directory\n");
+        return_value = ERROR_CODE;
+        goto END;
     }
-
-    static int loop_tracker = 0;
-
-    char * output_filepath = realpath(output_dir_arg, NULL);
 
     char reversed_byteorder_filename[FILENAME_BUFFER];
     memset(reversed_byteorder_filename, NULL_BYTE, FILENAME_BUFFER);
@@ -33,25 +36,20 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
 
     printf("Storing results in solution file: %s\n", output_filepath);
 
-    ssize_t file_size =
-        (sequation->num_of_e * SOLVED_EQUATION_LENGTH) + EQU_HEADER_LENGTH;
-
-    int fd = open(output_filepath,
-                  O_RDWR | O_CREAT | O_CLOEXEC,
-                  S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
+    fd = open(output_filepath,
+              O_RDWR | O_CREAT | O_CLOEXEC,
+              S_IRUSR | S_IWUSR | S_IROTH | S_IRGRP);
     if (ERROR_CODE == fd)
     {
         DEBUG_PRINT("Error opening solved file %s\n", output_filepath);
-        free(output_filepath);
-        output_filepath = NULL;
-        return ERROR_CODE;
+        return_value = ERROR_CODE;
+        goto END;
     }
 
     if (file_size <= lseek(fd, 0, SEEK_END))
     {
-        free(output_filepath);
-        output_filepath = NULL;
-        return 0;
+        DEBUG_PRINT("Expected file size: %ld\n", file_size);
+        goto END;
     }
 
     if (ENOENT == errno)
@@ -83,9 +81,6 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
 
     close(fd);
 
-    free(output_filepath);
-    output_filepath = NULL;
-
     DEBUG_PRINT(" Loop Tracker: %d\n", loop_tracker);
     loop_tracker++;
 
@@ -94,7 +89,10 @@ int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg)
         loop_tracker = 0;
     }
 
-    return 0;
+END:
+    free(output_filepath);
+    output_filepath = NULL;
+    return return_value;
 }
 
 /*** end of file ***/

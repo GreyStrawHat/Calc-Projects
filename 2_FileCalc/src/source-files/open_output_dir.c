@@ -2,6 +2,8 @@
 
 int open_output_dir(char * output_dir_arg)
 {
+    int return_value = 0;
+
     DIR * output_directory = opendir(output_dir_arg);
 
     if ((NULL == output_directory) && (ENOENT == errno))
@@ -12,19 +14,22 @@ int open_output_dir(char * output_dir_arg)
         if (NULL == output_directory)
         {
             DEBUG_PRINT("Error opening directory %s\n", output_dir_arg);
-            return ERROR_CODE;
+            return_value = ERROR_CODE;
+            goto END;
         }
         errno = 0;
     }
     else if (NULL == output_directory)
     {
         DEBUG_PRINT("Error opening directory %s\n", output_dir_arg);
-        return ERROR_CODE;
+        return_value = ERROR_CODE;
+        goto END;
     }
 
     closedir(output_directory);
 
-    return 0;
+END:
+    return return_value;
 }
 
 /*** end of file ***/

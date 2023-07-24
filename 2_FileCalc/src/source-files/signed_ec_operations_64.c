@@ -97,7 +97,7 @@ bool ec_division64(int64_t operand1, int64_t operand2)
 
     if (0 == operand2)
     {
-        printf("[ERROR] - Cannot Divide by Zero.\n\n");
+        fprintf(stderr, RED "[ERROR] - Cannot Divide by Zero.\n\n");
         return_value = true;
         goto END;
     }

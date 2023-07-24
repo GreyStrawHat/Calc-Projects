@@ -5,8 +5,9 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
                         char *              input_dir_arg,
                         char *              output_dir_arg)
 {
-
-    char * input_filepath = realpath(input_dir_arg, NULL);
+    int     return_value   = 0;
+    ssize_t file_size      = 0;
+    char *  input_filepath = realpath(input_dir_arg, NULL);
 
     strncat(input_filepath, "/", (strlen("/") + NULL_BYTE_SIZE));
 
@@ -18,14 +19,13 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
     if (ERROR_CODE == fd)
     {
         DEBUG_PRINT("[ERROR] - Failed to open file %s\n", input_filepath);
-        free(input_filepath);
-        input_filepath = NULL;
-        return ERROR_CODE;
+        return_value = ERROR_CODE;
+        goto END;
     }
 
     printf("\nTarget Equation File: %s\n", directory_entry->d_name);
 
-    ssize_t file_size = lseek(fd, 0, SEEK_END);
+    file_size = lseek(fd, 0, SEEK_END);
 
     printf("File Size: %ld\n", file_size);
 
@@ -38,19 +38,19 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
                     ((uequation->num_of_e * UNSOLVED_EQUATION_LENGTH) +
                      EQU_HEADER_LENGTH),
                     file_size);
-        free(input_filepath);
-        input_filepath = NULL;
         close(fd);
-        return ERROR_CODE;
+        return_value = ERROR_CODE;
+        goto END;
     }
 
     read_unsolved_equations(fd, uequation, output_dir_arg);
 
-    free(input_filepath);
-    input_filepath = NULL;
     close(fd);
 
-    return 0;
+END:
+    free(input_filepath);
+    input_filepath = NULL;
+    return return_value;
 }
 
 Unsolved_Equation * parse_unsolved_header(int fd, Unsolved_Equation * uequation)
@@ -83,7 +83,9 @@ int read_unsolved_equations(int                 fd,
                             Unsolved_Equation * uequation,
                             char *              output_dir_arg)
 {
-    int iterator = 0;
+    int               return_value = 0;
+    int               iterator     = 0;
+    Solved_Equation * sequation    = NULL;
 
     while (iterator < uequation->num_of_e)
     {
@@ -109,7 +111,8 @@ int read_unsolved_equations(int                 fd,
             fprintf(stderr,
                     RED "[ERROR] - Failed to read equation from file\n" RESET);
             close(fd);
-            return ERROR_CODE;
+            return_value = ERROR_CODE;
+            goto END;
         }
 
         if (0 != uequation->header_flag)
@@ -117,18 +120,19 @@ int read_unsolved_equations(int                 fd,
             DEBUG_PRINT("[ERROR] - Invalid Header Value: %02X\n",
                         uequation->header_flag);
             close(fd);
-            return ERROR_CODE;
+            return_value = ERROR_CODE;
+            goto END;
         }
 
-        Solved_Equation * sequation =
-            return_solved_struct(uequation, output_dir_arg);
-        free(sequation);
-        sequation = NULL;
+        sequation = return_solved_struct(uequation, output_dir_arg);
 
         iterator++;
+        free(sequation);
+        sequation = NULL;
     }
 
-    return 0;
+END:
+    return return_value;
 }
 
 /*** end of file ***/

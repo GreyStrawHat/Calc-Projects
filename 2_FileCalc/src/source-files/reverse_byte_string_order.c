@@ -1,9 +1,10 @@
 #include "reverse_byte_string_order.h"
 #define TWO_BYTES 2
+#define NULL_BYTE '\0'
 
 void reverse_string_byte_order(const char * string, char * buffer)
 {
-    if (*string == '\0')
+    if (*string == NULL_BYTE)
     {
         return;
     }

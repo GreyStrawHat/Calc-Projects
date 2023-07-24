@@ -3,48 +3,51 @@
 Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
                                            char * output_dir_arg)
 {
-    struct stat * path_st = calloc(1, sizeof(struct stat));
+    Unsolved_Equation * return_value = NULL;
+    Unsolved_Equation * uequation    = NULL;
+    struct stat *       path_st      = calloc(1, sizeof(struct stat));
     if (path_st == NULL)
     {
-        printf("Calloc Error\n");
-        return NULL;
+        fprintf(stderr, RED "Calloc Error\n");
+        return_value = NULL;
+        goto END;
     }
 
     stat(input_dir_arg, path_st);
 
     if (0 == S_ISDIR(path_st->st_mode))
     {
-        printf(RED "[ERROR] %s is not a directory\n" RESET, input_dir_arg);
-        free(path_st);
-        return NULL;
+        fprintf(
+            stderr, RED "[ERROR] %s is not a directory\n" RESET, input_dir_arg);
+        return_value = NULL;
+        goto END;
     }
 
     stat(output_dir_arg, path_st);
 
     if (0 == S_ISDIR(path_st->st_mode))
     {
-        printf(RED "[ERROR] %s is not a directory\n" RESET, output_dir_arg);
-        free(path_st);
-        return NULL;
+        fprintf(stderr,
+                RED "[ERROR] %s is not a directory\n" RESET,
+                output_dir_arg);
+        return_value = NULL;
+        goto END;
     }
 
-    free(path_st);
-
-    Unsolved_Equation * uequation =
-        (Unsolved_Equation *)calloc(1, sizeof(Unsolved_Equation));
+    uequation = (Unsolved_Equation *)calloc(1, sizeof(Unsolved_Equation));
     if (NULL == uequation)
     {
-        printf("Calloc Error\n");
-        return NULL;
+        fprintf(stderr, "Calloc Error\n");
+        return_value = NULL;
+        goto END;
     }
 
     DIR * input_directory = opendir(input_dir_arg);
     if (NULL == input_directory)
     {
         DEBUG_PRINT("Error opening dir %s..\n", input_dir_arg);
-        free(uequation);
-        uequation = NULL;
-        return NULL;
+        return_value = NULL;
+        goto END;
     }
 
     errno = 0;
@@ -71,11 +74,19 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
     if (0 != errno)
     {
         free(uequation);
-        uequation = NULL;
-        return NULL;
+        uequation    = NULL;
+        return_value = NULL;
+        goto END;
     }
-
-    return uequation;
+    return_value = uequation;
+END:
+    if (NULL == return_value)
+    {
+        free(uequation);
+        uequation = NULL;
+    }
+    free(path_st);
+    return return_value;
 }
 
 /*** end of file ***/
