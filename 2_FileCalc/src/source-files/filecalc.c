@@ -7,6 +7,12 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
 
     int error_status = 0;
 
+    if ((NULL == Equation) || (NULL == sequation))
+    {
+        fprintf(stderr, RED "Error: NULL pointer\n" RESET);
+        goto END;
+    }
+
     switch (Equation->operator_value)
     {
         case ADDITION:

@@ -3,15 +3,22 @@
 Solved_Equation * default_case64(Unsolved_Equation * Equation,
                                  Solved_Equation *   sequation)
 {
-    int error_status = 0;
+    Solved_Equation * return_value = sequation;
+
+    if ((NULL == Equation) || (NULL == sequation))
+    {
+        fprintf(stderr, RED "Error: NULL pointer\n" RESET);
+        return_value = NULL;
+        goto END;
+    }
 
     switch (Equation->operator_value)
     {
         case LEFT_SHIFT:
             if (true == ec_lshift64(Equation->operand1, Equation->operand2))
             {
-                printf("Left Shift Error\n");
-                error_status = ERROR_CODE;
+                fprintf(stderr, "Left Shift Error\n");
+                return_value = NULL;
                 goto END;
             }
             sequation->result = Equation->operand1 << Equation->operand2;
@@ -25,8 +32,8 @@ Solved_Equation * default_case64(Unsolved_Equation * Equation,
         case LEFT_ROTATE:
             if (true == ec_rotateLeft64(Equation->operand1, Equation->operand2))
             {
-                printf("Left Rotate Error\n");
-                error_status = ERROR_CODE;
+                fprintf(stderr, "Left Rotate Error\n");
+                return_value = NULL;
                 goto END;
             }
             sequation->result =
@@ -36,8 +43,8 @@ Solved_Equation * default_case64(Unsolved_Equation * Equation,
             if (true ==
                 ec_rotateRight64(Equation->operand1, Equation->operand2))
             {
-                printf("Right Rotate Error\n");
-                error_status = ERROR_CODE;
+                fprintf(stderr, "Right Rotate Error\n");
+                return_value = NULL;
                 goto END;
             }
             sequation->result =
@@ -47,8 +54,8 @@ Solved_Equation * default_case64(Unsolved_Equation * Equation,
             if (true ==
                 ec_bitwise_AND64(Equation->operand1, Equation->operand2))
             {
-                printf("Bitwise AND Error\n");
-                error_status = ERROR_CODE;
+                fprintf(stderr, "Bitwise AND Error\n");
+                return_value = NULL;
                 goto END;
             }
             sequation->result = Equation->operand1 & Equation->operand2;
@@ -57,8 +64,8 @@ Solved_Equation * default_case64(Unsolved_Equation * Equation,
         case BITWISE_OR:
             if (true == ec_bitwise_OR64(Equation->operand1, Equation->operand2))
             {
-                printf("Bitwise OR Error\n");
-                error_status = ERROR_CODE;
+                fprintf(stderr, "Bitwise OR Error\n");
+                return_value = NULL;
                 goto END;
             }
             sequation->result = Equation->operand1 | Equation->operand2;
@@ -68,29 +75,26 @@ Solved_Equation * default_case64(Unsolved_Equation * Equation,
             if (true ==
                 ec_bitwise_XOR64(Equation->operand1, Equation->operand2))
             {
-                printf("Bitwise XOR Error\n");
-                error_status = ERROR_CODE;
+                fprintf(stderr, "Bitwise XOR Error\n");
+                return_value = NULL;
                 goto END;
             }
             sequation->result = Equation->operand1 ^ Equation->operand2;
 
             break;
         default:
-            printf("Invalid Operator\n");
-            error_status = ERROR_CODE;
+            fprintf(stderr, "Invalid Operator\n");
+            return_value = NULL;
             goto END;
     }
 
 END:
-    if (ERROR_CODE == error_status)
-    {
-        sequation->solved_flag = 0;
-    }
-    else
+    if (NULL != return_value)
     {
         sequation->solved_flag = 1;
     }
-    return sequation;
+
+    return return_value;
 }
 
 /*** end of file ***/
