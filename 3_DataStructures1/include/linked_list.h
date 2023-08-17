@@ -19,6 +19,7 @@ typedef struct list_node_t
 {
     uint32_t position;
     void *data;
+    struct list_node_t *prev;
     struct list_node_t *next;
 } list_node_t;
 
