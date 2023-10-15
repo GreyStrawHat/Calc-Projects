@@ -49,3 +49,5 @@ uint64_t rotateLeft64(uint64_t value, uint64_t shift);
 uint64_t rotateRight64(uint64_t value, uint64_t shift);
 
 #endif
+
+/*** end of file ***/

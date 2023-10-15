@@ -69,3 +69,5 @@ bool ec_division(char * operand1, char * operand2);
 bool ec_modulo(char * operand1, char * operand2);
 
 #endif
+
+/*** end of file ***/

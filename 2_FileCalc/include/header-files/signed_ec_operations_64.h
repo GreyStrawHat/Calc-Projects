@@ -69,3 +69,5 @@ bool ec_division64(int64_t operand1, int64_t operand2);
 bool ec_modulo64(int64_t operand1, int64_t operand2);
 
 #endif
+
+/*** end of file ***/

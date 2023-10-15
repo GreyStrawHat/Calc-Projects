@@ -18,3 +18,5 @@
 int calc(char *operand1, char *operator_val, char *operand2);
 
 #endif
+
+/*** end of file ***/

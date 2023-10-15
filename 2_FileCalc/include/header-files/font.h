@@ -10,3 +10,5 @@
 #define BLUE      "\033[0;34m"
 
 #endif
+
+/*** end of file ***/

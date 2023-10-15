@@ -47,3 +47,5 @@ bool signed_error_checker(char * operand1, char *operand2);
 bool unsigned_error_checker(char * operand1, char *operand2);
 
 #endif
+
+/*** end of file ***/

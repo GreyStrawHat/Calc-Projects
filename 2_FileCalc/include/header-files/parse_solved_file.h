@@ -32,3 +32,5 @@
 int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg);
 
 #endif
+
+/*** end of file ***/

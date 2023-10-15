@@ -47,3 +47,5 @@ uint32_t rotateLeft(uint32_t value, uint32_t shift);
 uint32_t rotateRight(uint32_t value, uint32_t shift);
 
 #endif
+
+/*** end of file ***/

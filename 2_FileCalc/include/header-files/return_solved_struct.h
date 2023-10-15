@@ -32,3 +32,5 @@ Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
                                        char *              output_dir_arg);
 
 #endif
+
+/*** end of file ***/

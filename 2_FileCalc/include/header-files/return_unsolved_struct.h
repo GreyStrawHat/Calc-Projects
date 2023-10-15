@@ -34,3 +34,5 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
                                            char * output_dir_arg);
 
 #endif
+
+/*** end of file ***/

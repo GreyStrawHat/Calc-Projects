@@ -40,3 +40,5 @@ typedef struct
 } Solved_Equation;
 
 #endif
+
+/*** end of file ***/

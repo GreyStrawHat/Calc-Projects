@@ -34,3 +34,5 @@ Solved_Equation * default_case64(Unsolved_Equation * Equation,
                                  Solved_Equation *   sequation);
 
 #endif
+
+/*** end of file ***/

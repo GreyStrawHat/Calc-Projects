@@ -80,3 +80,5 @@ bool ec_bitwise_OR64(uint64_t operand1, uint64_t operand2);
 bool ec_bitwise_XOR64(uint64_t operand1, uint64_t operand2);
 
 #endif
+
+/*** end of file ***/

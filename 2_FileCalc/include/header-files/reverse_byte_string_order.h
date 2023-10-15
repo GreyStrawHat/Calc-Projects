@@ -20,3 +20,5 @@
 void reverse_string_byte_order(const char * string, char * buffer);
 
 #endif
+
+/*** end of file ***/

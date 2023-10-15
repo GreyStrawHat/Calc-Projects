@@ -36,3 +36,5 @@ Solved_Equation * filecalc(Unsolved_Equation * Equation,
                            Solved_Equation *   sequation);
 
 #endif
+
+/*** end of file ***/

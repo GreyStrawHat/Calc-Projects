@@ -74,3 +74,5 @@ bool ec_bitwise_OR(char * operand1, char * operand2);
 bool ec_bitwise_XOR(char * operand1, char * operand2);
 
 #endif
+
+/*** end of file ***/

@@ -68,7 +68,7 @@ typedef struct list_t
 
 /**
  * @brief Default Compare Function. Should be used if NULL specified for cmp_fun
- * in createion
+ * in creation
  *
  * @param value_to_find
  * @param node

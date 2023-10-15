@@ -24,3 +24,5 @@
 int open_output_dir(char * output_dir_arg);
 
 #endif
+
+/*** end of file ***/
