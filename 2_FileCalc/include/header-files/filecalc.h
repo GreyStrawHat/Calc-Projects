@@ -23,17 +23,18 @@
 /**
  * @brief Solve an equation based on the operator_value.
  *
- * This function takes an Unsolved_Equation and Solved_Equation as input and
+ * This function takes an unsolved_equation_t and solved_equation_t as input and
  * solves the equation based on the operator_value specified in the
- * Unsolved_Equation. The result is stored in the Solved_Equation.
+ * unsolved_equation_t. The result is stored in the solved_equation_t.
  *
- * @param Equation Pointer to the Unsolved_Equation to be solved.
- * @param sequation Pointer to the Solved_Equation where the result will be
+ * @param Header Pointer to the file header info
+ * @param Equation Pointer to the unsolved_equation_t to be solved.
+ * @param sequation Pointer to the solved_equation_t where the result will be
  * stored.
- * @return Pointer to the Solved_Equation with the result of the equation.
+ * @return Pointer to the solved_equation_t with the result of the equation.
  */
-Solved_Equation * filecalc(Unsolved_Equation * Equation,
-                           Solved_Equation *   sequation);
+solved_equation_t * filecalc(file_header_t * Header, unsolved_equation_t * Equation,
+                           solved_equation_t * sequation);
 
 #endif
 

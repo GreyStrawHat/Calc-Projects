@@ -1,10 +1,15 @@
 #include "return_unsolved_struct.h"
+#ifndef DT_REG   //Placed here to remove Intellisense issues
+#define DT_REG 8 
+#endif
 
-Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
+unsolved_equation_t * return_unsolved_struct(char * input_dir_arg,
                                            char * output_dir_arg)
 {
-    Unsolved_Equation * return_value = NULL;
-    Unsolved_Equation * uequation_p  = NULL;
+    unsolved_equation_t * return_value = NULL;
+    unsolved_equation_t * uequation_p  = NULL;
+    file_header_t * unsolved_file_header_p = NULL;
+
     struct stat *       path_st      = calloc(1, sizeof(struct stat));
     if (path_st == NULL)
     {
@@ -16,6 +21,7 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
     if ((NULL == input_dir_arg) || (NULL == output_dir_arg))
     {
         fprintf(stderr, RED "Error: NULL pointer\n");
+        DEBUG_PRINT(YELLOW "[*] Error %d " RESET, errno);
         return_value = NULL;
         goto END;
     }
@@ -41,7 +47,15 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
         goto END;
     }
 
-    uequation_p = (Unsolved_Equation *)calloc(1, sizeof(Unsolved_Equation));
+    unsolved_file_header_p = (file_header_t *)calloc(1, sizeof(file_header_t));
+    if (NULL == unsolved_file_header_p)
+    {
+        fprintf(stderr, "Calloc Error\n");
+        return_value = NULL;
+        goto END;
+    }
+
+    uequation_p = (unsolved_equation_t *)calloc(1, sizeof(unsolved_equation_t));
     if (NULL == uequation_p)
     {
         fprintf(stderr, "Calloc Error\n");
@@ -65,7 +79,7 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
     {
         if (DT_REG == directory_entry->d_type)
         {
-            if (ERROR_CODE == parse_unsolved_file(uequation_p,
+            if (ERROR_CODE == parse_unsolved_file(unsolved_file_header_p, uequation_p,
                                                   directory_entry,
                                                   input_dir_arg,
                                                   output_dir_arg))
@@ -82,6 +96,8 @@ Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
     if (0 != errno)
     {
         free(uequation_p);
+        free(unsolved_file_header_p);
+        unsolved_file_header_p = NULL;
         uequation_p  = NULL;
         return_value = NULL;
         goto END;
@@ -92,8 +108,11 @@ END:
     {
         free(uequation_p);
         uequation_p = NULL;
+        free(unsolved_file_header_p);
+        unsolved_file_header_p = NULL;
     }
     free(path_st);
+    free(unsolved_file_header_p);
     return return_value;
 }
 

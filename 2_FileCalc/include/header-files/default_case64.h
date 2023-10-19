@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include "equation_types.h"
 #include "unsigned_ec_operations_64.h"
+#include <errno.h>
 
 /**
  * @brief Solve an equation based on the operator_value.
@@ -30,8 +31,8 @@
  * stored.
  * @return Pointer to the Solved_Equation with the result of the equation.
  */
-Solved_Equation * default_case64(Unsolved_Equation * Equation,
-                                 Solved_Equation *   sequation);
+solved_equation_t * default_case64(unsolved_equation_t * Equation,
+                                 solved_equation_t *   sequation);
 
 #endif
 

@@ -30,7 +30,7 @@
  * @return Pointer to the Unsolved_Equation structure containing the unsolved
  * equations on success, or NULL on failure.
  */
-Unsolved_Equation * return_unsolved_struct(char * input_dir_arg,
+unsolved_equation_t * return_unsolved_struct(char * input_dir_arg,
                                            char * output_dir_arg);
 
 #endif

@@ -3,7 +3,7 @@
 int main(int argc, char ** argv)
 {
     int                 return_value = 0;
-    Unsolved_Equation * Input_Dir    = NULL;
+    unsolved_equation_t * Input_Dir    = NULL;
 
     if (3 != argc)
     {

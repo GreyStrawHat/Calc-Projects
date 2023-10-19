@@ -21,6 +21,7 @@
  * `solved_flag` field in the `sequation` structure is set to true, otherwise,
  * it is set to false.
  *
+ * @param File_Header 
  * @param Equation Pointer to the Unsolved_Equation structure containing the
  * equation to be solved.
  * @param output_dir_arg The path to the output directory where the solved
@@ -28,7 +29,7 @@
  * @return Pointer to the Solved_Equation structure containing the solved
  * equation on success, or NULL on failure.
  */
-Solved_Equation * return_solved_struct(Unsolved_Equation * Equation,
+solved_equation_t * return_solved_struct(file_header_t * File_Header, unsolved_equation_t * Equation,
                                        char *              output_dir_arg);
 
 #endif

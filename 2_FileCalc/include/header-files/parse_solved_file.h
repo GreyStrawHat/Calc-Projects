@@ -24,12 +24,13 @@
  * the Solved_Equation to a solution file in the directory. If the file already
  * exists, it appends the results to the file.
  *
+ * @param Header Pointer to file header info
  * @param sequation Pointer to the Solved_Equation to be stored in the file.
  * @param output_dir_arg The path to the output directory where the solution
  * file will be stored.
  * @return 0 on success, or an error code on failure.
  */
-int parse_solved_file(Solved_Equation * sequation, char * output_dir_arg);
+int parse_solved_file(file_header_t * Header, solved_equation_t * sequation, char * output_dir_arg);
 
 #endif
 

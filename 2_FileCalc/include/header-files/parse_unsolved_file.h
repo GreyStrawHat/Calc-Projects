@@ -25,6 +25,7 @@
  * generating corresponding solved equations and storing them in files in the
  * specified output directory.
  *
+ * @param unsolved_header Pointer to Unsolved_Equation
  * @param uequation Pointer to the Unsolved_Equation structure to store the
  * parsed header data and where the generated solved equations will be stored.
  * @param directory_entry Pointer to the directory entry information for the
@@ -35,7 +36,8 @@
  * solved equations will be stored.
  * @return 0 on success, or an error code on failure.
  */
-int parse_unsolved_file(Unsolved_Equation * uequation,
+int parse_unsolved_file(file_header_t * unsolved_header,
+                        unsolved_equation_t * uequation,
                         struct dirent *     directory_entry,
                         char *              input_dir_arg,
                         char *              output_dir_arg);
@@ -55,8 +57,7 @@ int parse_unsolved_file(Unsolved_Equation * uequation,
  * parsed header data.
  * @return Pointer to the same Unsolved_Equation structure.
  */
-Unsolved_Equation * parse_unsolved_header(int                 fd,
-                                          Unsolved_Equation * uequation);
+file_header_t * parse_unsolved_header(int fd, file_header_t * unsolved_header);
 
 /**
  * @brief Read unsolved equations from a file and generate solved equations.
@@ -75,7 +76,8 @@ Unsolved_Equation * parse_unsolved_header(int                 fd,
  * @return 0 on success, or an error code on failure.
  */
 int read_unsolved_equations(int                 fd,
-                            Unsolved_Equation * uequation,
+                            file_header_t * unsolved_header,
+                            unsolved_equation_t * uequation,
                             char *              output_dir_arg);
 
 #endif

@@ -1,13 +1,14 @@
 #include "default_case64.h"
 
-Solved_Equation * default_case64(Unsolved_Equation * Equation,
-                                 Solved_Equation *   sequation)
+solved_equation_t * default_case64(unsolved_equation_t * Equation,
+                                 solved_equation_t *   sequation)
 {
-    Solved_Equation * return_value = sequation;
+    solved_equation_t * return_value = sequation;
 
     if ((NULL == Equation) || (NULL == sequation))
     {
         fprintf(stderr, RED "Error: NULL pointer\n" RESET);
+        DEBUG_PRINT(YELLOW "[*] Error %d " RESET, errno);
         return_value = NULL;
         goto END;
     }
