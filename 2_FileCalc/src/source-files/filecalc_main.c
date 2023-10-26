@@ -3,7 +3,7 @@
 int main(int argc, char ** argv)
 {
     int                 return_value = 0;
-    unsolved_equation_t * Input_Dir    = NULL;
+    unsolved_equation_t * Input_Dir_p    = NULL;
 
     if (3 != argc)
     {
@@ -14,8 +14,8 @@ int main(int argc, char ** argv)
         goto END;
     }
 
-    Input_Dir = return_unsolved_struct(argv[1], argv[2]);
-    if (NULL == Input_Dir)
+    Input_Dir_p = return_unsolved_struct(argv[1], argv[2]);
+    if (NULL == Input_Dir_p)
     {
         fprintf(stderr, RED "Operation Failed\n\n" RESET);
         printf(RED BOLD "Usage: %s <input_dir> <output_dir>\n\n" RESET,
@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
     printf("\nOperations Successful.\n");
 
 END:
-    free(Input_Dir);
+    free(Input_Dir_p);
     return return_value;
 }
 

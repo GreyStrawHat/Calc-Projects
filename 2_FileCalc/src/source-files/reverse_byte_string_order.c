@@ -1,5 +1,5 @@
 #include "reverse_byte_string_order.h"
-#define TWO_BYTES 2
+#define HALF_WORD 2
 #define NULL_BYTE '\0'
 
 void reverse_string_byte_order(const char * string, char * buffer)
@@ -8,8 +8,8 @@ void reverse_string_byte_order(const char * string, char * buffer)
     {
         return;
     }
-    reverse_string_byte_order(string + TWO_BYTES, buffer);
-    strncat(buffer, string, TWO_BYTES);
+    reverse_string_byte_order(string + HALF_WORD, buffer);
+    strncat(buffer, string, HALF_WORD);
 }
 
 /*** end of file ***/

@@ -5,7 +5,7 @@ solved_equation_t * return_solved_struct(file_header_t * equation_file_header,
                                          unsolved_equation_t * Equation,
                                          char *                output_dir_arg)
 {
-    solved_equation_t * return_value = NULL;
+    solved_equation_t * return_value_p = NULL;
     errno                            = 0;
     solved_equation_t * sequation_p =
         (solved_equation_t *)calloc(1, sizeof(solved_equation_t));
@@ -16,14 +16,14 @@ solved_equation_t * return_solved_struct(file_header_t * equation_file_header,
     if (NULL == sequation_p)
     {
         fprintf(stderr, "Calloc Error\n");
-        return_value = NULL;
+        return_value_p = NULL;
         goto END;
     }
 
     if (NULL == solved_file_header)
     {
         fprintf(stderr, "Calloc Error\n");
-        return_value = NULL;
+        return_value_p = NULL;
         goto END;
     }
 
@@ -31,7 +31,7 @@ solved_equation_t * return_solved_struct(file_header_t * equation_file_header,
     {
         fprintf(stderr, RED "Error: NULL pointer\n");
         DEBUG_PRINT(YELLOW "[*] Error %d " RESET, errno);
-        return_value = NULL;
+        return_value_p = NULL;
         goto END;
     }
 
@@ -52,7 +52,7 @@ solved_equation_t * return_solved_struct(file_header_t * equation_file_header,
     {
         fprintf(stderr, "NULL value found.\n");
         DEBUG_PRINT(YELLOW "[*] Error %d " RESET, errno);
-        return_value = NULL;
+        return_value_p = NULL;
         goto END;
     }
 
@@ -63,36 +63,36 @@ solved_equation_t * return_solved_struct(file_header_t * equation_file_header,
     else
     {
         fprintf(stderr, RED "Error solving equation\n" RESET);
-        return_value = NULL;
+        return_value_p = NULL;
         goto END;
     }
 
     if (ERROR_CODE == parse_solved_file(solved_file_header, sequation_p, output_dir_arg))
     {
         fprintf(stderr, "Error parsing solved file\n");
-        return_value = NULL;
+        return_value_p = NULL;
         goto END;
     }
 
     if (0 != errno)
     {
         DEBUG_PRINT("Errno: %d\n", errno);
-        return_value = NULL;
+        return_value_p = NULL;
         goto END;
     }
 
-    return_value = sequation_p;
+    return_value_p = sequation_p;
 END:
     free(solved_file_header);
     solved_file_header = NULL;
 
-    if (NULL == return_value)
+    if (NULL == return_value_p)
     {
         free(sequation_p);
         sequation_p = NULL;
     }
     
-    return return_value;
+    return return_value_p;
 }
 
 /*** end of file ***/
