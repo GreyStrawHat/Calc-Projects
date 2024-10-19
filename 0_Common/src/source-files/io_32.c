@@ -1,4 +1,5 @@
 #include "io_32.h"
+#include "operations_32.h"
 #include "error_handling.h"
 
 uint32_t sanitize_uarg(char * arg)

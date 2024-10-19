@@ -14,7 +14,14 @@ set(SIMPLECALC_SOURCE_FILES
     src/source-files/handle_args.c
 )
 
-add_library(common_lib ${SIMPLECALC_SOURCE_FILES})
+set(CALC_32_SOURCE_FILES
+    src/source-files/io_32.c
+    src/source-files/operations_32.c
+    src/source-files/error_handling_32.c
+    )
+
+#add_library(common_lib ${SIMPLECALC_SOURCE_FILES})
+add_library(common_lib ${CALC_32_SOURCE_FILES})
 
 target_include_directories(common_lib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/header-files)

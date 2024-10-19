@@ -1,5 +1,6 @@
 #include "error_handling.h"
 #include "io_32.h"
+#include "operations_32.h"
 
 void usage(char * program_name)
 {

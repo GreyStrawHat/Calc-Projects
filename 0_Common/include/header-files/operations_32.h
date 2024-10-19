@@ -4,6 +4,7 @@
 #define INT32_BIT_MASK 0xFFFFFFFF
 #define BASE_TEN               10
 
+#include <string.h>
 #include <stdint.h>
 
 /**
